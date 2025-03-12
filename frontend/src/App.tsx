@@ -1,20 +1,6 @@
-// import React from 'react';
-// import './App.css';
-// import DataComponent from './DataComponent';
-
-// const App: React.FC = () => {
-//   return (
-//     <div className="App">
-//       <DataComponent />
-//     </div>
-//   );
-// }
-
-// export default App;
-
 import React from "react";
 import { useState } from "react";
-//import Fire from '../src/assets/images/Fire.webp';
+import Fire from './images/Fire.webp';
 import FilterContainer from "./FilterContainer";
 import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
@@ -25,7 +11,7 @@ const useSelectedDragon = (initialSrc: string) => {
 };
 
 const App: React.FC = () => {
-    const { selectedDragon, setSelectedDragon } = useSelectedDragon("undefined");
+    const { selectedDragon, setSelectedDragon } = useSelectedDragon(Fire);
   return (
     <div className="app">
         <FilterContainer />
