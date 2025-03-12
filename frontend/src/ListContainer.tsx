@@ -15,6 +15,7 @@ import Dragon from "./Dragon";
 interface DragonData {
   id: number;
   name: string;
+  elements: string[];
 }
 
 const imageMap: { [key: string]: string } = {
@@ -30,40 +31,55 @@ const imageMap: { [key: string]: string } = {
     Dark: Dark,
 };
 
-const ListContainer: React.FC<{ filter: string | null; onClick: (name: string) => void }> = ({ filter, onClick }) => {
-  const [dragons, setDragons] = useState<DragonData[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchDragons = async () => {
-      try {
-        const response = filter
-          ? await axios.get(`http://localhost:5000/dragons-by-element?elementName=${filter}`)
-          : await axios.get("http://localhost:5000/dragons");
-        setDragons(response.data);
-      } catch (err) {
-        setError("Error fetching dragons");
-        console.error(err);
-      }
-    };
-
-    fetchDragons();
-  }, [filter]);
-
-  if (error) return <div>{error}</div>;
-
-  return (
-    <div className="list-container">
-      {dragons.length > 0 ? (
-        dragons.map((dragon) => {
-          const imageSrc = imageMap[dragon.name] || "/images/default.webp";
-          return <Dragon key={dragon.id} src={imageSrc} onClick={() => onClick(imageSrc)} />;
-        })
-      ) : (
-        <p>No dragons found.</p>
-      )}
-    </div>
-  );
-};
+const ListContainer: React.FC<{ filters: Record<string, number>; onClick: (name: string) => void }> = ({ filters, onClick }) => {
+    const [dragons, setDragons] = useState<DragonData[]>([]);
+    const [error, setError] = useState<string | null>(null);
+  
+    useEffect(() => {
+      const fetchDragons = async () => {
+        try {
+          const response = await axios.get("http://localhost:5000/dragons");
+          let filteredDragons = response.data;
+  
+          const includeElements = Object.keys(filters).filter((key) => filters[key] === 1);
+          const excludeElements = Object.keys(filters).filter((key) => filters[key] === 2);
+  
+          if (includeElements.length > 0) {
+            filteredDragons = filteredDragons.filter((dragon: DragonData) =>
+              includeElements.every((element) => dragon.elements.includes(element))
+            );
+          }
+  
+          if (excludeElements.length > 0) {
+            filteredDragons = filteredDragons.filter((dragon: DragonData) =>
+              excludeElements.every((element) => !dragon.elements.includes(element))
+            );
+          }
+  
+          setDragons(filteredDragons);
+        } catch (err) {
+          setError("Error fetching dragons");
+          console.error(err);
+        }
+      };
+  
+      fetchDragons();
+    }, [filters]);
+  
+    if (error) return <div>{error}</div>;
+  
+    return (
+      <div className="list-container">
+        {dragons.length > 0 ? (
+          dragons.map((dragon) => {
+            const imageSrc = imageMap[dragon.name] || "/images/default.webp";
+            return <Dragon key={dragon.id} src={imageSrc} onClick={() => onClick(imageSrc)} />;
+          })
+        ) : (
+          <p>No dragons found.</p>
+        )}
+      </div>
+    );
+  };
 
 export default ListContainer;

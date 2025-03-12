@@ -11,20 +11,20 @@ import IconMetal from './images/Icon_Metal.webp';
 import IconLight from './images/Icon_Light.webp';
 import IconDark from './images/Icon_Dark.webp';
 
-const FilterContainer: React.FC<{ onFilter: (name: string) => void }> = ({ onFilter }) => {
+const FilterContainer: React.FC<{ onToggle: (name: string, state: number) => void }> = ({ onToggle }) => {
   return (
     <div className="container">
       <div className="filter-box">
-        <FilterButton src={IconFire} name="Fire" onClick={onFilter} />
-        <FilterButton src={IconPlant} name="Plant" onClick={onFilter} />
-        <FilterButton src={IconEarth} name="Earth" onClick={onFilter} />
-        <FilterButton src={IconCold} name="Cold" onClick={onFilter} />
-        <FilterButton src={IconAir} name="Air" onClick={onFilter} />
-        <FilterButton src={IconLightning} name="Lightning" onClick={onFilter} />
-        <FilterButton src={IconWater} name="Water" onClick={onFilter} />
-        <FilterButton src={IconMetal} name="Metal" onClick={onFilter} />
-        <FilterButton src={IconLight} name="Light" onClick={onFilter} />
-        <FilterButton src={IconDark} name="Dark" onClick={onFilter} />
+        <FilterButton src={IconFire} name="Fire" onToggle={onToggle} />
+        <FilterButton src={IconPlant} name="Plant" onToggle={onToggle} />
+        <FilterButton src={IconEarth} name="Earth" onToggle={onToggle} />
+        <FilterButton src={IconCold} name="Cold" onToggle={onToggle} />
+        <FilterButton src={IconAir} name="Air" onToggle={onToggle} />
+        <FilterButton src={IconLightning} name="Lightning" onToggle={onToggle} />
+        <FilterButton src={IconWater} name="Water" onToggle={onToggle} />
+        <FilterButton src={IconMetal} name="Metal" onToggle={onToggle} />
+        <FilterButton src={IconLight} name="Light" onToggle={onToggle} />
+        <FilterButton src={IconDark} name="Dark" onToggle={onToggle} />
       </div>
     </div>
   );
