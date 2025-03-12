@@ -3,13 +3,13 @@ import FilterButton from "./FilterButton";
 import IconFire from './images/Icon_Fire.webp';
 import IconPlant from './images/Icon_Plant.webp';
 
-const FilterContainer: React.FC = () => {
+const FilterContainer: React.FC<{ onFilter: (name: string) => void }> = ({ onFilter }) => {
   return (
     <div className="container">
-        <div className="filter-box">
-            <FilterButton src={IconFire} name={"Fire"} ></FilterButton>
-            <FilterButton src={IconPlant} name={"Plant"} ></FilterButton>
-        </div>
+      <div className="filter-box">
+        <FilterButton src={IconFire} name="Fire" onClick={onFilter} />
+        <FilterButton src={IconPlant} name="Plant" onClick={onFilter} />
+      </div>
     </div>
   );
 };

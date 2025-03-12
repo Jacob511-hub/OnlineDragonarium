@@ -12,7 +12,7 @@ import Dark from './images/Dark.webp';
 import axios from "axios";
 import Dragon from "./Dragon";
 
-interface Data {
+interface DragonData {
   id: number;
   name: string;
 }
@@ -30,34 +30,40 @@ const imageMap: { [key: string]: string } = {
     Dark: Dark,
 };
 
-const ListContainer: React.FC<{ onSelect: (src: string) => void }> = ({ onSelect }) => {
-    const [data, setData] = useState<Data[]>([]);
-    const [error, setError] = useState<string | null>(null);
-  
-    useEffect(() => {
-      axios
-        .get("http://localhost:5000/dragons")
-        .then((response) => {
-          setData(response.data);
+const ListContainer: React.FC<{ filter: string | null; onClick: (name: string) => void }> = ({ filter, onClick }) => {
+  const [dragons, setDragons] = useState<DragonData[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDragons = async () => {
+      try {
+        const response = filter
+          ? await axios.get(`http://localhost:5000/dragons-by-element?elementName=${filter}`)
+          : await axios.get("http://localhost:5000/dragons");
+        setDragons(response.data);
+      } catch (err) {
+        setError("Error fetching dragons");
+        console.error(err);
+      }
+    };
+
+    fetchDragons();
+  }, [filter]);
+
+  if (error) return <div>{error}</div>;
+
+  return (
+    <div className="list-container">
+      {dragons.length > 0 ? (
+        dragons.map((dragon) => {
+          const imageSrc = imageMap[dragon.name] || "/images/default.webp";
+          return <Dragon key={dragon.id} src={imageSrc} onClick={() => onClick(imageSrc)} />;
         })
-        .catch((err) => {
-          setError("Error fetching data");
-          console.error(err);
-        });
-    }, []);
-  
-    if (error) {
-      return <div>{error}</div>;
-    }
-  
-    return (
-      <div className="list-container">
-        {data.map((item) => {
-          const imageSrc = imageMap[item.name];
-          return <Dragon key={item.id} src={imageSrc} onClick={() => onSelect(imageSrc)} />;
-        })}
-      </div>
-    );
-  };
+      ) : (
+        <p>No dragons found.</p>
+      )}
+    </div>
+  );
+};
 
 export default ListContainer;

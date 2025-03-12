@@ -11,11 +11,16 @@ const useSelectedDragon = (initialSrc: string) => {
 };
 
 const App: React.FC = () => {
-    const { selectedDragon, setSelectedDragon } = useSelectedDragon(Fire);
+  const { selectedDragon, setSelectedDragon } = useSelectedDragon(Fire);
+  const [filter, setFilter] = useState<string | null>(null);
+
+  const handleFilter = (name: string) => {
+    setFilter(name);
+  };
   return (
     <div className="app">
-        <FilterContainer />
-        <ListContainer onSelect={setSelectedDragon} />
+        <FilterContainer onFilter={handleFilter} />
+        <ListContainer filter={filter} onClick={setSelectedDragon}/>
         <InfoContainer selectedSrc={selectedDragon} />
     </div>
   );
