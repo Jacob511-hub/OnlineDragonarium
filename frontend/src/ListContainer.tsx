@@ -9,6 +9,7 @@ import Cold from './images/Cold.webp';
 import Water from './images/Water.webp';
 import Light from './images/Light.webp';
 import Dark from './images/Dark.webp';
+import Poison from './images/Poison.webp';
 import axios from "axios";
 import Dragon from "./Dragon";
 
@@ -29,6 +30,7 @@ const imageMap: { [key: string]: string } = {
     Water: Water,
     Light: Light,
     Dark: Dark,
+    Poison: Poison,
 };
 
 const ListContainer: React.FC<{ filters: Record<string, number>; onClick: (name: string) => void }> = ({ filters, onClick }) => {
