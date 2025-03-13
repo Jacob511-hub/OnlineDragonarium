@@ -70,6 +70,7 @@ body {
     margin-top: 0px;
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .dragon-display img {
@@ -78,6 +79,30 @@ body {
     object-fit: contain;
     box-sizing: border-box;
 }
+
+.elements-display {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    height: 15%;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .element-icon {
+    height: 100%;
+  }
+  
+  .element-icon img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
 
 .filter-box {
     display: flex;
