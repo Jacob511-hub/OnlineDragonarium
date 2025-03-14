@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import FilterContainer from "./FilterContainer";
 import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
+import bgImage from './images/bg-kairos.webp';
+
+document.body.style.backgroundImage = `url(${bgImage})`;
 
 const useSelectedDragon = (initialId: number | null) => {
   const [selectedDragonId, setSelectedDragonId] = useState<number | null>(initialId);
