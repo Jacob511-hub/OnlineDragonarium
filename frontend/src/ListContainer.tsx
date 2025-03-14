@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
+import useDragons from "./hooks/useDragons";
 import Fire from './images/Fire.webp';
 import Plant from './images/Plant.webp';
 import Lightning from './images/Lightning.webp';
@@ -10,9 +11,7 @@ import Water from './images/Water.webp';
 import Light from './images/Light.webp';
 import Dark from './images/Dark.webp';
 import Poison from './images/Poison.webp';
-import axios from "axios";
 import Dragon from "./Dragon";
-
 interface DragonData {
   id: number;
   name: string;
@@ -33,50 +32,27 @@ const imageMap: { [key: string]: string } = {
   Poison: Poison,
 };
 
-const ListContainer: React.FC<{ filters: Record<string, number>; onClick: (id: number) => void }> = ({
-  filters,
-  onClick,
-}) => {
-  const [dragons, setDragons] = useState<DragonData[]>([]);
-  const [error, setError] = useState<string | null>(null);
+const ListContainer: React.FC<{ filters: Record<string, number>; onClick: (id: number) => void }> = ({ filters, onClick }) => {
+  const { dragons, error } = useDragons();
 
-  useEffect(() => {
-    const fetchDragons = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/dragons");
-        let filteredDragons = response.data;
+  const filteredDragons = useMemo(() => {
+    if (!dragons.length) return [];
 
-        const includeElements = Object.keys(filters).filter((key) => filters[key] === 1);
-        const excludeElements = Object.keys(filters).filter((key) => filters[key] === 2);
+    const includeElements = Object.keys(filters).filter((key) => filters[key] === 1);
+    const excludeElements = Object.keys(filters).filter((key) => filters[key] === 2);
 
-        if (includeElements.length > 0) {
-          filteredDragons = filteredDragons.filter((dragon: DragonData) =>
-            includeElements.every((element) => dragon.elements.includes(element))
-          );
-        }
-
-        if (excludeElements.length > 0) {
-          filteredDragons = filteredDragons.filter((dragon: DragonData) =>
-            excludeElements.every((element) => !dragon.elements.includes(element))
-          );
-        }
-
-        setDragons(filteredDragons);
-      } catch (err) {
-        setError("Error fetching dragons");
-        console.error(err);
-      }
-    };
-
-    fetchDragons();
-  }, [filters]);
+    return dragons.filter((dragon: DragonData) =>
+      includeElements.every((element) => dragon.elements.includes(element)) &&
+      excludeElements.every((element) => !dragon.elements.includes(element))
+    );
+  }, [dragons, filters]);
 
   if (error) return <div>{error}</div>;
 
   return (
     <div className="list-container">
-      {dragons.length > 0 ? (
-        dragons.map((dragon) => (
+      {filteredDragons.length > 0 ? (
+        filteredDragons.map((dragon) => (
           <Dragon
             key={dragon.id}
             src={imageMap[dragon.name]}

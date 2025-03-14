@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Fire from "./images/Fire.webp";
 import FilterContainer from "./FilterContainer";
 import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
