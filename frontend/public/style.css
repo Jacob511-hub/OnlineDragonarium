@@ -45,7 +45,10 @@ body {
 }
 
 .dragon {
-    background-color: rgb(234, 234, 234);
+    background-image: url('/images/tile.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     height: 100px;
     width: 100px;
     overflow: hidden;
@@ -53,6 +56,12 @@ body {
     margin: 3px;
     padding: 5px;
     box-sizing: border-box;
+
+    transition: transform 0.1s ease;
+}
+
+.dragon:active {
+    transform: scale(0.9);
 }
 
 .dragon img {
@@ -63,14 +72,14 @@ body {
 }
 
 .dragon-display {
-    background-color: rgb(234, 234, 234);
-    width: 100%;
+    background-image: url('/images/tile.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 70%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    border-radius: 10px;
-    margin: 20px;
-    margin-top: 0px;
-    padding: 20px;
+    padding: calc(5%);
     box-sizing: border-box;
     position: relative;
 }
@@ -84,26 +93,23 @@ body {
 
 .elements-display {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: calc(10%);
+    left: calc(10%);
     display: flex;
-    gap: 5px;
+    gap: calc(5%);
     height: 15%;
     align-items: center;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
+}
 
-  .element-icon {
+.element-icon {
     height: 100%;
-  }
-  
-  .element-icon img {
+}
+
+.element-icon img {
     height: 100%;
     width: auto;
     object-fit: contain;
-  }
+}
 
 .filter-box {
     display: flex;
