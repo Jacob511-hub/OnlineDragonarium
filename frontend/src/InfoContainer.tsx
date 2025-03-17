@@ -12,6 +12,9 @@ import Water from './images/Water.webp';
 import Light from './images/Light.webp';
 import Dark from './images/Dark.webp';
 import Poison from './images/Poison.webp';
+import Tree from './images/Tree.webp';
+import Lava from './images/Lava.webp';
+import Storm from './images/Storm.webp';
 
 const imageMap: { [key: string]: string } = {
     Fire: Fire,
@@ -25,6 +28,9 @@ const imageMap: { [key: string]: string } = {
     Light: Light,
     Dark: Dark,
     Poison: Poison,
+    Tree: Tree,
+    Lava: Lava,
+    Storm: Storm,
 };
 
 const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selectedDragonId }) => {

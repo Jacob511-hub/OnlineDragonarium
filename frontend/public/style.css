@@ -134,6 +134,7 @@ body {
     border-style: solid;
     border-radius: 10px;
     margin: 5px;
+    user-select: none;
 }
 
 .filter-button img {
