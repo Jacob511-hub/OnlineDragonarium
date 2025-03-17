@@ -1,20 +1,9 @@
 import express from 'express';
-import { Pool } from 'pg';
+import pool from './pool';
 import cors from 'cors';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const app = express();
 const port = 5000;
-
-const pool = new Pool({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASSWORD,
-  port: Number(process.env.PG_PORT),
-});
 
 app.use(cors());
 

@@ -18,7 +18,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({ src, name, onToggle }) => {
     const getColor = () => {
       if (state === 1) return "green";
       if (state === 2) return "rgb(172, 0, 0)";
-      return "rgb(104, 104, 104)";
+      return "rgb(139, 139, 139)";
     };
 
     return (

@@ -19,7 +19,7 @@ body {
 .container {
     display: flex;
     flex: 1;
-    background-color: rgba(190, 190, 190, 0.486);
+    background-color: rgba(47, 47, 47, 0.486);
     height: 100%;
     width: auto;
     padding: 2rem;
@@ -34,7 +34,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-content: flex-start;
-    background-color: rgb(190, 190, 190, 0.486);
+    background-color: rgba(47, 47, 47, 0.486);
     height: 100%;
     width: 40%;
     padding: 2rem;
@@ -129,7 +129,9 @@ body {
     display: flex;
     align-items: center;
     width: 45%;
-    background-color: rgb(104, 104, 104);
+    background-color: rgb(139, 139, 139);
+    border: black;
+    border-style: solid;
     border-radius: 10px;
     margin: 5px;
 }
