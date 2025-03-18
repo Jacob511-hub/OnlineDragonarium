@@ -1,10 +1,15 @@
 import express from 'express';
 import pool from './pool';
 import cors from 'cors';
-const bcrypt = require("bcryptjs");
+import sessionConfig from "./session-config";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const port = 5000;
+
+const bcrypt = require("bcryptjs");
 
 app.use(cors());
 app.use(express.json());
@@ -44,6 +49,8 @@ app.get("/dragons", async (req, res) => {
   }
 });
 
+app.use(sessionConfig);
+
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -74,7 +81,6 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Route to login a user
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -82,20 +88,42 @@ app.post("/login", async (req, res) => {
     // Check if user exists
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (user.rows.length === 0) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "This account does not exist" });
     }
 
     // Compare hashed password
     const isMatch = await bcrypt.compare(password, user.rows[0].password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Incorrect password" });
     }
+
+    // Save to session
+    req.session.user = {
+      id: user.rows[0].id,
+      username: user.rows[0].username,
+      email: user.rows[0].email,
+    };
 
     res.status(200).json({ message: "Login successful", user: user.rows[0].username });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
+});
+
+app.get("/profile", (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "Unauthorized: Not logged in" });
+  }
+
+  res.status(200).json({ message: "Profile loaded", user: req.session.user });
+});
+
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) return res.status(500).json({ message: "Error logging out" });
+    res.status(200).json({ message: "Logged out successfully" });
+  });
 });
 
 app.listen(port, () => {
