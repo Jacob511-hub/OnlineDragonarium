@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -11,7 +11,7 @@ const LogoutButton: React.FC = () => {
     useEffect(() => {
         const checkSession = async () => {
             try {
-                const res = await axios.get(`${API_BASE_URL}/profile`);
+                const res = await axios.get(`${API_BASE_URL}/profile`, { withCredentials: true });
                 if (res.data.user) setIsLoggedIn(true);
             } catch (err) {
                 setIsLoggedIn(false);
@@ -21,14 +21,13 @@ const LogoutButton: React.FC = () => {
         }, []);
     
         const handleLogout = async () => {
-            await axios.post(`${API_BASE_URL}/logout`);
+            await axios.post(`${API_BASE_URL}/logout`, {}, { withCredentials: true });
             setIsLoggedIn(false);
             navigate("/login");
         };
 
     return (
-        <div className="app">
-            <h1>Welcome to the App</h1>
+        <div className="logout-button">
             {isLoggedIn ? (
                 <button onClick={handleLogout}>Logout</button>
             ) : (

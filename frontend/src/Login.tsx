@@ -11,7 +11,7 @@ const Login: React.FC = () => {
   
     const handleLogin = async () => {
       try {
-        const res = await axios.post(`${API_BASE_URL}/login`, { email, password });
+        const res = await axios.post(`${API_BASE_URL}/login`, { email, password }, { withCredentials: true });
         alert(res.data.message);
         navigate("/app");
       } catch (err) {

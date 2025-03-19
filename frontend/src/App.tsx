@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FilterContainer from "./FilterContainer";
 import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
+import LogoutButton from "./LogoutButton";
 import bgImage from './images/bg-kairos.webp';
 
 document.body.style.backgroundImage = `url(${bgImage})`;
@@ -24,7 +25,7 @@ const App: React.FC = () => {
       <FilterContainer onToggle={handleToggle} />
       <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
       <InfoContainer selectedDragonId={selectedDragonId} />
-      {/* <LogoutButton /> */}
+      <LogoutButton />
     </div>
   );
 };

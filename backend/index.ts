@@ -11,7 +11,12 @@ const port = 5000;
 
 const bcrypt = require("bcryptjs");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.REACT_APP_FRONTEND_URL,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.get("/dragons", async (req, res) => {

@@ -11,6 +11,7 @@ const sessionConfig = session({
     secure: process.env.NODE_ENV === "production", // Only secure in production
     httpOnly: true, // Prevents client-side JS from accessing cookies
     maxAge: 1000 * 60 * 60 * 24, // 1 day
+    sameSite: 'Lax'
   },
 });
 
