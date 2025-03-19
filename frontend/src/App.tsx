@@ -24,8 +24,10 @@ const App: React.FC = () => {
       <FilterContainer onToggle={handleToggle} />
       <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
       <InfoContainer selectedDragonId={selectedDragonId} />
+      {/* <LogoutButton /> */}
     </div>
   );
 };
 
 export default App;
+

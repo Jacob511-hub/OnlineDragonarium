@@ -55,6 +55,11 @@ app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
+    // Check for empty fields
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "Username, email, and password are required" });
+    }
+    
     // Check if user already exists
     const userExists = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (userExists.rows.length > 0) {
