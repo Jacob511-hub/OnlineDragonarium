@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+import useLogin from "./hooks/useLogin";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
   
-    const handleLogin = async () => {
-      try {
-        const res = await axios.post(`${API_BASE_URL}/login`, { email, password }, { withCredentials: true });
-        alert(res.data.message);
-        navigate("/app");
-      } catch (err) {
-        alert("Login failed");
-      }
-    };
+    const { handleLogin } = useLogin(email, password);
   
     return (
         <div className="app">
