@@ -18,8 +18,8 @@ const Register: React.FC = () => {
                 <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button onClick={handleRegister}>Register</button>
-                <button onClick={() => navigate("/login")}>Back to Login</button>
+                <button onClick={handleRegister} style={{ cursor: "pointer" }}>Register</button>
+                <button onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>Back to Login</button>
             </div>
         </div>
     );

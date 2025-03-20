@@ -15,9 +15,9 @@ const Login: React.FC = () => {
                     <h2>Login</h2>
                     <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    <button onClick={handleLogin}>Login</button>
-                    <button onClick={() => navigate("/register")}>Create Account</button>
-                    <button onClick={() => navigate("/app")}>Continue without logging in</button>
+                    <button onClick={handleLogin} style={{ cursor: "pointer" }}>Login</button>
+                    <button onClick={() => navigate("/register")} style={{ cursor: "pointer" }}>Create Account</button>
+                    <button onClick={() => navigate("/app")} style={{ cursor: "pointer" }}>Continue without logging in</button>
             </div>
         </div>
     );
