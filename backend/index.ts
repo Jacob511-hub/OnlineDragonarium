@@ -98,13 +98,13 @@ app.post("/login", async (req, res) => {
     // Check if user exists
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (user.rows.length === 0) {
-      return res.status(400).json({ message: "This account does not exist" });
+      return res.status(400).json({ message: "Invalid email/password" });
     }
 
     // Compare hashed password
     const isMatch = await bcrypt.compare(password, user.rows[0].password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Incorrect password" });
+      return res.status(400).json({ message: "Invalid email/password" });
     }
 
     // Save to session
@@ -123,7 +123,7 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", (req, res) => {
   if (!req.session.user) {
-    return res.status(401).json({ message: "Unauthorized: Not logged in" });
+    return res.status(200).json({ message: "Not logged in" });
   }
 
   res.status(200).json({ message: "Profile loaded", user: req.session.user });
