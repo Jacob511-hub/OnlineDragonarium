@@ -1,6 +1,7 @@
 import React from "react";
 import useDragons from "./hooks/useDragons";
 import DragonDisplay from "./DragonDisplay";
+import DragonCount from "./DragonCount";
 import Fire from './images/Fire.webp';
 import Plant from './images/Plant.webp';
 import Lightning from './images/Lightning.webp';
@@ -48,6 +49,8 @@ const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selected
   return (
     <div className="container">
       <DragonDisplay src={imageMap[displayDragon.name] || imageMap['Fire']} elements={displayDragon.elements} />
+      <h1>{displayDragon.name}</h1>
+      <DragonCount />
     </div>
   );
 };

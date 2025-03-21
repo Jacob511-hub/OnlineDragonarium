@@ -19,13 +19,15 @@ body {
 .container {
     display: flex;
     flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
     background-color: rgba(47, 47, 47, 0.486);
     height: 100%;
     width: auto;
     padding: 2rem;
     border-radius: 10px;
-    justify-content: center;
-    align-items: flex-start;
     box-sizing: border-box;
 }
 
@@ -42,6 +44,23 @@ body {
     border-radius: 10px;
     text-align: center;
     box-sizing: border-box;
+}
+
+.count-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: white;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    margin: 0;
 }
 
 .dragon {
