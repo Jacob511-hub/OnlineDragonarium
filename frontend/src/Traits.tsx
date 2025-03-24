@@ -1,6 +1,8 @@
 import React from "react";
 
-const Traits: React.FC = () => {
+const Traits: React.FC<{ can_be_traited: boolean }> = ({ can_be_traited }) => {
+    if (!can_be_traited) return null;
+
     return (
         <div className="traits-container">
             <img src={'/images/traits/plant-off.png'} />
