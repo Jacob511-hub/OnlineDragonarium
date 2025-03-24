@@ -90,12 +90,12 @@ VALUES
     (8, 'Metal'),
     (9, 'Light'),
     (10, 'Dark');
-
+    
 CREATE TABLE user_traits (
     user_id INTEGER NOT NULL,
     dragon_id INTEGER NOT NULL,
     trait_id INTEGER NOT NULL,
-    PRIMARY KEY (user_id, dragon_id),
+    PRIMARY KEY (user_id, dragon_id, trait_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) 
         REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_dragon FOREIGN KEY (dragon_id) 

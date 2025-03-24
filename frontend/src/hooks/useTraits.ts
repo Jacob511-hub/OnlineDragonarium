@@ -8,7 +8,7 @@ interface Trait {
     name: string;
 }
 
-export const useTraits = () => {
+const useTraits = () => {
     const [traits, setTraits] = useState<Trait[]>([]);
     const [error, setError] = useState<string | null>(null);
   

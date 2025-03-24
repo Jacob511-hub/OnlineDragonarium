@@ -146,6 +146,71 @@ app.post("/logout", (req, res) => {
   });
 });
 
+app.get('/user-traits', async (req, res) => {
+  try {
+    // Query to get all user traits from the table
+    const result = await pool.query(`
+      SELECT user_id, dragon_id, trait_id, unlocked
+      FROM user_traits
+    `);
+
+    // Send the result as a JSON response
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error fetching user traits:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Route 2: POST route to insert a new user trait
+app.post('/user-traits', async (req, res) => {
+  const { user_id, dragon_id, trait_id, unlocked } = req.body;
+
+  // Check if all required fields are provided
+  if (!user_id || !dragon_id || !trait_id || unlocked === undefined) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    // Query to insert the new record into the user_traits table
+    const result = await pool.query(`
+      INSERT INTO user_traits (user_id, dragon_id, trait_id, unlocked)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+    `, [user_id, dragon_id, trait_id, unlocked]);
+
+    // Send the created record as a JSON response
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Error inserting user trait:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.patch('/user-traits', async (req, res) => {
+  const { user_id, dragon_id, trait_id, unlocked } = req.body;
+
+  try {
+      const query = `
+          UPDATE user_traits 
+          SET unlocked = $1 
+          WHERE user_id = $2 AND dragon_id = $3 AND trait_id = $4
+          RETURNING *;
+      `;
+
+      const result = await pool.query(query, [unlocked, user_id, dragon_id, trait_id]);
+
+      if (result.rowCount === 0) {
+          return res.status(404).json({ error: "Trait entry not found" });
+      }
+
+      res.status(200).json(result.rows[0]);
+  } catch (err) {
+      console.error('Error updating trait state:', err);
+      res.status(500).json({ error: 'Server error' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

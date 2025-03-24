@@ -1,14 +1,15 @@
 import React from "react";
 import TraitToggle from "./TraitToggle";
 
-const Traits: React.FC<{ can_be_traited: boolean }> = ({ can_be_traited }) => {
+const Traits: React.FC<{ can_be_traited: boolean, user_id: number, dragon_id: number }> = ({ can_be_traited, user_id, dragon_id }) => {
     if (!can_be_traited) return null;
+
     const traits = ['plant', 'fire', 'earth', 'cold', 'lightning', 'water', 'air', 'metal', 'light', 'dark'];
 
     return (
         <div className="traits-container">
-            {traits.map((trait) => (
-                <TraitToggle key={trait} trait={trait} />
+            {traits.map((trait, index) => (
+                <TraitToggle key={index} trait={trait} user_id={user_id} dragon_id={dragon_id} />
             ))}
         </div>
     );
