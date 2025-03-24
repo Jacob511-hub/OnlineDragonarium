@@ -54,6 +54,16 @@ app.get("/dragons", async (req, res) => {
   }
 });
 
+app.get('/traits', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM traits');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching traits:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.use(sessionConfig);
 
 app.post("/register", async (req, res) => {

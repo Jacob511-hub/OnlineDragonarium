@@ -8,7 +8,7 @@ interface DragonData {
     name: string;
     can_be_traited: boolean;
     elements: string[];
-  }
+}
 
 const useDragons = () => {
   const [dragons, setDragons] = useState<DragonData[]>([]);
