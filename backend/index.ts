@@ -117,6 +117,21 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid email/password" });
     }
 
+    const dragonsResult = await pool.query('SELECT id FROM dragons WHERE can_be_traited = true');
+    const dragonIds = dragonsResult.rows.map(row => row.id);
+    const traitIds = Array.from({ length: 10 }, (_, i) => i + 1);
+
+    for (const dragonId of dragonIds) {
+      for (const traitId of traitIds) {
+        await pool.query(
+          `INSERT INTO user_traits (user_id, dragon_id, trait_id, unlocked)
+           VALUES ($1, $2, $3, $4)
+           ON CONFLICT (user_id, dragon_id, trait_id) DO NOTHING`,
+          [user.rows[0].id, dragonId, traitId, false]
+        );
+      }
+    }
+
     // Save to session
     req.session.user = {
       id: user.rows[0].id,
