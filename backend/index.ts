@@ -161,6 +161,14 @@ app.post("/logout", (req, res) => {
   });
 });
 
+app.get("/current-user", (req, res) => {
+  if (req.session.user) {
+      res.json({ user_id: req.session.user.id });
+  } else {
+      res.status(401).json({ message: "Not logged in" });
+  }
+});
+
 app.get("/user-traits", async (req, res) => {
   const { user_id, dragon_id, trait_id } = req.query;
 
@@ -181,7 +189,6 @@ app.get("/user-traits", async (req, res) => {
   }
 });
 
-// Route 2: POST route to insert a new user trait
 app.post('/user-traits', async (req, res) => {
   const { user_id, dragon_id, trait_id, unlocked } = req.body;
 

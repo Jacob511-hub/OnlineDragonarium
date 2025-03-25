@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useTraits from './hooks/useTraits';
+import useCurrentUser from "./hooks/useCurrentUser";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const TraitToggle: React.FC<{ trait: string, user_id: number, dragon_id: number }> = ({ trait, user_id, dragon_id }) => {
+const TraitToggle: React.FC<{ trait: string, dragon_id: number }> = ({ trait, dragon_id }) => {
+    const user_id = useCurrentUser();
     const [isOn, setIsOn] = useState<boolean | null>(null);
     const { traits, error } = useTraits();
 
