@@ -165,7 +165,7 @@ app.get("/current-user", (req, res) => {
   if (req.session.user) {
       res.json({ user_id: req.session.user.id });
   } else {
-      res.status(401).json({ message: "Not logged in" });
+    res.status(200).json({ user_id: "guest" });
   }
 });
 
