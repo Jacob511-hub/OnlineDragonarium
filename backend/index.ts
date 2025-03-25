@@ -161,19 +161,23 @@ app.post("/logout", (req, res) => {
   });
 });
 
-app.get('/user-traits', async (req, res) => {
-  try {
-    // Query to get all user traits from the table
-    const result = await pool.query(`
-      SELECT user_id, dragon_id, trait_id, unlocked
-      FROM user_traits
-    `);
+app.get("/user-traits", async (req, res) => {
+  const { user_id, dragon_id, trait_id } = req.query;
 
-    // Send the result as a JSON response
-    res.status(200).json(result.rows);
+  try {
+    const result = await pool.query(
+      `SELECT * FROM user_traits WHERE user_id = $1 AND dragon_id = $2 AND trait_id = $3`,
+      [user_id, dragon_id, trait_id]
+    );
+
+    if (result.rows.length > 0) {
+      res.json(result.rows); // Return the trait data for this user, dragon, and trait
+    } else {
+      res.status(404).json({ message: "Trait not found" });
+    }
   } catch (err) {
-    console.error('Error fetching user traits:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Error fetching user trait:', err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

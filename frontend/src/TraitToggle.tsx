@@ -21,7 +21,7 @@ const TraitToggle: React.FC<{ trait: string, user_id: number, dragon_id: number 
                 });
 
                 if (response.data && response.data.length > 0) {
-                    setIsOn(response.data[0].unlocked);
+                    setIsOn(response.data[0].unlocked === true || response.data[0].unlocked === "true");
                 } else {
                     // If no entry exists, create one with "unlocked: false"
                     await axios.post(`${API_BASE_URL}/user-traits`, {
@@ -42,7 +42,7 @@ const TraitToggle: React.FC<{ trait: string, user_id: number, dragon_id: number 
 
     // Return early if trait_id isn't found or if there's an error
     if (error) return <div>Error: {error}</div>;
-    if (trait_id === null) return <div>Trait ID not found</div>;
+    if (trait_id === null) return null;
 
     // Handle toggle click to update state and backend
     const handleClick = async () => {
