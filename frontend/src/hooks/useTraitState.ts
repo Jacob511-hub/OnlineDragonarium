@@ -9,35 +9,54 @@ interface UseTraitStateProps {
   trait_id: number | null;
 }
 
+interface TraitStateHandler {
+  get: () => Promise<boolean>;
+  set: (newState: boolean) => Promise<void>;
+}
+
+const createAPIHandler = ({ user_id, dragon_id, trait_id }: UseTraitStateProps): TraitStateHandler => ({
+  get: async () => {
+    const response = await axios.get(`${API_BASE_URL}/user-traits`, {
+      params: { user_id, dragon_id, trait_id },
+    });
+    return response.data?.[0]?.unlocked === true || response.data?.[0]?.unlocked === "true";
+  },
+  set: async (newState: boolean) => {
+    await axios.patch(
+      `${API_BASE_URL}/user-traits`,
+      { user_id, dragon_id, trait_id, unlocked: newState },
+      { withCredentials: true }
+    );
+  },
+});
+
+const createLocalStorageHandler = ({ user_id, dragon_id, trait_id }: UseTraitStateProps): TraitStateHandler => {
+  const storageKey = `trait_${user_id}_${dragon_id}_${trait_id}`;
+
+  return {
+    get: async () => {
+      const storedValue = localStorage.getItem(storageKey);
+      return storedValue === "true";
+    },
+    set: async (newState: boolean) => {
+      localStorage.setItem(storageKey, newState.toString());
+    },
+  };
+};
+
 const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => {
   const [isOn, setIsOn] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const handler = user_id === "guest" || trait_id === null
+    ? createLocalStorageHandler({ user_id, dragon_id, trait_id })
+    : createAPIHandler({ user_id, dragon_id, trait_id });
+
   useEffect(() => {
     const fetchTraitState = async () => {
-      if (trait_id === null) return;
-
       try {
-        const response = await axios.get(`${API_BASE_URL}/user-traits`, {
-          params: { user_id, dragon_id, trait_id },
-        });
-
-        if (response.data && response.data.length > 0) {
-          setIsOn(response.data[0].unlocked === true || response.data[0].unlocked === "true");
-        } else {
-          // If no entry exists, create one with "unlocked: false"
-          await axios.post(
-            `${API_BASE_URL}/user-traits`,
-            {
-              user_id,
-              dragon_id,
-              trait_id,
-              unlocked: false,
-            },
-            { withCredentials: true }
-          );
-          setIsOn(false);
-        }
+        const state = await handler.get();
+        setIsOn(state);
       } catch (err) {
         setError("Error fetching trait state");
         console.error('Error fetching trait state:', err);
@@ -54,16 +73,7 @@ const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => 
     setIsOn(newState);
 
     try {
-      await axios.patch(
-        `${API_BASE_URL}/user-traits`,
-        {
-          user_id,
-          dragon_id,
-          trait_id,
-          unlocked: newState,
-        },
-        { withCredentials: true }
-      );
+      await handler.set(newState);
     } catch (err) {
       setIsOn(!newState); // Revert state if update fails
       console.error('Error updating trait state:', err);
