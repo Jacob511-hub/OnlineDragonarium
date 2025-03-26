@@ -28,4 +28,4 @@ const loginUser = async (email, password, pool, bcrypt, session) => {
     }
   };
   
-  module.exports = { loginUser };
+  export { loginUser };
