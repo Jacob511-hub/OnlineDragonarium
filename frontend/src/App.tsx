@@ -4,6 +4,7 @@ import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
 import LogoutButton from "./LogoutButton";
 import bgImage from './images/bg-kairos.webp';
+import useInitializeTraits from "./hooks/useInitializeTraits";
 
 document.body.style.backgroundImage = `url(${bgImage})`;
 
@@ -13,6 +14,7 @@ const useSelectedDragon = (initialId: number | null) => {
 };
 
 const App: React.FC = () => {
+  useInitializeTraits();
   const { selectedDragonId, setSelectedDragonId } = useSelectedDragon(null);
   const [filters, setFilters] = useState<Record<string, number>>({});
 
