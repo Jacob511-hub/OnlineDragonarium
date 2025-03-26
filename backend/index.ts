@@ -3,6 +3,7 @@ import pool from './pool';
 import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
+const { loginUser } = require("./auth-service");
 
 dotenv.config();
 
@@ -103,32 +104,8 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
-  try {
-    // Check if user exists
-    const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
-    if (user.rows.length === 0) {
-      return res.status(400).json({ message: "Invalid email/password" });
-    }
-
-    // Compare hashed password
-    const isMatch = await bcrypt.compare(password, user.rows[0].password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email/password" });
-    }
-
-    // Save to session
-    req.session.user = {
-      id: user.rows[0].id,
-      username: user.rows[0].username,
-      email: user.rows[0].email,
-    };
-
-    res.status(200).json({ message: "Login successful", user: user.rows[0].username });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
+  const result = await loginUser(email, password, pool, bcrypt, req.session);
+  res.status(result.status).json(result.json);
 });
 
 app.get("/profile", (req, res) => {
