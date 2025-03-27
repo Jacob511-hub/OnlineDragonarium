@@ -17,9 +17,12 @@ interface MockSession {
 const mockSession: MockSession = {};
 
 describe("loginUser", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
   it("should return 400 if the user does not exist", async () => {
     mockPool.query.mockResolvedValueOnce({ rows: [] });
@@ -60,6 +63,9 @@ describe("loginUser", () => {
 });
 
 describe("registerUser", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
     afterEach(() => {
       jest.clearAllMocks();
     });
@@ -85,8 +91,9 @@ describe("registerUser", () => {
       });
     
       it("should return 201 and register a user successfully", async () => {
-        (mockPool.query as jest.Mock).mockResolvedValueOnce({ rows: [] }); // No existing user
-        (mockPool.query as jest.Mock).mockResolvedValueOnce({ rows: [{ id: 1, username: "testuser", email: "test@example.com" }] });
+        (mockPool.query as jest.Mock)
+            .mockResolvedValueOnce({ rows: [] }) // First call (checking if user exists)
+            .mockResolvedValueOnce({ rows: [{ id: 1, username: "testuser", email: "test@example.com" }] });
         jest.spyOn(bcrypt, "genSalt").mockResolvedValue("fakeSalt");
         jest.spyOn(bcrypt, "hash").mockResolvedValue("hashedPassword");
         

@@ -4,6 +4,7 @@ import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 const { loginUser, registerUser } = require("./auth-service");
+const { initializeTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -103,32 +104,13 @@ app.get("/current-user", (req, res) => {
 });
 
 app.post("/initialize-traits", async (req, res) => {
-  try {
-    const userId = req.session.user ? req.session.user.id : null;
-    const dragonsResult = await pool.query('SELECT id FROM dragons WHERE can_be_traited = true');
-    const dragonIds = dragonsResult.rows.map(row => row.id);
-    const traitIds = Array.from({ length: 10 }, (_, i) => i + 1);
+  const userId = req.session.user ? req.session.user.id : null;
+  const dragonsResult = await pool.query('SELECT id FROM dragons WHERE can_be_traited = true');
+  const dragonIds = dragonsResult.rows.map(row => row.id);
+  const traitIds = Array.from({ length: 10 }, (_, i) => i + 1);
 
-    for (const dragonId of dragonIds) {
-      for (const traitId of traitIds) {
-        if (userId) {
-          await pool.query(
-            `INSERT INTO user_traits (user_id, dragon_id, trait_id, unlocked)
-             VALUES ($1, $2, $3, $4)
-             ON CONFLICT (user_id, dragon_id, trait_id) DO NOTHING`,
-            [userId, dragonId, traitId, false]
-          );
-        } else {
-          continue;
-        }
-      }
-    }
-
-    res.status(200).json({ message: "Traits initialized successfully" });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
+  const result = await initializeTraits(userId, dragonIds, traitIds, pool);
+  res.status(result.status).json(result.json);
 });
 
 app.get("/user-traits", async (req, res) => {
