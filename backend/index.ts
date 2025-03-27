@@ -3,7 +3,7 @@ import pool from './pool';
 import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
-const { loginUser } = require("./auth-service");
+const { loginUser, registerUser } = require("./auth-service");
 
 dotenv.config();
 
@@ -69,37 +69,8 @@ app.use(sessionConfig);
 
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
-
-  try {
-    // Check for empty fields
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: "Username, email, and password are required" });
-    }
-    
-    // Check if user already exists
-    const userExists = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
-    if (userExists.rows.length > 0) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-
-    // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Insert new user into database
-    const newUser = await pool.query(
-      "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
-      [username, email, hashedPassword]
-    );
-
-    res.status(201).json({
-      message: "User registered successfully",
-      user: { id: newUser.rows[0].id, username: newUser.rows[0].username, email: newUser.rows[0].email },
-    });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
+  const result = await registerUser(username, email, password, pool, bcrypt);
+  res.status(result.status).json(result.json);
 });
 
 app.post("/login", async (req, res) => {

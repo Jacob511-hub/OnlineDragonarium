@@ -3,9 +3,9 @@ import type { Config } from 'jest';
 const config: Config = {
   clearMocks: true,
   coverageProvider: "v8",
-  preset: 'ts-jest',  // Add this line
+  preset: 'ts-jest',
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',  // Add this line for TypeScript files
+    '^.+\\.tsx?$': 'ts-jest',
   },
 };
 

@@ -1,4 +1,4 @@
-import { loginUser } from "./auth-service";
+import { loginUser, registerUser } from "./auth-service";
 import bcrypt from "bcrypt";
 
 // Mock dependencies
@@ -57,4 +57,60 @@ describe("loginUser", () => {
     
     expect(result).toEqual({ status: 500, json: { message: "Server error" } });
   });
+});
+
+describe("registerUser", () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should return 400 if any field is missing", async () => {
+        const response = await registerUser("", "test@example.com", "password", mockPool, bcrypt);
+        expect(response).toEqual({
+          status: 400,
+          json: { message: "Username, email, and password are required" },
+        });
+      });
+    
+      it("should return 400 if the user already exists", async () => {
+        (mockPool.query as jest.Mock).mockResolvedValueOnce({ rows: [{}] });
+        
+        const response = await registerUser("testuser", "test@example.com", "password", mockPool, bcrypt);
+        
+        expect(response).toEqual({
+          status: 400,
+          json: { message: "User already exists" },
+        });
+        expect(mockPool.query).toHaveBeenCalledWith("SELECT * FROM users WHERE email = $1", ["test@example.com"]);
+      });
+    
+      it("should return 201 and register a user successfully", async () => {
+        (mockPool.query as jest.Mock).mockResolvedValueOnce({ rows: [] }); // No existing user
+        (mockPool.query as jest.Mock).mockResolvedValueOnce({ rows: [{ id: 1, username: "testuser", email: "test@example.com" }] });
+        jest.spyOn(bcrypt, "genSalt").mockResolvedValue("fakeSalt");
+        jest.spyOn(bcrypt, "hash").mockResolvedValue("hashedPassword");
+        
+        const response = await registerUser("testuser", "test@example.com", "password", mockPool, bcrypt);
+        
+        expect(response).toEqual({
+          status: 201,
+          json: {
+            message: "User registered successfully",
+            user: { id: 1, username: "testuser", email: "test@example.com" },
+          },
+        });
+        expect(mockPool.query).toHaveBeenCalledTimes(2);
+        expect(bcrypt.hash).toHaveBeenCalledWith("password", "fakeSalt");
+      });
+    
+      it("should return 500 on server error", async () => {
+        (mockPool.query as jest.Mock).mockRejectedValue(new Error("Database error"));
+        
+        const response = await registerUser("testuser", "test@example.com", "password", mockPool, bcrypt);
+        
+        expect(response).toEqual({
+          status: 500,
+          json: { message: "Server error" },
+        });
+      });
 });
