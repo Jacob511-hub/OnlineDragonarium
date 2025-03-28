@@ -19,6 +19,7 @@ const mockSession: MockSession = {};
 describe("loginUser", () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        jest.spyOn(console, "error").mockImplementation(() => {});
     });
     afterEach(() => {
         jest.clearAllMocks();
@@ -65,6 +66,7 @@ describe("loginUser", () => {
 describe("registerUser", () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        jest.spyOn(console, "error").mockImplementation(() => {});
     });
     afterEach(() => {
       jest.clearAllMocks();
@@ -76,21 +78,21 @@ describe("registerUser", () => {
           status: 400,
           json: { message: "Username, email, and password are required" },
         });
-      });
-    
-      it("should return 400 if the user already exists", async () => {
+    });
+
+    it("should return 400 if the user already exists", async () => {
         (mockPool.query as jest.Mock).mockResolvedValueOnce({ rows: [{}] });
         
         const response = await registerUser("testuser", "test@example.com", "password", mockPool, bcrypt);
         
         expect(response).toEqual({
-          status: 400,
-          json: { message: "User already exists" },
+            status: 400,
+            json: { message: "User already exists" },
         });
         expect(mockPool.query).toHaveBeenCalledWith("SELECT * FROM users WHERE email = $1", ["test@example.com"]);
-      });
-    
-      it("should return 201 and register a user successfully", async () => {
+    });
+
+    it("should return 201 and register a user successfully", async () => {
         (mockPool.query as jest.Mock)
             .mockResolvedValueOnce({ rows: [] }) // First call (checking if user exists)
             .mockResolvedValueOnce({ rows: [{ id: 1, username: "testuser", email: "test@example.com" }] });
@@ -100,24 +102,24 @@ describe("registerUser", () => {
         const response = await registerUser("testuser", "test@example.com", "password", mockPool, bcrypt);
         
         expect(response).toEqual({
-          status: 201,
-          json: {
+            status: 201,
+            json: {
             message: "User registered successfully",
             user: { id: 1, username: "testuser", email: "test@example.com" },
-          },
+            },
         });
         expect(mockPool.query).toHaveBeenCalledTimes(2);
         expect(bcrypt.hash).toHaveBeenCalledWith("password", "fakeSalt");
-      });
-    
-      it("should return 500 on server error", async () => {
+    });
+
+    it("should return 500 on server error", async () => {
         (mockPool.query as jest.Mock).mockRejectedValue(new Error("Database error"));
         
         const response = await registerUser("testuser", "test@example.com", "password", mockPool, bcrypt);
         
         expect(response).toEqual({
-          status: 500,
-          json: { message: "Server error" },
+            status: 500,
+            json: { message: "Server error" },
         });
-      });
+    });
 });
