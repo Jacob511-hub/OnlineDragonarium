@@ -85,6 +85,11 @@ app.post("/initialize-traits", async (req, res) => {
 
 app.get("/user-traits", async (req, res) => {
   const { user_id, dragon_id, trait_id } = req.query;
+  const userIdSession = req.session.user ? req.session.user.id : null;
+
+  if (!userIdSession || user_id !== String(userIdSession)) {
+    return res.status(403).json({ error: "Unauthorized access" });
+  }
 
   try {
     const result = await pool.query(

@@ -16,8 +16,9 @@ interface TraitStateHandler {
 
 const createAPIHandler = ({ user_id, dragon_id, trait_id }: UseTraitStateProps): TraitStateHandler => ({
   get: async () => {
-    const response = await axios.get(`${API_BASE_URL}/user-traits`, {
+    const response = await axios.get(`${API_BASE_URL}/user-traits`,{
       params: { user_id, dragon_id, trait_id },
+      withCredentials: true
     });
     return response.data?.[0]?.unlocked === true || response.data?.[0]?.unlocked === "true";
   },
