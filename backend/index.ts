@@ -104,7 +104,8 @@ app.get("/user-traits", async (req, res) => {
 });
 
 app.post('/user-traits', async (req, res) => {
-  const { user_id, dragon_id, trait_id, unlocked } = req.body;
+  const user_id = req.session.user ? req.session.user.id : null;
+  const { dragon_id, trait_id, unlocked } = req.body;
 
   // Check if all required fields are provided
   if (!user_id || !dragon_id || !trait_id || unlocked === undefined) {
@@ -128,7 +129,8 @@ app.post('/user-traits', async (req, res) => {
 });
 
 app.patch('/user-traits', async (req, res) => {
-  const { user_id, dragon_id, trait_id, unlocked } = req.body;
+  const user_id = req.session.user ? req.session.user.id : null;
+  const { dragon_id, trait_id, unlocked } = req.body;
 
   try {
       const query = `
