@@ -57,4 +57,70 @@ const initializeTraits = async (userId, dragonIds, traitIds, pool) => {
     }
 };
 
-export { getDragons, initializeTraits };
+const getUserTraits = async (user_id, dragon_id, trait_id, userIdSession, pool) => {
+  if (!userIdSession || user_id !== String(userIdSession)) {
+    return { status: 403, json: { error: "Unauthorized access" } };
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM user_traits WHERE user_id = $1 AND dragon_id = $2 AND trait_id = $3`,
+      [user_id, dragon_id, trait_id]
+    );
+
+    if (result.rows.length > 0) {
+      return { status: 200, json: result.rows }; // Return the trait data for this user, dragon, and trait
+    } else {
+      return { status: 404, json: { message: "Trait not found" } };
+    }
+  } catch (err) {
+    console.error('Error fetching user trait:', err);
+    return { status: 500, json: { message: "Server error" } };
+  }
+};
+
+const setUserTraits = async (user_id, dragon_id, trait_id, unlocked, pool) => {
+  // Check if all required fields are provided
+  if (!user_id || !dragon_id || !trait_id || unlocked === undefined) {
+    return { status: 400, json: { error: 'Missing required fields' } };
+  }
+
+  try {
+    // Query to insert the new record into the user_traits table
+    const result = await pool.query(`
+      INSERT INTO user_traits (user_id, dragon_id, trait_id, unlocked)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+    `, [user_id, dragon_id, trait_id, unlocked]);
+
+    // Send the created record as a JSON response
+    return { status: 201, json: result.rows[0] };
+  } catch (err) {
+    console.error('Error inserting user trait:', err);
+    return { status: 500, json: { error: 'Internal server error' } };
+  }
+};
+
+const patchUserTraits = async (user_id, dragon_id, trait_id, unlocked, pool) => {
+  try {
+    const query = `
+        UPDATE user_traits 
+        SET unlocked = $1 
+        WHERE user_id = $2 AND dragon_id = $3 AND trait_id = $4
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [unlocked, user_id, dragon_id, trait_id]);
+
+    if (result.rowCount === 0) {
+      return { status: 404, json: { error: "Trait entry not found" } };
+    }
+
+    return { status: 200, json: result.rows[0] };
+} catch (err) {
+    console.error('Error updating trait state:', err);
+    return { status: 500, json: { error: 'Server error' } };
+}
+};
+
+export { getDragons, initializeTraits, getUserTraits, setUserTraits, patchUserTraits };

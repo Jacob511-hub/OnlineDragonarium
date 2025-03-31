@@ -1,3 +1,5 @@
+const bcrypt = require("bcryptjs");
+
 const loginUser = async (email, password, pool, bcrypt, session) => {
     try {
       // Check if user exists
