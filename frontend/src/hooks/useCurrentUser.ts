@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+import api from "../axios";
 
 const useCurrentUser = () => {
     const [userId, setUserId] = useState<number | null>(null);
@@ -9,7 +7,7 @@ const useCurrentUser = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get(`${API_BASE_URL}/current-user`, { withCredentials: true });
+                const res = await api.get('/current-user');
                 setUserId(res.data.user_id);
             } catch (err) {
                 console.error("Failed to fetch user:", err);

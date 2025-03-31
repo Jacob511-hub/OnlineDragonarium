@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
+import api from "../axios";
 interface UseTraitStateProps {
   user_id: string;
   dragon_id: number;
@@ -16,17 +13,15 @@ interface TraitStateHandler {
 
 const createAPIHandler = ({ user_id, dragon_id, trait_id }: UseTraitStateProps): TraitStateHandler => ({
   get: async () => {
-    const response = await axios.get(`${API_BASE_URL}/user-traits`,{
-      params: { user_id, dragon_id, trait_id },
-      withCredentials: true
+    const response = await api.get('/user-traits',{
+      params: { user_id, dragon_id, trait_id }
     });
     return response.data?.[0]?.unlocked === true || response.data?.[0]?.unlocked === "true";
   },
   set: async (newState: boolean) => {
-    await axios.patch(
-      `${API_BASE_URL}/user-traits`,
-      { user_id, dragon_id, trait_id, unlocked: newState },
-      { withCredentials: true }
+    await api.patch(
+      '/user-traits',
+      { user_id, dragon_id, trait_id, unlocked: newState }
     );
   },
 });
