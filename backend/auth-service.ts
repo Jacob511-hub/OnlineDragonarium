@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 
-const loginUser = async (email, password, pool, bcrypt, session) => {
+const loginUser = async (email, password, pool, session) => {
     try {
       // Check if user exists
       const userQuery = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
@@ -30,7 +30,7 @@ const loginUser = async (email, password, pool, bcrypt, session) => {
     }
   };
 
-  const registerUser = async (username, email, password, pool, bcrypt) => {
+  const registerUser = async (username, email, password, pool) => {
     try {
       // Check for empty fields
       if (!username || !email || !password) {

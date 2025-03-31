@@ -40,13 +40,13 @@ app.use(sessionConfig);
 
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
-  const result = await registerUser(username, email, password, pool, bcrypt);
+  const result = await registerUser(username, email, password, pool);
   res.status(result.status).json(result.json);
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const result = await loginUser(email, password, pool, bcrypt, req.session);
+  const result = await loginUser(email, password, pool, req.session);
   res.status(result.status).json(result.json);
 });
 
