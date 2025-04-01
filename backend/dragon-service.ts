@@ -82,7 +82,7 @@ const getUserTraits = async (user_id, dragon_id, trait_id, userIdSession, pool) 
 const setUserTraits = async (user_id, dragon_id, trait_id, unlocked, pool) => {
   // Check if all required fields are provided
   if (!user_id || !dragon_id || !trait_id || unlocked === undefined) {
-    return { status: 400, json: { error: 'Missing required fields' } };
+    return { status: 400, json: { message: 'Missing required fields' } };
   }
 
   try {
@@ -97,7 +97,7 @@ const setUserTraits = async (user_id, dragon_id, trait_id, unlocked, pool) => {
     return { status: 201, json: result.rows[0] };
   } catch (err) {
     console.error('Error inserting user trait:', err);
-    return { status: 500, json: { error: 'Internal server error' } };
+    return { status: 500, json: { message: 'Server error' } };
   }
 };
 
@@ -113,13 +113,13 @@ const patchUserTraits = async (user_id, dragon_id, trait_id, unlocked, pool) => 
     const result = await pool.query(query, [unlocked, user_id, dragon_id, trait_id]);
 
     if (result.rowCount === 0) {
-      return { status: 404, json: { error: "Trait entry not found" } };
+      return { status: 404, json: { message: "Trait entry not found" } };
     }
 
     return { status: 200, json: result.rows[0] };
 } catch (err) {
     console.error('Error updating trait state:', err);
-    return { status: 500, json: { error: 'Server error' } };
+    return { status: 500, json: { message: 'Server error' } };
 }
 };
 
