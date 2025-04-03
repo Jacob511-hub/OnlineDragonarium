@@ -61,6 +61,6 @@ const loginUser = async (email, password, pool, session) => {
       console.error(err.message);
       return { status: 500, json: { message: "Server error" } };
     }
-  }
+  };
   
   export { loginUser, registerUser };

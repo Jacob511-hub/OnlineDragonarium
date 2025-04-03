@@ -1,4 +1,4 @@
-import { getDragons, initializeTraits, getUserTraits, setUserTraits, patchUserTraits } from "./dragon-service";
+import { getDragons, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits } from "./dragon-service";
 
 const mockPool = {
     query: jest.fn(),
@@ -75,6 +75,35 @@ describe("getDragons", () => {
         status: 500,
         json: { message: "Failed to fetch dragons with elements" },
       });
+    });
+});
+
+describe("getTraits", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      jest.spyOn(console, "error").mockImplementation(() => {});
+    });
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should return traits from the database", async () => {
+      const mockTraits = [{ id: 1, name: "Fire" }, { id: 2, name: "Water" }];
+      mockPool.query.mockResolvedValueOnce({ rows: mockTraits });
+
+      const result = await getTraits(mockPool);
+
+      expect(mockPool.query).toHaveBeenCalledWith("SELECT * FROM traits");
+      expect(result).toEqual({ status: 200, json: mockTraits });
+    });
+
+    it("should handle database errors gracefully", async () => {
+      mockPool.query.mockRejectedValue(new Error("DB error"));
+
+      const result = await getTraits(mockPool);
+
+      expect(mockPool.query).toHaveBeenCalledWith("SELECT * FROM traits");
+      expect(result).toEqual({ status: 500, json: { error: "Server Error" } });
     });
 });
 

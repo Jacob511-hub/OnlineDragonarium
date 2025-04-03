@@ -33,6 +33,16 @@ const getDragons = async (pool) => {
     }
 };
 
+const getTraits = async (pool) => {
+  try {
+    const result = await pool.query('SELECT * FROM traits');
+    return { status: 200, json: result.rows };
+  } catch (error) {
+    console.error('Error fetching traits:', error);
+    return { status: 500, json: { error: 'Server Error' } };
+  }
+};
+
 const initializeTraits = async (userId, dragonIds, traitIds, pool) => {
     try {
         for (const dragonId of dragonIds) {
@@ -123,4 +133,4 @@ const patchUserTraits = async (user_id, dragon_id, trait_id, unlocked, pool) => 
 }
 };
 
-export { getDragons, initializeTraits, getUserTraits, setUserTraits, patchUserTraits };
+export { getDragons, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits };

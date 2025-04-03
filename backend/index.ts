@@ -4,14 +4,12 @@ import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 const { loginUser, registerUser } = require("./auth-service");
-const { getDragons, initializeTraits, getUserTraits, setUserTraits, patchUserTraits } = require("./dragon-service");
+const { getDragons, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits } = require("./dragon-service");
 
 dotenv.config();
 
 const app = express();
 const port = 5000;
-
-const bcrypt = require("bcryptjs");
 
 app.use(
   cors({
@@ -27,13 +25,8 @@ app.get("/dragons", async (req, res) => {
 });
 
 app.get('/traits', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM traits');
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error fetching traits:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+  const result = await getTraits(pool);
+  res.status(result.status).json(result.json);
 });
 
 app.use(sessionConfig);
