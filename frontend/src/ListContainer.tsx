@@ -18,6 +18,7 @@ import Dragon from "./Dragon";
 interface DragonData {
   id: number;
   name: string;
+  can_be_traited: boolean;
   elements: string[];
 }
 

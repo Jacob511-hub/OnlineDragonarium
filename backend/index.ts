@@ -3,6 +3,8 @@ import pool from './pool';
 import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
+const { loginUser, registerUser } = require("./auth-service");
+const { getDragons, initializeTraits, getUserTraits, setUserTraits, patchUserTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -20,37 +22,17 @@ app.use(
 app.use(express.json());
 
 app.get("/dragons", async (req, res) => {
+  const result = await getDragons(pool);
+  res.status(result.status).json(result.json);
+});
+
+app.get('/traits', async (req, res) => {
   try {
-    const dragonsResult = await pool.query("SELECT * FROM dragons");
-    const dragons = dragonsResult.rows;
-
-    const dragonIds = dragons.map((d) => d.id);
-
-    // Get all elements related to these dragons
-    const elementsResult = await pool.query(
-      `SELECT de.dragon_id, e.name AS element 
-       FROM dragon_elements de
-       JOIN elements e ON de.element_id = e.id
-       WHERE de.dragon_id = ANY($1)`,
-      [dragonIds]
-    );
-
-    const elementsMap = elementsResult.rows.reduce((acc, row) => {
-      if (!acc[row.dragon_id]) acc[row.dragon_id] = [];
-      acc[row.dragon_id].push(row.element);
-      return acc;
-    }, {});
-
-    // Attach elements to each dragon
-    const dragonsWithElements = dragons.map((dragon) => ({
-      ...dragon,
-      elements: elementsMap[dragon.id] || [],
-    }));
-
-    res.json(dragonsWithElements);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to fetch dragons with elements" });
+    const result = await pool.query('SELECT * FROM traits');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching traits:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -58,67 +40,14 @@ app.use(sessionConfig);
 
 app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
-
-  try {
-    // Check for empty fields
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: "Username, email, and password are required" });
-    }
-    
-    // Check if user already exists
-    const userExists = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
-    if (userExists.rows.length > 0) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-
-    // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Insert new user into database
-    const newUser = await pool.query(
-      "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
-      [username, email, hashedPassword]
-    );
-
-    res.status(201).json({
-      message: "User registered successfully",
-      user: { id: newUser.rows[0].id, username: newUser.rows[0].username, email: newUser.rows[0].email },
-    });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
+  const result = await registerUser(username, email, password, pool);
+  res.status(result.status).json(result.json);
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
-  try {
-    // Check if user exists
-    const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
-    if (user.rows.length === 0) {
-      return res.status(400).json({ message: "Invalid email/password" });
-    }
-
-    // Compare hashed password
-    const isMatch = await bcrypt.compare(password, user.rows[0].password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email/password" });
-    }
-
-    // Save to session
-    req.session.user = {
-      id: user.rows[0].id,
-      username: user.rows[0].username,
-      email: user.rows[0].email,
-    };
-
-    res.status(200).json({ message: "Login successful", user: user.rows[0].username });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
+  const result = await loginUser(email, password, pool, req.session);
+  res.status(result.status).json(result.json);
 });
 
 app.get("/profile", (req, res) => {
@@ -134,6 +63,48 @@ app.post("/logout", (req, res) => {
     if (err) return res.status(500).json({ message: "Error logging out" });
     res.status(200).json({ message: "Logged out successfully" });
   });
+});
+
+app.get("/current-user", (req, res) => {
+  if (req.session.user) {
+      res.json({ user_id: req.session.user.id });
+  } else {
+    res.status(200).json({ user_id: "guest" });
+  }
+});
+
+app.post("/initialize-traits", async (req, res) => {
+  const userId = req.session.user ? req.session.user.id : null;
+  const dragonsResult = await pool.query('SELECT id FROM dragons WHERE can_be_traited = true');
+  const dragonIds = dragonsResult.rows.map(row => row.id);
+  const traitIds = Array.from({ length: 10 }, (_, i) => i + 1);
+
+  const result = await initializeTraits(userId, dragonIds, traitIds, pool);
+  res.status(result.status).json(result.json);
+});
+
+app.get("/user-traits", async (req, res) => {
+  const { user_id, dragon_id, trait_id } = req.query;
+  const userIdSession = req.session.user ? req.session.user.id : null;
+
+  const result = await getUserTraits(user_id, dragon_id, trait_id, userIdSession, pool);
+  res.status(result.status).json(result.json);
+});
+
+app.post('/user-traits', async (req, res) => {
+  const user_id = req.session.user ? req.session.user.id : null;
+  const { dragon_id, trait_id, unlocked } = req.body;
+
+  const result = await setUserTraits(user_id, dragon_id, trait_id, unlocked, pool);
+  res.status(result.status).json(result.json);
+});
+
+app.patch('/user-traits', async (req, res) => {
+  const user_id = req.session.user ? req.session.user.id : null;
+  const { dragon_id, trait_id, unlocked } = req.body;
+
+  const result = await patchUserTraits(user_id, dragon_id, trait_id, unlocked, pool);
+  res.status(result.status).json(result.json);
 });
 
 app.listen(port, () => {

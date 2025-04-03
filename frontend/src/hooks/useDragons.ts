@@ -6,8 +6,9 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 interface DragonData {
     id: number;
     name: string;
+    can_be_traited: boolean;
     elements: string[];
-  }
+}
 
 const useDragons = () => {
   const [dragons, setDragons] = useState<DragonData[]>([]);
