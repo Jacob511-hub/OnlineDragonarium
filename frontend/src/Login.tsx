@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useLogin from "./hooks/useLogin";
 
@@ -8,6 +8,20 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
   
     const { handleLogin } = useLogin(email, password);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+                handleLogin();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    });
   
     return (
         <div className="app">

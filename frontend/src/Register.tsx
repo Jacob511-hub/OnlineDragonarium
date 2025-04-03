@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useRegister from "./hooks/useRegister";
 
@@ -10,6 +10,20 @@ const Register: React.FC = () => {
     const navigate = useNavigate();
   
     const { handleRegister } = useRegister(username, email, password);
+
+    useEffect(() => {
+            const handleKeyDown = (event: KeyboardEvent) => {
+                if (event.key === 'Enter') {
+                    handleRegister();
+                }
+            };
+    
+            window.addEventListener('keydown', handleKeyDown);
+    
+            return () => {
+                window.removeEventListener('keydown', handleKeyDown);
+            };
+        });
   
     return (
         <div className="app">
