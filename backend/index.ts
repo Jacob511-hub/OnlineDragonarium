@@ -4,7 +4,7 @@ import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 const { loginUser, registerUser } = require("./auth-service");
-const { getDragons, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits } = require("./dragon-service");
+const { getDragons, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -97,6 +97,14 @@ app.patch('/user-traits', async (req, res) => {
   const { dragon_id, trait_id, unlocked } = req.body;
 
   const result = await patchUserTraits(user_id, dragon_id, trait_id, unlocked, pool);
+  res.status(result.status).json(result.json);
+});
+
+app.get("/user-dragon-traits", async (req, res) => {
+  const { user_id, dragon_id } = req.query;
+  const userIdSession = req.session.user ? req.session.user.id : null;
+
+  const result = await getUserDragonTraits(user_id, dragon_id, userIdSession, pool);
   res.status(result.status).json(result.json);
 });
 

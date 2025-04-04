@@ -62,6 +62,8 @@ const ListContainer: React.FC<{ filters: Record<string, number>; onClick: (id: n
         filteredDragons.map((dragon) => (
           <Dragon
             key={dragon.id}
+            id={dragon.id}
+            can_be_traited={dragon.can_be_traited}
             src={imageMap[dragon.name]}
             onClick={() => onClick(dragon.id)}
           />
