@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../axios";
 import useTraitCountStore from "./useTraitCountStore";
+import useTraitStateStore from "./useTraitStateStore";
 
 interface UseTraitStateProps {
   user_id: string;
@@ -47,7 +48,10 @@ const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => 
   const [error, setError] = useState<string | null>(null);
 
   const { increment, decrement } = useTraitCountStore();
-  const traitKey = `${user_id}_${dragon_id}`;
+  const { getTrait, setTrait } = useTraitStateStore();
+
+  const traitKey = `${user_id}_${dragon_id}_${trait_id}`;
+  const traitCountKey = `${user_id}_${dragon_id}`;
 
   const handler = user_id === "guest" || trait_id === null
     ? createLocalStorageHandler({ user_id, dragon_id, trait_id })
@@ -55,6 +59,13 @@ const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => 
 
   useEffect(() => {
     const fetchTraitState = async () => {
+      const cachedState = getTrait(traitKey);
+
+      if (cachedState !== undefined) {
+        setIsOn(cachedState);
+        return;
+      }
+
       try {
         const state = await handler.get();
         setIsOn(state);
@@ -72,16 +83,18 @@ const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => 
 
     const newState = !isOn;
     setIsOn(newState);
+    setTrait(traitKey, newState);
 
     try {
       await handler.set(newState);
       if (newState) {
-        increment(traitKey);
+        increment(traitCountKey);
       } else {
-        decrement(traitKey);
+        decrement(traitCountKey);
       }
     } catch (err) {
       setIsOn(!newState); // Revert state if update fails
+      setTrait(traitKey, !newState);
       console.error('Error updating trait state:', err);
     }
   };
