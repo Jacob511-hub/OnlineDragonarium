@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../axios";
+import useTraitCountStore from "./useTraitCountStore";
 
 interface UseTraitStateProps {
   user_id: string;
@@ -38,7 +39,10 @@ const createLocalStorageHandler = ({ user_id, dragon_id }: UseTraitStateProps): 
 };
 
 const useTraitCount = ({ user_id, dragon_id }: UseTraitStateProps) => {
-    const [count, setCount] = useState(0);
+    const { traitCounts, setCount } = useTraitCountStore();
+    const key = `${user_id}_${dragon_id}`;
+    const count = traitCounts[key] || 0;
+
     const handler = user_id === "guest"
         ? createLocalStorageHandler({ user_id, dragon_id })
         : createAPIHandler({ user_id, dragon_id });
@@ -47,7 +51,7 @@ const useTraitCount = ({ user_id, dragon_id }: UseTraitStateProps) => {
         const fetchCount = async () => {
             const values = await handler.get();
             const trueCount = values.filter(Boolean).length;
-            setCount(trueCount);
+            setCount(key, trueCount);
         };
 
         fetchCount();
