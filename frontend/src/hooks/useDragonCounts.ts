@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../axios";
+import useDragonCountsStore from "./useDragonCountsStore";
 
 interface UseDragonCountsProps {
   user_id: string;
@@ -64,6 +65,10 @@ const useDragonCounts = ({ user_id, dragon_id }: UseDragonCountsProps) => {
   const [counts, setCounts] = useState<DragonCounts>(defaultCounts);
   const [error, setError] = useState<string | null>(null);
 
+  const { getCounts, setCounts: setCachedCounts } = useDragonCountsStore();
+
+  const key = `${user_id}_${dragon_id}`;
+
   const handler =
     user_id === "guest"
       ? createLocalStorageHandler({ user_id, dragon_id })
@@ -71,20 +76,28 @@ const useDragonCounts = ({ user_id, dragon_id }: UseDragonCountsProps) => {
 
   useEffect(() => {
     const fetchCounts = async () => {
-      try {
-        const data = await handler.get();
-        setCounts(data);
-      } catch (err) {
-        setError("Error fetching dragon counts");
-        console.error(err);
-      }
+        const cached = getCounts(key);
+        if (cached) {
+          setCounts(cached);
+          return;
+        }
+
+        try {
+            const data = await handler.get();
+            setCounts(data);
+            setCachedCounts(key, data);
+        } catch (err) {
+            setError("Error fetching dragon counts");
+            console.error(err);
+        }
     };
     fetchCounts();
   }, [user_id, dragon_id]);
 
-  const updateCount = (key: keyof DragonCounts, value: number) => {
-    const updated = { ...counts, [key]: value };
+  const updateCount = (countKey: keyof DragonCounts, value: number) => {
+    const updated = { ...counts, [countKey]: value };
     setCounts(updated);
+    setCachedCounts(key, updated);
 
     handler.set(updated).catch((err) => {
       console.error("Error updating dragon counts:", err);
