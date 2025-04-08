@@ -54,7 +54,7 @@ const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selected
       <DragonDisplay src={imageMap[displayDragon.name] || imageMap['Fire']} elements={displayDragon.elements} />
       <h1 style={{margin: 0}}>{displayDragon.name}</h1>
       <Traits can_be_traited={displayDragon.can_be_traited} dragon_id={displayDragon.id}/>
-      <DragonCount can_be_traited={displayDragon.can_be_traited}/>
+      <DragonCount dragon_id={displayDragon.id} can_be_traited={displayDragon.can_be_traited}/>
     </div>
   );
 };

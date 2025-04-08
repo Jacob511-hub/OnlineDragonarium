@@ -13,6 +13,6 @@ const useInitializeTraits = () => {
     
         initializeTraits();
     }, []);
-  };
+};
   
-  export default useInitializeTraits;
+export default useInitializeTraits;

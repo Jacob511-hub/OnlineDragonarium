@@ -1,6 +1,10 @@
 import React from "react";
+import useCurrentUser from "./hooks/useCurrentUser";
 
-const DragonCount: React.FC<{ can_be_traited: boolean }> = ({ can_be_traited }) => {
+const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean }> = ({ dragon_id, can_be_traited }) => {
+    const user_id = useCurrentUser();
+    const userIdString = user_id !== null ? user_id.toString() : "guest";
+    
     return (
         <div className="count-container">
             <h1 style={{textDecoration: 'underline'}} className="header">Normal Dragons</h1>
@@ -28,7 +32,7 @@ const DragonCount: React.FC<{ can_be_traited: boolean }> = ({ can_be_traited }) 
                 </>
             )}
         </div>
-      );
+    );
 };
 
 export default DragonCount;

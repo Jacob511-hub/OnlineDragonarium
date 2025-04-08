@@ -33,6 +33,32 @@ const getDragons = async (pool) => {
     }
 };
 
+const initializeCounts = async (userId, dragonIds, pool) => {
+  if (!userId) {
+    return { status: 200, json: { message: 'User not logged in' } };
+  }
+
+  try {
+      for (const dragonId of dragonIds) {
+        if (userId) {
+          await pool.query(
+            `INSERT INTO user_dragons (user_id, dragon_id, normal_count, traited_count, twin_count, traited_twin_count)
+              VALUES ($1, $2, $3, $4, $5, $6)
+              ON CONFLICT (user_id, dragon_id) DO NOTHING`,
+            [userId, dragonId, 0, 0, 0, 0]
+          );
+        } else {
+          continue;
+        }
+      }
+  
+      return { status: 200, json: { message: "Dragon counts initialized successfully" } };
+  } catch (err) {
+      console.error(err.message);
+      return { status: 500, json: { message: "Server error" } };
+  }
+};
+
 const getTraits = async (pool) => {
   try {
     const result = await pool.query('SELECT * FROM traits');
@@ -44,6 +70,10 @@ const getTraits = async (pool) => {
 };
 
 const initializeTraits = async (userId, dragonIds, traitIds, pool) => {
+    if (!userId) {
+      return { status: 200, json: { message: 'User not logged in' } };
+    }
+
     try {
         for (const dragonId of dragonIds) {
           for (const traitId of traitIds) {
@@ -155,4 +185,4 @@ const getUserDragonTraits = async (user_id, dragon_id, userIdSession, pool) => {
   }
 };
 
-export { getDragons, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
+export { getDragons, initializeCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };

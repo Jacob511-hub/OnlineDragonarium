@@ -4,7 +4,7 @@ import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 const { loginUser, registerUser } = require("./auth-service");
-const { getDragons, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
+const { getDragons, initializeCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -64,6 +64,15 @@ app.get("/current-user", (req, res) => {
   } else {
     res.status(200).json({ user_id: "guest" });
   }
+});
+
+app.post("/initialize-counts", async (req, res) => {
+  const userId = req.session.user ? req.session.user.id : null;
+  const dragonsResult = await pool.query('SELECT id FROM dragons');
+  const dragonIds = dragonsResult.rows.map(row => row.id);
+
+  const result = await initializeCounts(userId, dragonIds, pool);
+  res.status(result.status).json(result.json);
 });
 
 app.post("/initialize-traits", async (req, res) => {
