@@ -4,7 +4,7 @@ import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 const { loginUser, registerUser } = require("./auth-service");
-const { getDragons, initializeCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
+const { getDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -72,6 +72,22 @@ app.post("/initialize-counts", async (req, res) => {
   const dragonIds = dragonsResult.rows.map(row => row.id);
 
   const result = await initializeCounts(userId, dragonIds, pool);
+  res.status(result.status).json(result.json);
+});
+
+app.get("/user-counts", async (req, res) => {
+  const { user_id, dragon_id } = req.query;
+  const userIdSession = req.session.user ? req.session.user.id : null;
+
+  const result = await getUserCounts(user_id, dragon_id, userIdSession, pool);
+  res.status(result.status).json(result.json);
+});
+
+app.patch('/user-counts', async (req, res) => {
+  const user_id = req.session.user ? req.session.user.id : null;
+  const { dragon_id, count_normal, count_traited, count_twin, count_traited_twin } = req.body;
+
+  const result = await patchUserCounts(user_id, dragon_id, count_normal, count_traited, count_twin, count_traited_twin, pool);
   res.status(result.status).json(result.json);
 });
 

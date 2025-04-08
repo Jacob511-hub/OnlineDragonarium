@@ -59,6 +59,53 @@ const initializeCounts = async (userId, dragonIds, pool) => {
   }
 };
 
+const getUserCounts = async (user_id, dragon_id, userIdSession, pool) => {
+  if (!userIdSession || user_id !== String(userIdSession)) {
+    return { status: 403, json: { error: "Unauthorized access" } };
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM user_dragons WHERE user_id = $1 AND dragon_id = $2`,
+      [user_id, dragon_id]
+    );
+
+    if (result.rows.length > 0) {
+      return { status: 200, json: result.rows }; // Return the count data for this user and dragon
+    } else {
+      return { status: 404, json: { message: "Dragon not found" } };
+    }
+  } catch (err) {
+    console.error('Error fetching user dragons:', err);
+    return { status: 500, json: { message: "Server error" } };
+  }
+};
+
+const patchUserCounts = async (user_id, dragon_id, count_normal, count_traited, count_twin, count_traited_twin, pool) => {
+  try {
+    const query = `
+        UPDATE user_dragons
+        SET normal_count = $1,
+            traited_count = $2,
+            twin_count = $3,
+            traited_twin_count = $4
+        WHERE user_id = $5 AND dragon_id = $6
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [count_normal, count_traited, count_twin, count_traited_twin, user_id, dragon_id]);
+
+    if (result.rowCount === 0) {
+      return { status: 404, json: { message: "Dragon entry not found" } };
+    }
+
+    return { status: 200, json: result.rows[0] };
+  } catch (err) {
+      console.error('Error updating dragon count:', err);
+      return { status: 500, json: { message: 'Server error' } };
+  }
+};
+
 const getTraits = async (pool) => {
   try {
     const result = await pool.query('SELECT * FROM traits');
@@ -157,10 +204,10 @@ const patchUserTraits = async (user_id, dragon_id, trait_id, unlocked, pool) => 
     }
 
     return { status: 200, json: result.rows[0] };
-} catch (err) {
-    console.error('Error updating trait state:', err);
-    return { status: 500, json: { message: 'Server error' } };
-}
+  } catch (err) {
+      console.error('Error updating trait state:', err);
+      return { status: 500, json: { message: 'Server error' } };
+  }
 };
 
 const getUserDragonTraits = async (user_id, dragon_id, userIdSession, pool) => {
@@ -185,4 +232,4 @@ const getUserDragonTraits = async (user_id, dragon_id, userIdSession, pool) => {
   }
 };
 
-export { getDragons, initializeCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
+export { getDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
