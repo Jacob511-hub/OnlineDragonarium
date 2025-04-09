@@ -1,15 +1,13 @@
 import React from "react";
 import TraitWheel from "./TraitWheel";
 import useCurrentUser from "./hooks/useCurrentUser";
-import useDragonCountsStore from "./hooks/useDragonCountsStore";
+import useDragonCounts from "./hooks/useDragonCounts";
 
 const Dragon: React.FC<{ id: number; can_be_traited: boolean; src: string; onClick: () => void }> = ({ id, can_be_traited, src, onClick }) => {
     const user_id = useCurrentUser();
     const userIdString = user_id !== null ? user_id.toString() : "guest";
 
-    const { getCounts } = useDragonCountsStore();
-    const key = `${userIdString}_${id}`;
-    const counts = getCounts(key);
+    const { counts } = useDragonCounts({ user_id: userIdString, dragon_id: id });
 
     let image = "../images/tile.png";
     let opacity = 1;

@@ -117,10 +117,6 @@ const getTraits = async (pool) => {
 };
 
 const initializeTraits = async (userId, dragonIds, traitIds, pool) => {
-    if (!userId) {
-      return { status: 200, json: { message: 'User not logged in' } };
-    }
-
     try {
         for (const dragonId of dragonIds) {
           for (const traitId of traitIds) {

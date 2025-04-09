@@ -62,12 +62,12 @@ const createLocalStorageHandler = ({ user_id, dragon_id }: UseDragonCountsProps)
 };
 
 const useDragonCounts = ({ user_id, dragon_id }: UseDragonCountsProps) => {
-  const [counts, setCounts] = useState<DragonCounts>(defaultCounts);
   const [error, setError] = useState<string | null>(null);
 
-  const { getCounts, setCounts: setCachedCounts } = useDragonCountsStore();
+  const { dragonCounts, getCounts, setCounts } = useDragonCountsStore();
 
   const key = `${user_id}_${dragon_id}`;
+  const counts = dragonCounts[key] || 0;
 
   const handler =
     user_id === "guest"
@@ -78,14 +78,13 @@ const useDragonCounts = ({ user_id, dragon_id }: UseDragonCountsProps) => {
     const fetchCounts = async () => {
         const cached = getCounts(key);
         if (cached) {
-          setCounts(cached);
+          setCounts(key, cached);
           return;
         }
 
         try {
             const data = await handler.get();
-            setCounts(data);
-            setCachedCounts(key, data);
+            setCounts(key, data);
         } catch (err) {
             setError("Error fetching dragon counts");
             console.error(err);
@@ -96,8 +95,7 @@ const useDragonCounts = ({ user_id, dragon_id }: UseDragonCountsProps) => {
 
   const updateCount = (countKey: keyof DragonCounts, value: number) => {
     const updated = { ...counts, [countKey]: value };
-    setCounts(updated);
-    setCachedCounts(key, updated);
+    setCounts(key, updated);
 
     handler.set(updated).catch((err) => {
       console.error("Error updating dragon counts:", err);
