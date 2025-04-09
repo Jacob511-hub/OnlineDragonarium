@@ -10,7 +10,7 @@ const Dragon: React.FC<{ id: number; can_be_traited: boolean; src: string; onCli
     const { counts } = useDragonCounts({ user_id: userIdString, dragon_id: id });
 
     let image = "../images/tile.png";
-    let opacity = 1;
+    let filter = "none";
 
     if (counts) {
         const { count_normal, count_traited, count_twin, count_traited_twin } = counts;
@@ -19,18 +19,18 @@ const Dragon: React.FC<{ id: number; can_be_traited: boolean; src: string; onCli
         const hasTwin = count_twin > 0 || count_traited_twin > 0;
 
         if (!hasNormal && !hasTwin) {
-            opacity = 0.4;
+            filter = 'brightness(0.4)';
         } else if (hasNormal && hasTwin) {
             image = "../images/tile_gold.png";
         } else if (hasTwin) {
             image = "../images/tile_twin.png";
         }
     } else {
-        opacity = 0.4;
+        filter = 'brightness(0.4)';
     }
 
     return (
-        <div className="dragon" onClick={onClick} style={{ cursor: "pointer", backgroundImage: `url(${image})`, opacity}}>
+        <div className="dragon" onClick={onClick} style={{ cursor: "pointer", backgroundImage: `url(${image})`, filter}}>
             <img src={src}/>
             {can_be_traited && <TraitWheel id={id} can_be_traited={can_be_traited} />}
         </div>
