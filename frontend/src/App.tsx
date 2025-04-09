@@ -3,6 +3,7 @@ import FilterContainer from "./FilterContainer";
 import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
 import LogoutButton from "./LogoutButton";
+import AdminMenu from "./AdminMenu";
 import bgImage from './images/bg-kairos.webp';
 import useInitializeTraits from "./hooks/useInitializeTraits";
 import useInitializeCounts from "./hooks/useInitializeCounts";
@@ -30,6 +31,7 @@ const App: React.FC = () => {
       <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
       <InfoContainer selectedDragonId={selectedDragonId} />
       <LogoutButton />
+      <AdminMenu />
     </div>
   );
 };

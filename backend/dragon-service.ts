@@ -33,11 +33,7 @@ const getDragons = async (pool) => {
     }
 };
 
-const addDragons = async (userId, userIdSession, dragonId, name, canBeTraited, isOnlyTraited, elements, pool) => {
-  if (!userIdSession || userId !== String(userIdSession)) {
-    return { status: 403, json: { error: "Unauthorized access" } };
-  }
-
+const addDragons = async (dragon_id, name, can_be_traited, is_only_traited, elements, pool) => {
   try {
     const query = `
       INSERT INTO dragons (id, name, can_be_traited, is_only_traited)
@@ -45,13 +41,13 @@ const addDragons = async (userId, userIdSession, dragonId, name, canBeTraited, i
       RETURNING *;
     `;
 
-    const result = await pool.query(query, [dragonId, name, canBeTraited, isOnlyTraited]);
+    const result = await pool.query(query, [dragon_id, name, can_be_traited, is_only_traited]);
 
     // Insert elements into dragon_elements table
     for (const element of elements) {
       await pool.query(
         `INSERT INTO dragon_elements (dragon_id, element_id) VALUES ($1, $2)`,
-        [dragonId, element]
+        [dragon_id, element]
       );
     }
 

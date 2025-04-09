@@ -18,6 +18,9 @@ import Tree from './images/Tree.webp';
 import Lava from './images/Lava.webp';
 import Storm from './images/Storm.webp';
 import Rain from './images/Rain.webp';
+import Mountain from './images/Mountain.webp';
+import Firefly from './images/Firefly.webp';
+import Quake from './images/Quake.webp';
 
 const imageMap: { [key: string]: string } = {
     Fire: Fire,
@@ -35,6 +38,9 @@ const imageMap: { [key: string]: string } = {
     Lava: Lava,
     Storm: Storm,
     Rain: Rain,
+    Mountain: Mountain,
+    Firefly: Firefly,
+    Quake: Quake,
 };
 
 const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selectedDragonId }) => {

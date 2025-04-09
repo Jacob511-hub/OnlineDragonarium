@@ -21,6 +21,7 @@ const loginUser = async (email, password, pool, session) => {
         id: user.id,
         username: user.username,
         email: user.email,
+        is_admin: user.is_admin,
       };
   
       return { status: 200, json: { message: "Login successful", user: user.username } };

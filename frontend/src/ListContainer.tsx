@@ -15,6 +15,9 @@ import Tree from './images/Tree.webp';
 import Lava from './images/Lava.webp';
 import Storm from './images/Storm.webp';
 import Rain from './images/Rain.webp';
+import Mountain from './images/Mountain.webp';
+import Firefly from './images/Firefly.webp';
+import Quake from './images/Quake.webp';
 import Dragon from "./Dragon";
 interface DragonData {
   id: number;
@@ -39,6 +42,9 @@ const imageMap: { [key: string]: string } = {
   Lava: Lava,
   Storm: Storm,
   Rain: Rain,
+  Mountain: Mountain,
+  Firefly: Firefly,
+  Quake: Quake,
 };
 
 const ListContainer: React.FC<{ filters: Record<string, number>; onClick: (id: number) => void }> = ({ filters, onClick }) => {

@@ -17,7 +17,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean }> = ({
                 type="number"
                 placeholder="# of Dragons"
                 min={0}
-                value={counts.count_normal}
+                value={counts.count_normal ?? ""}
                 onChange={(e) => updateCount("count_normal", Number(e.target.value))}
             />
 
@@ -28,7 +28,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean }> = ({
                         type="number"
                         placeholder="# of Dragons"
                         min={0}
-                        value={counts.count_traited}
+                        value={counts.count_traited ?? ""}
                         onChange={(e) => updateCount("count_traited", Number(e.target.value))}
                     />
                 </>
@@ -41,7 +41,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean }> = ({
                 type="number"
                 placeholder="# of Dragons"
                 min={0}
-                value={counts.count_twin}
+                value={counts.count_twin ?? ""}
                 onChange={(e) => updateCount("count_twin", Number(e.target.value))}
             />
 
@@ -52,7 +52,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean }> = ({
                         type="number"
                         placeholder="# of Dragons"
                         min={0}
-                        value={counts.count_traited_twin}
+                        value={counts.count_traited_twin ?? ""}
                         onChange={(e) => updateCount("count_traited_twin", Number(e.target.value))}
                     />
                 </>
