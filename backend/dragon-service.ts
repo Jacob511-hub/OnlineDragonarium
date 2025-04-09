@@ -33,6 +33,35 @@ const getDragons = async (pool) => {
     }
 };
 
+const addDragons = async (userId, userIdSession, dragonId, name, canBeTraited, isOnlyTraited, elements, pool) => {
+  if (!userIdSession || userId !== String(userIdSession)) {
+    return { status: 403, json: { error: "Unauthorized access" } };
+  }
+
+  try {
+    const query = `
+      INSERT INTO dragons (id, name, can_be_traited, is_only_traited)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *;
+    `;
+
+    const result = await pool.query(query, [dragonId, name, canBeTraited, isOnlyTraited]);
+
+    // Insert elements into dragon_elements table
+    for (const element of elements) {
+      await pool.query(
+        `INSERT INTO dragon_elements (dragon_id, element_id) VALUES ($1, $2)`,
+        [dragonId, element]
+      );
+    }
+
+    return { status: 201, json: result.rows[0] };
+  } catch (err) {
+    console.error('Error adding dragon:', err);
+    return { status: 500, json: { message: 'Server error' } };
+  }
+};
+
 const initializeCounts = async (userId, dragonIds, pool) => {
   if (!userId) {
     return { status: 200, json: { message: 'User not logged in' } };
@@ -228,4 +257,4 @@ const getUserDragonTraits = async (user_id, dragon_id, userIdSession, pool) => {
   }
 };
 
-export { getDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
+export { getDragons, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };

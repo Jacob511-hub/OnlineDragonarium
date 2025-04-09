@@ -4,7 +4,7 @@ import cors from 'cors';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 const { loginUser, registerUser } = require("./auth-service");
-const { getDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
+const { getDragons, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -21,6 +21,20 @@ app.use(express.json());
 
 app.get("/dragons", async (req, res) => {
   const result = await getDragons(pool);
+  res.status(result.status).json(result.json);
+});
+
+app.post("/add-dragons", async (req, res) => {
+  const user_id_session = req.session.user ? req.session.user.id : null;
+  const user_is_admin = req.session.user ? req.session.user.is_admin : false;
+  
+  if (!user_id_session || !user_is_admin) {
+    return res.status(403).json({ message: "Unauthorized access" });
+  }
+
+  const { user_id, dragon_id, name, can_be_traited, is_only_traited, elements } = req.body;
+
+  const result = await addDragons(user_id, user_id_session, dragon_id, name, can_be_traited, is_only_traited, elements, pool);
   res.status(result.status).json(result.json);
 });
 
