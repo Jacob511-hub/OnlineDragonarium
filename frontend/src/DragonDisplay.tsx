@@ -11,6 +11,7 @@ import IconMetal from './images/Icon_Metal.webp';
 import IconLight from './images/Icon_Light.webp';
 import IconDark from './images/Icon_Dark.webp';
 import IconRainbow from './images/Icon_Rainbow.webp';
+import IconRift from './images/Icon_Rift.webp';
 
 const DragonDisplay: React.FC<{ src: string; elements: string[] }> = ({ src, elements }) => {
     const elementIcons: { [key: string]: string } = {
@@ -25,6 +26,7 @@ const DragonDisplay: React.FC<{ src: string; elements: string[] }> = ({ src, ele
         Light: IconLight,
         Dark: IconDark,
         Rainbow: IconRainbow,
+        Rift: IconRift,
     };
 
     return (
