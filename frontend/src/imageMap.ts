@@ -16,6 +16,7 @@ import Rain from './images/Rain.webp';
 import Mountain from './images/Mountain.webp';
 import Firefly from './images/Firefly.webp';
 import Quake from './images/Quake.webp';
+import Rainbow from './images/Rainbow.webp';
 
 export const imageMap: { [key: string]: string } = {
     Fire: Fire,
@@ -36,4 +37,5 @@ export const imageMap: { [key: string]: string } = {
     Mountain: Mountain,
     Firefly: Firefly,
     Quake: Quake,
+    Rainbow: Rainbow,
 };

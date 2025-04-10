@@ -10,6 +10,7 @@ import IconWater from './images/Icon_Water.webp';
 import IconMetal from './images/Icon_Metal.webp';
 import IconLight from './images/Icon_Light.webp';
 import IconDark from './images/Icon_Dark.webp';
+import IconRainbow from './images/Icon_Rainbow.webp';
 
 const FilterContainer: React.FC<{ onToggle: (name: string, state: number) => void }> = ({ onToggle }) => {
   return (
@@ -25,6 +26,7 @@ const FilterContainer: React.FC<{ onToggle: (name: string, state: number) => voi
         <FilterButton src={IconMetal} name="Metal" onToggle={onToggle} />
         <FilterButton src={IconLight} name="Light" onToggle={onToggle} />
         <FilterButton src={IconDark} name="Dark" onToggle={onToggle} />
+        <FilterButton src={IconRainbow} name="Rainbow" onToggle={onToggle} />
       </div>
     </div>
   );

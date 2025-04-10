@@ -1,7 +1,4 @@
-import axios from "axios";
 import api from "../axios";
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 interface AddDragonParams {
   dragon_id: number;

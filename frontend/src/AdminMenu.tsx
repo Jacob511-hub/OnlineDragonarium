@@ -52,6 +52,7 @@ const AdminMenu: React.FC = () => {
                                 <li>8: Air</li>
                                 <li>9: Light</li>
                                 <li>10: Dark</li>
+                                <li>11: Rainbow</li>
                             </ul>
                             <form onSubmit={handleSubmit} style={{ marginTop: "1rem" }}>
                                 <div>
