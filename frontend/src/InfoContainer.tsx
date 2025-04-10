@@ -15,14 +15,14 @@ const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selected
     ? dragons.find((d) => d.id === selectedDragonId)
     : dragons.find((d) => d.name === "Fire");
 
-  const displayDragon = dragon ?? { id: 1, name: "Fire", elements: ["Fire"], can_be_traited: false };
+  const displayDragon = dragon ?? { id: 1, name: "Fire", elements: ["Fire"], can_be_traited: false, is_only_traited: false };
 
   return (
     <div className="container">
       <DragonDisplay src={imageMap[displayDragon.name] || imageMap['Fire']} elements={displayDragon.elements} />
       <h1 style={{margin: 0}}>{displayDragon.name}</h1>
       <Traits can_be_traited={displayDragon.can_be_traited} dragon_id={displayDragon.id}/>
-      <DragonCount dragon_id={displayDragon.id} can_be_traited={displayDragon.can_be_traited}/>
+      <DragonCount dragon_id={displayDragon.id} can_be_traited={displayDragon.can_be_traited} is_only_traited={displayDragon.is_only_traited}/>
     </div>
   );
 };
