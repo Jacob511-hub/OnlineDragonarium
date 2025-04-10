@@ -25,7 +25,7 @@ const TraitToggle: React.FC<{ trait: string, dragon_id: number }> = ({ trait, dr
       src={`/images/traits/${trait}-${isOn ? 'on' : 'off'}.png`}
       alt={trait}
       onClick={toggleTraitState}
-      style={{ cursor: 'pointer', transition: 'opacity 0.3s', opacity: isOn ? 1 : 0.3 }}
+      style={{ cursor: 'pointer', transition: 'filter 0.3s', filter: isOn ? 'brightness(1)' : 'brightness(0.5)' }}
     />
   );
 };

@@ -3,6 +3,7 @@ import useDragons from "./hooks/useDragons";
 import DragonDisplay from "./DragonDisplay";
 import DragonCount from "./DragonCount";
 import Traits from "./Traits";
+import TraitsFixed from "./TraitsFixed";
 import { imageMap } from "./imageMap";
 
 const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selectedDragonId }) => {
@@ -22,6 +23,7 @@ const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selected
       <DragonDisplay src={imageMap[displayDragon.name] || imageMap['Fire']} elements={displayDragon.elements} />
       <h1 style={{margin: 0}}>{displayDragon.name}</h1>
       <Traits can_be_traited={displayDragon.can_be_traited} dragon_id={displayDragon.id}/>
+      <TraitsFixed is_only_traited={displayDragon.is_only_traited} name={displayDragon.name}/>
       <DragonCount dragon_id={displayDragon.id} can_be_traited={displayDragon.can_be_traited} is_only_traited={displayDragon.is_only_traited}/>
     </div>
   );

@@ -68,6 +68,22 @@ body {
     transform: scale(0.9);
 }
 
+.traits-container-fixed {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.588);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.traits-container-fixed img {
+    height: auto;
+    width: 10%;
+    object-fit: contain;
+}
+
 .count-container {
     display: flex;
     flex: 1;
