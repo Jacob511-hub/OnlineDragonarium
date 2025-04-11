@@ -1,7 +1,27 @@
 import React, { useMemo } from "react";
 import useDragons from "./hooks/useDragons";
 import Dragon from "./Dragon";
-import { imageMap } from "./imageMap";
+import useDragonImage from "./hooks/useDragonImage";
+
+interface DragonCardProps {
+  id: number;
+  name: string;
+  can_be_traited: boolean;
+  onClick: () => void;
+}
+
+const DragonCard: React.FC<DragonCardProps> = ({ id, name, can_be_traited, onClick }) => {
+  const dragonImage = useDragonImage(name);
+
+  return (
+    <Dragon
+      id={id}
+      can_be_traited={can_be_traited}
+      src={dragonImage ?? ''}
+      onClick={onClick}
+    />
+  );
+};
 
 interface DragonData {
   id: number;
@@ -32,11 +52,11 @@ const ListContainer: React.FC<{ filters: Record<string, number>; onClick: (id: n
     <div className="list-container">
       {filteredDragons.length > 0 ? (
         filteredDragons.map((dragon) => (
-          <Dragon
+          <DragonCard
             key={dragon.id}
             id={dragon.id}
+            name={dragon.name}
             can_be_traited={dragon.can_be_traited}
-            src={imageMap[dragon.name]}
             onClick={() => onClick(dragon.id)}
           />
         ))

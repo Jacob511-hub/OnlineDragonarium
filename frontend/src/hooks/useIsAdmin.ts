@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import api from "../axios";
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const useIsAdmin = () => {
     const [isAdmin, setIsAdmin] = useState<number | null>(null);

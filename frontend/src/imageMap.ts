@@ -18,6 +18,7 @@ import Firefly from './images/Firefly.webp';
 import Quake from './images/Quake.webp';
 import Rainbow from './images/Rainbow.webp';
 import FireRift from './images/Fire_Rift.webp';
+import PlantRift from './images/Plant_Rift.webp';
 
 export const imageMap: { [key: string]: string } = {
     "Fire": Fire,
@@ -40,4 +41,5 @@ export const imageMap: { [key: string]: string } = {
     "Quake": Quake,
     "Rainbow": Rainbow,
     "Fire Rift": FireRift,
+    "Plant Rift": PlantRift,
 };

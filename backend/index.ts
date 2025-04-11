@@ -1,6 +1,8 @@
 import express from 'express';
 import pool from './pool';
 import cors from 'cors';
+import path from 'path';
+import { promises as fsPromises } from 'fs';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 const { loginUser, registerUser } = require("./auth-service");
@@ -22,6 +24,31 @@ app.use(express.json());
 app.get("/dragons", async (req, res) => {
   const result = await getDragons(pool);
   res.status(result.status).json(result.json);
+});
+
+app.use('/images', express.static(path.join(__dirname, '../frontend/src/images')));
+const imageDirectory = path.join(__dirname, '../frontend/src/images');
+
+app.get('/images/:name', async (req, res) => {
+  const name = req.params.name;
+  const supportedExtensions = ['.webp', '.png', '.jpg', '.jpeg', '.gif'];
+
+  try {
+      for (const ext of supportedExtensions) {
+          const filePath = path.join(imageDirectory, `${name}${ext}`);
+          try {
+              await fsPromises.access(filePath);
+              return res.sendFile(filePath);
+          } catch {
+              // File doesn't exist with this extension, continue checking
+          }
+      }
+
+      res.status(404).send('Image not found');
+  } catch (error) {
+      console.error('Error serving image:', error);
+      res.status(500).send('Server error');
+  }
 });
 
 app.get('/traits', async (req, res) => {
