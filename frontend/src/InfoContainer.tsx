@@ -4,23 +4,32 @@ import DragonDisplay from "./DragonDisplay";
 import DragonCount from "./DragonCount";
 import Traits from "./Traits";
 import TraitsFixed from "./TraitsFixed";
-import { imageMap } from "./imageMap";
+import Fire from './images/Fire.webp';
+import useDragonImage from "./hooks/useDragonImage";
 
 const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selectedDragonId }) => {
   const { dragons, error } = useDragons();
-
-  if (error) return <div>{error}</div>;
-  if (!dragons.length) return <div>Loading dragons</div>;
 
   const dragon = selectedDragonId !== null
     ? dragons.find((d) => d.id === selectedDragonId)
     : dragons.find((d) => d.name === "Fire");
 
-  const displayDragon = dragon ?? { id: 1, name: "Fire", elements: ["Fire"], can_be_traited: false, is_only_traited: false };
+  const displayDragon = dragon ?? {
+    id: 1,
+    name: "Fire",
+    elements: ["Fire"],
+    can_be_traited: false,
+    is_only_traited: false
+  };
+
+  const dragonImage = useDragonImage(displayDragon.name);
+
+  if (error) return <div>{error}</div>;
+  if (!dragons.length) return <div>Loading dragons</div>;
 
   return (
     <div className="container">
-      <DragonDisplay src={imageMap[displayDragon.name] || imageMap['Fire']} elements={displayDragon.elements} />
+      <DragonDisplay src={dragonImage || Fire} elements={displayDragon.elements} />
       <h1 style={{margin: 0}}>{displayDragon.name}</h1>
       <Traits can_be_traited={displayDragon.can_be_traited} dragon_id={displayDragon.id}/>
       <TraitsFixed is_only_traited={displayDragon.is_only_traited} name={displayDragon.name}/>
