@@ -3,6 +3,7 @@ import React from "react";
 const nameToTraitMap: Record<string, string> = {
   "Fire Rift": "fire",
   "Plant Rift": "plant",
+  "Earth Rift": "earth",
 };
 
 const TraitToggleFixed: React.FC<{ trait: string, name: string }> = ({ trait, name }) => {
