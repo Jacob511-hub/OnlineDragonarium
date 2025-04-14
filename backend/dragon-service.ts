@@ -56,21 +56,22 @@ const getDragonImages = async (imageDirectory, name, supportedExtensions) => {
   }
 };
 
-const addDragons = async (dragon_id, name, can_be_traited, is_only_traited, elements, pool) => {
+const addDragons = async (name, can_be_traited, is_only_traited, elements, pool) => {
   try {
     const query = `
       INSERT INTO dragons (id, name, can_be_traited, is_only_traited)
-      VALUES ($1, $2, $3, $4)
+      VALUES (DEFAULT, $1, $2, $3)
       RETURNING *;
     `;
 
-    const result = await pool.query(query, [dragon_id, name, can_be_traited, is_only_traited]);
+    const result = await pool.query(query, [name, can_be_traited, is_only_traited]);
+    const newDragon = result.rows[0];
 
     // Insert elements into dragon_elements table
     for (const element of elements) {
       await pool.query(
         `INSERT INTO dragon_elements (dragon_id, element_id) VALUES ($1, $2)`,
-        [dragon_id, element]
+        [newDragon.id, element]
       );
     }
 

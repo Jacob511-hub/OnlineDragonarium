@@ -1,7 +1,6 @@
 import api from "../axios";
 
 interface AddDragonParams {
-  dragon_id: number;
   name: string;
   can_be_traited: boolean;
   is_only_traited: boolean;

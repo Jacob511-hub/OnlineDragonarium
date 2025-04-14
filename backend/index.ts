@@ -103,9 +103,9 @@ app.post("/add-dragons", async (req, res) => {
     return res.status(403).json({ message: "Unauthorized access" });
   }
 
-  const { dragon_id, name, can_be_traited, is_only_traited, elements } = req.body;
+  const { name, can_be_traited, is_only_traited, elements } = req.body;
 
-  const result = await addDragons(dragon_id, name, can_be_traited, is_only_traited, elements, pool);
+  const result = await addDragons(name, can_be_traited, is_only_traited, elements, pool);
   res.status(result.status).json(result.json);
 });
 

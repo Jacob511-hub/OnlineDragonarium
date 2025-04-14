@@ -11,10 +11,8 @@ const AdminMenu: React.FC = () => {
     const [canBeTrait, setCanBeTrait] = useState(false);
     const [isOnlyTrait, setIsOnlyTrait] = useState(false);
     const [elements, setElements] = useState<string[]>([]);
-    const [dragonId, setDragonId] = useState<number>(0);
 
     const { handleAddDragon } = useAddDragon({
-        dragon_id: dragonId,
         name: name,
         can_be_traited: canBeTrait,
         is_only_traited: isOnlyTrait,
@@ -62,15 +60,6 @@ const AdminMenu: React.FC = () => {
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label>Dragon ID:</label>
-                                    <input
-                                        type="number"
-                                        value={dragonId}
-                                        onChange={(e) => setDragonId(Number(e.target.value))}
                                         required
                                     />
                                 </div>
