@@ -6,7 +6,7 @@ const useDragonImage = (name: string) => {
     const imageUrl = useMemo(() => {
         if (!name) return null;
         const formatted = name.replace(/ /g, '_');
-        return `${API_BASE_URL}/images/${formatted}.webp`;
+        return `${API_BASE_URL}/images/${formatted}`;
     }, [name]);
 
     return imageUrl;

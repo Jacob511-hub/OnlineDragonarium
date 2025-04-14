@@ -2,11 +2,10 @@ import express from 'express';
 import pool from './pool';
 import cors from 'cors';
 import path from 'path';
-import { promises as fsPromises } from 'fs';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 const { loginUser, registerUser } = require("./auth-service");
-const { getDragons, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
+const { getDragons, getDragonImages, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -32,22 +31,18 @@ const imageDirectory = path.join(__dirname, '../frontend/src/images');
 app.get('/images/:name', async (req, res) => {
   const name = req.params.name;
   const supportedExtensions = ['.webp', '.png', '.jpg', '.jpeg', '.gif'];
-
+  
   try {
-      for (const ext of supportedExtensions) {
-          const filePath = path.join(imageDirectory, `${name}${ext}`);
-          try {
-              await fsPromises.access(filePath);
-              return res.sendFile(filePath);
-          } catch {
-              // File doesn't exist with this extension, continue checking
-          }
-      }
+    const result = await getDragonImages(imageDirectory, name, supportedExtensions);
 
-      res.status(404).send('Image not found');
-  } catch (error) {
-      console.error('Error serving image:', error);
-      res.status(500).send('Server error');
+    if (result.found) {
+      res.sendFile(result.filePath);
+    } else {
+      res.status(result.error.status).json(result.error.json);
+    }
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 

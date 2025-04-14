@@ -1,3 +1,7 @@
+import path from 'path';
+import { promises as fsPromises } from 'fs';
+import { send } from 'process';
+
 const getDragons = async (pool) => {
     try {
         const dragonsResult = await pool.query("SELECT * FROM dragons");
@@ -31,6 +35,25 @@ const getDragons = async (pool) => {
         console.error(err);
         return { status: 500, json: { message: "Failed to fetch dragons with elements" } };
     }
+};
+
+const getDragonImages = async (imageDirectory, name, supportedExtensions) => {
+  try {
+      for (const ext of supportedExtensions) {
+          const filePath = path.join(imageDirectory, `${name}${ext}`);
+          try {
+            await fsPromises.access(filePath);
+            return { found: true, filePath };
+          } catch {
+            // File not found, try next extension
+          }
+      }
+
+      return { status: 404, json: { message: "Image not found" } };
+  } catch (error) {
+      console.error('Error serving image:', error);
+      return { status: 500, json: { message: 'Server error' } };
+  }
 };
 
 const addDragons = async (dragon_id, name, can_be_traited, is_only_traited, elements, pool) => {
@@ -253,4 +276,4 @@ const getUserDragonTraits = async (user_id, dragon_id, userIdSession, pool) => {
   }
 };
 
-export { getDragons, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
+export { getDragons, getDragonImages, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
