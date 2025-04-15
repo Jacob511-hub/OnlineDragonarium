@@ -4,7 +4,7 @@ interface AddDragonParams {
   name: string;
   can_be_traited: boolean;
   is_only_traited: boolean;
-  elements: string[];
+  elements: number[];
 }
 
 const useAddDragon = (params: AddDragonParams) => {

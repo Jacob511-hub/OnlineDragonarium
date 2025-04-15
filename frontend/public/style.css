@@ -112,6 +112,18 @@ body {
     box-sizing: border-box;
 }
 
+.admin-elements-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.admin-elements-container img {
+    width: 30px;
+    height: auto;
+    object-fit: contain;
+}
+
 .header {
     margin: 0;
 }
