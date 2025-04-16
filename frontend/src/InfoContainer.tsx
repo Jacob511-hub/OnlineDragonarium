@@ -29,7 +29,7 @@ const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selected
 
   return (
     <div className="container">
-      <DragonDisplay src={dragonImage || Fire} elements={displayDragon.elements} />
+      <DragonDisplay src={dragonImage || Fire} elements={displayDragon.elements} id={displayDragon.id} />
       <h1 style={{margin: 0}}>{displayDragon.name}</h1>
       <Traits can_be_traited={displayDragon.can_be_traited} dragon_id={displayDragon.id}/>
       <TraitsFixed is_only_traited={displayDragon.is_only_traited} name={displayDragon.name}/>

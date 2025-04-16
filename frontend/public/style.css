@@ -213,7 +213,6 @@ body {
 }
 
 .dragon-display {
-    background-image: url('/images/tile.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
