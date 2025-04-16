@@ -64,7 +64,7 @@ const AdminMenu: React.FC = () => {
                         color="secondary"
                         onClick={() => setMenuOpen(true)}
                         style={{ position: "absolute", bottom: "10px", left: "10px" }}>
-                        {menuOpen ? "Close Admin Menu" : "Open Admin Menu"}
+                        {"Open Admin Menu"}
                     </button>
 
                     {menuOpen && (
