@@ -7,16 +7,18 @@ interface DragonCardProps {
   id: number;
   name: string;
   can_be_traited: boolean;
+  is_only_traited: boolean;
   onClick: () => void;
 }
 
-const DragonCard: React.FC<DragonCardProps> = ({ id, name, can_be_traited, onClick }) => {
+const DragonCard: React.FC<DragonCardProps> = ({ id, name, can_be_traited, is_only_traited, onClick }) => {
   const dragonImage = useDragonImage(name);
 
   return (
     <Dragon
       id={id}
       can_be_traited={can_be_traited}
+      is_only_traited={is_only_traited}
       src={dragonImage ?? ''}
       onClick={onClick}
     />
@@ -57,6 +59,7 @@ const ListContainer: React.FC<{ filters: Record<string, number>; onClick: (id: n
             id={dragon.id}
             name={dragon.name}
             can_be_traited={dragon.can_be_traited}
+            is_only_traited={dragon.is_only_traited}
             onClick={() => onClick(dragon.id)}
           />
         ))

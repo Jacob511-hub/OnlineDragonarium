@@ -1,9 +1,10 @@
 import React from "react";
 import TraitWheel from "./TraitWheel";
+import TraitWheelStatic from "./TraitWheelStatic";
 import useCurrentUser from "./hooks/useCurrentUser";
 import useDragonCounts from "./hooks/useDragonCounts";
 
-const Dragon: React.FC<{ id: number; can_be_traited: boolean; src: string; onClick: () => void }> = ({ id, can_be_traited, src, onClick }) => {
+const Dragon: React.FC<{ id: number; can_be_traited: boolean; is_only_traited: boolean; src: string; onClick: () => void }> = ({ id, can_be_traited, is_only_traited, src, onClick }) => {
     const user_id = useCurrentUser();
     const userIdString = user_id !== null ? user_id.toString() : "guest";
 
@@ -33,6 +34,7 @@ const Dragon: React.FC<{ id: number; can_be_traited: boolean; src: string; onCli
         <div className="dragon" onClick={onClick} style={{ cursor: "pointer", backgroundImage: `url(${image})`, filter}}>
             <img src={src}/>
             {can_be_traited && <TraitWheel id={id} can_be_traited={can_be_traited} />}
+            {is_only_traited && <TraitWheelStatic is_only_traited={is_only_traited} />}
         </div>
     );
 };
