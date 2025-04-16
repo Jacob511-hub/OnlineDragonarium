@@ -44,6 +44,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
                 <>
                     <h2 style={{color: '#1199ff'}} className="header">Non-Traited Dragons</h2>
                     <input
+                        style={{backgroundColor: '#1199ff'}}
                         type="number"
                         placeholder="# of Dragons"
                         min={0}
@@ -57,6 +58,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
                 <>
                     <h2 style={{color: '#1199ff'}} className="header">Traited Dragons</h2>
                     <input
+                        style={{backgroundColor: '#1199ff'}}
                         type="number"
                         placeholder="# of Dragons"
                         min={0}

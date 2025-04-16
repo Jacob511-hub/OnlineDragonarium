@@ -90,8 +90,10 @@ body {
     height: auto;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.588);
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 10px;
     padding: 5px;
+    box-sizing: border-box;
 }
 
 .traits-container img {
@@ -112,8 +114,10 @@ body {
     height: auto;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.588);
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 10px;
     padding: 5px;
+    box-sizing: border-box;
 }
 
 .traits-container-fixed img {
@@ -124,14 +128,26 @@ body {
 
 .count-container {
     display: flex;
-    flex: 1;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     color: white;
-    height: 100%;
+    height: auto;
     width: 100%;
-    padding: 0;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.588);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.count-container input {
+    width: 50%;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 5px;
     box-sizing: border-box;
 }
 
@@ -201,7 +217,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    width: 65%;
+    width: 55%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
     padding: calc(5%);
