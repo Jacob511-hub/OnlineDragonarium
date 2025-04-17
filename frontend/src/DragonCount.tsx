@@ -10,11 +10,11 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
 
     return (
         <div className="count-container">
-            <h1 style={{textDecoration: 'underline'}} className="header">Normal Dragons</h1>
+            <h1 style={{textDecoration: 'underline'}} className="header">Normal</h1>
 
             {!is_only_traited && (
                 <>
-                    <h2 className="header">Non-Traited Dragons</h2>
+                    <h2 className="header">Non-Traited</h2>
                     <input
                         type="number"
                         placeholder="# of Dragons"
@@ -27,7 +27,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
 
             {(can_be_traited || is_only_traited) && (
                 <>
-                    <h2 className="header">Traited Dragons</h2>
+                    <h2 className="header">Traited</h2>
                     <input
                         type="number"
                         placeholder="# of Dragons"
@@ -38,11 +38,11 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
                 </>
             )}
 
-            {!is_only_traited &&(<h1 style={{textDecoration: 'underline', color: '#1199ff'}} className="header">Twin Dragons</h1>)}
+            {!is_only_traited &&(<h1 style={{textDecoration: 'underline', color: '#1199ff'}} className="header">Twins</h1>)}
 
             {!is_only_traited && (
                 <>
-                    <h2 style={{color: '#1199ff'}} className="header">Non-Traited Dragons</h2>
+                    <h2 style={{color: '#1199ff'}} className="header">Non-Traited</h2>
                     <input
                         style={{backgroundColor: '#1199ff'}}
                         type="number"
@@ -56,7 +56,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
 
             {(can_be_traited && !is_only_traited) && (
                 <>
-                    <h2 style={{color: '#1199ff'}} className="header">Traited Dragons</h2>
+                    <h2 style={{color: '#1199ff'}} className="header">Traited</h2>
                     <input
                         style={{backgroundColor: '#1199ff'}}
                         type="number"

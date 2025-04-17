@@ -311,3 +311,73 @@ body {
     bottom: 10px;
     right: 10px;
 }
+
+@media (max-width: 1200px) {
+    .app {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+        justify-items: center;
+    }
+    
+    .app > div:nth-child(1) {
+        grid-row: 1;
+        grid-column: 1;
+        padding: 0rem;
+    }
+
+    .app > div:nth-child(2) {
+        grid-row: 2;
+        grid-column: 1;
+        width: auto;
+        margin: 0;
+        padding: calc(5%);
+    }
+    
+    .app > div:nth-child(3) {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        width: 100%;
+    }
+
+    .filter-button {
+        text-overflow: clip;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .dragon {
+        width: 40%;
+        max-width: 100px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .dragon-display {
+        width: 70%;
+        overflow: visible;
+    }
+
+    .traits-container {
+        max-width: 200px;
+        flex-wrap: wrap;
+    }
+
+    .traits-container img {
+        width: 20%;
+    }
+
+    .traits-container-fixed {
+        flex-wrap: wrap;
+    }
+
+    .traits-container-fixed img {
+        width: 20%;
+    }
+
+    .count-container {
+        overflow: auto;
+    }
+}
