@@ -6,6 +6,7 @@ const nameToTraitMap: Record<string, string> = {
   "Earth Rift": "earth",
   "Cold Rift": "cold",
   "Lightning Rift": "lightning",
+  "Air Rift": "air",
 };
 
 const TraitToggleFixed: React.FC<{ trait: string, name: string }> = ({ trait, name }) => {
