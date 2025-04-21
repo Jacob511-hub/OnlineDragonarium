@@ -37,16 +37,14 @@ const getDragons = async (pool) => {
     }
 };
 
-const getDragonImages = async (imageDirectory, name, supportedExtensions) => {
+const getDragonImages = async (imageDirectory, imageFileName) => {
   try {
-      for (const ext of supportedExtensions) {
-          const filePath = path.join(imageDirectory, `${name}${ext}`);
-          try {
-            await fsPromises.access(filePath);
-            return { found: true, filePath };
-          } catch {
-            // File not found, try next extension
-          }
+      const filePath = path.join(imageDirectory, `${imageFileName}`);
+      try {
+        await fsPromises.access(filePath);
+        return { found: true, filePath };
+      } catch {
+        // File not found, try next extension
       }
 
       return { status: 404, json: { message: "Image not found" } };

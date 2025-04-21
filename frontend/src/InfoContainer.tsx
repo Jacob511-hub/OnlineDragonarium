@@ -22,7 +22,7 @@ const InfoContainer: React.FC<{ selectedDragonId: number | null }> = ({ selected
     is_only_traited: false
   };
 
-  const dragonImage = useDragonImage(displayDragon.name);
+  const dragonImage = useDragonImage(displayDragon.id);
 
   if (error) return <div>{error}</div>;
   if (!dragons.length) return <div>Loading dragons</div>;

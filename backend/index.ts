@@ -28,12 +28,17 @@ app.get("/dragons", async (req, res) => {
 app.use('/images', express.static(path.join(__dirname, '../frontend/src/images')));
 const imageDirectory = path.join(__dirname, '../frontend/src/images');
 
-app.get('/images/:name', async (req, res) => {
-  const name = req.params.name;
-  const supportedExtensions = ['.webp', '.png', '.jpg', '.jpeg', '.gif'];
+app.get('/dragons/:id/image', async (req, res) => {
+  const id = req.params.id;
+  const result = await pool.query('SELECT image FROM dragons WHERE id = $1', [id]);
+  const dragon = result.rows[0];
+  if (!dragon) {
+    return res.status(404).json({ message: 'Dragon not found' });
+  }
+  const imageFileName = dragon.image;
   
   try {
-    const result = await getDragonImages(imageDirectory, name, supportedExtensions);
+    const result = await getDragonImages(imageDirectory, imageFileName);
 
     if (result.found) {
       res.sendFile(result.filePath);

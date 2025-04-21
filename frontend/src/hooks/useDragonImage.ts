@@ -2,12 +2,11 @@ import { useMemo } from 'react';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const useDragonImage = (name: string) => {
+const useDragonImage = (id: number) => {
     const imageUrl = useMemo(() => {
-        if (!name) return null;
-        const formatted = name.replace(/ /g, '_');
-        return `${API_BASE_URL}/images/${formatted}`;
-    }, [name]);
+        if (!id) return null;
+        return `${API_BASE_URL}/dragons/${id}/image`;
+    }, [id]);
 
     return imageUrl;
 };

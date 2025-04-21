@@ -12,7 +12,7 @@ interface DragonCardProps {
 }
 
 const DragonCard: React.FC<DragonCardProps> = ({ id, name, can_be_traited, is_only_traited, onClick }) => {
-  const dragonImage = useDragonImage(name);
+  const dragonImage = useDragonImage(id);
 
   return (
     <Dragon
