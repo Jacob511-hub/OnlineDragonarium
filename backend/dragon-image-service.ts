@@ -18,6 +18,10 @@ class DiskDragonImageService implements DragonImageService {
         this.basePath = basePath;
     }
 
+    getBasePath(): string {
+        return this.basePath;
+    }
+
     getImageStream(filename: string): NodeJS.ReadableStream {
         const filePath = path.join(this.basePath, filename);
         return createReadStream(filePath);
@@ -30,3 +34,5 @@ class DiskDragonImageService implements DragonImageService {
         await pipelineAsync(data, writeStream);
     };
 };
+
+export default DiskDragonImageService;

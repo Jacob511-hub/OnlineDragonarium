@@ -7,6 +7,10 @@ const nameToTraitMap: Record<string, string> = {
   "Cold Rift": "cold",
   "Lightning Rift": "lightning",
   "Air Rift": "air",
+  "Metal Rift": "metal",
+  "Water Rift": "water",
+  "Dark Rift": "dark",
+  "Light Rift": "light",
 };
 
 const TraitToggleFixed: React.FC<{ trait: string, name: string }> = ({ trait, name }) => {

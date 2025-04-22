@@ -4,6 +4,7 @@ import { keyframes } from "@emotion/react";
 import AdminMenuElementPicker from "./AdminMenuElementPicker";
 import useIsAdmin from "./hooks/useIsAdmin";
 import useAddDragon from "./hooks/useAddDragon";
+import useUploadImage from "./hooks/useUploadImage";
 
 const slideDownFade = keyframes`
     from {
@@ -29,6 +30,7 @@ const AdminMenu: React.FC = () => {
         transform: "translate(-50%, -50%)",
         animation: `${slideDownFade} 0.3s ease-out`,
         width: "450px",
+        height: "300px",
         borderRadius: "10px",
         boxShadow: 24,
         p: 4,
@@ -56,6 +58,27 @@ const AdminMenu: React.FC = () => {
         handleAddDragon();
     };
 
+    const { uploadImage } = useUploadImage();
+
+    const handleImageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        const fileInput = e.currentTarget.querySelector('input[type="file"]') as HTMLInputElement;
+
+        if (fileInput && fileInput.files) {
+            const file = fileInput.files[0];
+            formData.append("image", file);
+        }
+
+        try {
+            await uploadImage(formData);
+            alert("Image uploaded successfully!");
+        } catch (error) {
+            alert("Failed to upload image.");
+        }
+    };
+
     return (
         <div>
             {is_admin && (
@@ -70,7 +93,7 @@ const AdminMenu: React.FC = () => {
                     {menuOpen && (
                         <Modal open={menuOpen} onClose={() => setMenuOpen(false)}>
                             <Box sx={modalStyle}>
-                                <h1 style={{marginTop: "0px"}}>Admin Menu</h1>
+                                <h1 style={{marginTop: "0px"}}>Add Dragon</h1>
                                 <form onSubmit={handleSubmit} style={{ marginTop: "1rem" }}>
                                     <div>
                                         <label>Dragon Name:</label>
@@ -102,6 +125,14 @@ const AdminMenu: React.FC = () => {
                                         <AdminMenuElementPicker elements={elements} setElements={setElements} />
                                     </div>
                                     <button type="submit">Add Dragon</button>
+                                </form>
+                                <h1>Add Image</h1>
+                                <form onSubmit={handleImageSubmit} style={{ marginTop: "1rem" }}>
+                                    <div>
+                                        <label>Upload Image:</label>
+                                        <input type="file" accept="image/*" required />
+                                    </div>
+                                    <button type="submit">Upload Image</button>
                                 </form>
                             </Box>
                         </Modal>

@@ -2,8 +2,10 @@ import express from 'express';
 import pool from './pool';
 import cors from 'cors';
 import path from 'path';
+import multer from 'multer';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
+import DiskDragonImageService from './dragon-image-service';
 const { loginUser, registerUser } = require("./auth-service");
 const { getDragons, getDragonImages, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
@@ -11,6 +13,7 @@ dotenv.config();
 
 const app = express();
 const port = 5000;
+const router = express.Router();
 
 app.use(
   cors({
@@ -48,6 +51,28 @@ app.get('/dragons/:id/image', async (req, res) => {
   } catch (err) {
     console.error('Unexpected error:', err);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+const upload = multer({ storage: multer.memoryStorage() });
+const imageService = new DiskDragonImageService(imageDirectory);
+
+app.post('/upload', upload.single('image'), async (req, res) => {
+  try {
+      if (!req.file) {
+          return res.status(400).json({ error: 'No image file uploaded.' });
+      }
+
+      const stream = require('stream');
+      const readableImageStream = new stream.PassThrough();
+      readableImageStream.end(req.file.buffer);
+
+      await imageService.saveImage(req.file.originalname, readableImageStream);
+
+      res.status(200).json({ message: 'Image uploaded successfully.', filename: req.file.originalname });
+  } catch (error) {
+      console.error('Upload error:', error);
+      res.status(500).json({ error: 'Failed to upload image.' });
   }
 });
 
