@@ -32,41 +32,58 @@ import IconGemstone from './images/Icon_Gemstone.webp';
 import IconCrystalline from './images/Icon_Crystalline.webp';
 import IconGalaxy from './images/Icon_Galaxy.webp';
 
-const FilterContainer: React.FC<{ onToggle: (name: string, state: number) => void }> = ({ onToggle }) => {
+interface FilterContainerProps {
+  filters: { [name: string]: number };
+  onToggle: (name: string, state: number) => void;
+}
+
+const FilterContainer: React.FC<FilterContainerProps> = ({ filters, onToggle }) => {
+  const buttons = [
+    { name: "Fire", src: IconFire },
+    { name: "Plant", src: IconPlant },
+    { name: "Earth", src: IconEarth },
+    { name: "Cold", src: IconCold },
+    { name: "Air", src: IconAir },
+    { name: "Lightning", src: IconLightning },
+    { name: "Water", src: IconWater },
+    { name: "Metal", src: IconMetal },
+    { name: "Light", src: IconLight },
+    { name: "Dark", src: IconDark },
+    { name: "Rift", src: IconRift },
+    { name: "Rainbow", src: IconRainbow },
+    { name: "Sun", src: IconSun },
+    { name: "Moon", src: IconMoon },
+    { name: "Treasure", src: IconTreasure },
+    { name: "Olympus", src: IconOlympus },
+    { name: "Seasonal", src: IconSeasonal },
+    { name: "Apocalypse", src: IconApocalypse },
+    { name: "Dream", src: IconDream },
+    { name: "Snowflake", src: IconSnowflake },
+    { name: "Monolith", src: IconMonolith },
+    { name: "Chrysalis", src: IconChrysalis },
+    { name: "Ornamental", src: IconOrnamental },
+    { name: "Aura", src: IconAura },
+    { name: "Hidden", src: IconHidden },
+    { name: "Surface", src: IconSurface },
+    { name: "Melody", src: IconMelody },
+    { name: "Zodiac", src: IconZodiac },
+    { name: "Gemstone", src: IconGemstone },
+    { name: "Crystalline", src: IconCrystalline },
+    { name: "Galaxy", src: IconGalaxy },
+  ];
+
   return (
     <div className="filter-container">
       <div className="filter-box">
-        <FilterButton src={IconFire} name="Fire" onToggle={onToggle} />
-        <FilterButton src={IconPlant} name="Plant" onToggle={onToggle} />
-        <FilterButton src={IconEarth} name="Earth" onToggle={onToggle} />
-        <FilterButton src={IconCold} name="Cold" onToggle={onToggle} />
-        <FilterButton src={IconAir} name="Air" onToggle={onToggle} />
-        <FilterButton src={IconLightning} name="Lightning" onToggle={onToggle} />
-        <FilterButton src={IconWater} name="Water" onToggle={onToggle} />
-        <FilterButton src={IconMetal} name="Metal" onToggle={onToggle} />
-        <FilterButton src={IconLight} name="Light" onToggle={onToggle} />
-        <FilterButton src={IconDark} name="Dark" onToggle={onToggle} />
-        <FilterButton src={IconRift} name="Rift" onToggle={onToggle} />
-        <FilterButton src={IconRainbow} name="Rainbow" onToggle={onToggle} />
-        <FilterButton src={IconSun} name="Sun" onToggle={onToggle} />
-        <FilterButton src={IconMoon} name="Moon" onToggle={onToggle} />
-        <FilterButton src={IconTreasure} name="Treasure" onToggle={onToggle} />
-        <FilterButton src={IconOlympus} name="Olympus" onToggle={onToggle} />
-        <FilterButton src={IconSeasonal} name="Seasonal" onToggle={onToggle} />
-        <FilterButton src={IconApocalypse} name="Apocalypse" onToggle={onToggle} />
-        <FilterButton src={IconDream} name="Dream" onToggle={onToggle} />
-        <FilterButton src={IconSnowflake} name="Snowflake" onToggle={onToggle} />
-        <FilterButton src={IconMonolith} name="Monolith" onToggle={onToggle} />
-        <FilterButton src={IconChrysalis} name="Chrysalis" onToggle={onToggle} />
-        <FilterButton src={IconOrnamental} name="Ornamental" onToggle={onToggle} />
-        <FilterButton src={IconAura} name="Aura" onToggle={onToggle} />
-        <FilterButton src={IconHidden} name="Hidden" onToggle={onToggle} />
-        <FilterButton src={IconSurface} name="Surface" onToggle={onToggle} />
-        <FilterButton src={IconMelody} name="Melody" onToggle={onToggle} />
-        <FilterButton src={IconZodiac} name="Zodiac" onToggle={onToggle} />
-        <FilterButton src={IconGemstone} name="Gemstone" onToggle={onToggle} />
-        <FilterButton src={IconCrystalline} name="Crystalline" onToggle={onToggle} />
-        <FilterButton src={IconGalaxy} name="Galaxy" onToggle={onToggle} />
+        {buttons.map(({ name, src }) => (
+          <FilterButton
+            key={name}
+            src={src}
+            name={name}
+            state={filters[name] ?? 0}
+            onToggle={onToggle}
+          />
+        ))}
       </div>
     </div>
   );

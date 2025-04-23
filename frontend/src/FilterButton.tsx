@@ -3,15 +3,13 @@ import React, { useState } from "react";
 interface FilterButtonProps {
     src: string;
     name: string;
+    state: number;
     onToggle: (name: string, state: number) => void;
 }
 
-const FilterButton: React.FC<FilterButtonProps> = ({ src, name, onToggle }) => {
-    const [state, setState] = useState(0);
-  
+const FilterButton: React.FC<FilterButtonProps> = ({ src, name, state, onToggle }) => {
     const handleClick = () => {
       const newState = (state + 1) % 3;
-      setState(newState);
       onToggle(name, newState);
     };
   

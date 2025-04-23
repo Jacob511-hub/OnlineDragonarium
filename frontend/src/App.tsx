@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FilterContainer from "./FilterContainer";
+import FilterContainerModal from "./FilterContainerModal";
 import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
 import LogoutButton from "./LogoutButton";
@@ -27,7 +27,7 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <FilterContainer onToggle={handleToggle} />
+      <FilterContainerModal filters={filters} onToggle={handleToggle} />
       <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
       <InfoContainer selectedDragonId={selectedDragonId} />
       <LogoutButton />

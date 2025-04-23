@@ -4,10 +4,11 @@ import FilterContainer from "./FilterContainer";
 type FilterButtonProps = {
     src: string;
     name: string;
+    value: number;
     onToggle: (name: string, state: number) => void;
 };
-  
-jest.mock("./FilterButton", () => ({ src, name, onToggle }: FilterButtonProps) => (
+
+jest.mock("./FilterButton", () => ({ name, onToggle }: FilterButtonProps) => (
     <button data-testid={`filter-button-${name}`} onClick={() => onToggle(name, 1)}>
         {name}
     </button>
@@ -15,7 +16,7 @@ jest.mock("./FilterButton", () => ({ src, name, onToggle }: FilterButtonProps) =
 
 describe("FilterContainer", () => {
     it("renders all filter buttons", () => {
-        render(<FilterContainer onToggle={jest.fn()} />);
+        render(<FilterContainer filters={{}} onToggle={jest.fn()} />);
         
         const filterNames = [
             "Fire", "Plant", "Earth", "Cold", "Air", 
@@ -29,7 +30,7 @@ describe("FilterContainer", () => {
 
     it("calls onToggle with the correct arguments when a button is clicked", () => {
         const mockOnToggle = jest.fn();
-        render(<FilterContainer onToggle={mockOnToggle} />);
+        render(<FilterContainer filters={{}} onToggle={mockOnToggle} />);
 
         const fireButton = screen.getByTestId("filter-button-Fire");
         fireEvent.click(fireButton!);
