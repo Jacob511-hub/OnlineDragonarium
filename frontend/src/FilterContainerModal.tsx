@@ -19,18 +19,17 @@ const FilterContainerModal: React.FC<FilterContainerModalProps> = ({ filters, on
     <>
       {isMobile ? (
         <>
-          <Button 
-            onClick={handleOpen} 
-            variant="contained" 
-            sx={{
+          <button 
+            onClick={handleOpen}
+            style={{
               position: 'fixed',
-              top: 16,
-              right: 16,
-              zIndex: 1300,
+              top: 10,
+              right: 10,
+              zIndex: 99,
             }}
           >
             Filters
-          </Button>
+          </button>
           <Modal open={open} onClose={handleClose}>
             <Box 
               sx={{

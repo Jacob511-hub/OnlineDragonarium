@@ -268,7 +268,7 @@ body {
 .filter-button {
     display: flex;
     align-items: center;
-    width: 45%;
+    width: 40%;
     background-color: rgb(139, 139, 139);
     border: black;
     border-style: solid;
@@ -352,11 +352,13 @@ body {
 
     .dragon-display {
         width: 70%;
+        max-width: 300px;
+        padding: min(22px, 5%);
         overflow: visible;
     }
 
     .traits-container {
-        max-width: 200px;
+        max-width: 300px;
         flex-wrap: wrap;
     }
 
