@@ -26,14 +26,22 @@ const Register: React.FC = () => {
         });
   
     return (
-        <div className="app">
+        <div className="login">
             <div className="login-container">
                 <h2>Create Account</h2>
-                <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button onClick={handleRegister} style={{ cursor: "pointer" }}>Register</button>
-                <button onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>Back to Login</button>
+                <input className="login-input" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <input className="login-input" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input className="login-input" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <button
+                    className='button-default'
+                    style={{ width: '150px' }}
+                    onClick={handleRegister}
+                >Register</button>
+                <button
+                    className='button-default'
+                    style={{ width: '150px' }}
+                    onClick={() => navigate("/login")}
+                >Back to Login</button>
             </div>
         </div>
     );

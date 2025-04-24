@@ -86,7 +86,9 @@ const AdminMenu: React.FC = () => {
                     <button
                         color="secondary"
                         onClick={() => setMenuOpen(true)}
-                        style={{ position: "fixed", bottom: "10px", left: "10px" }}>
+                        className='button-default'
+                        style={{ position: "fixed", bottom: "10px", left: "10px", fontSize: "14px" }}
+                    >
                         {"Open Admin Menu"}
                     </button>
 

@@ -21,6 +21,7 @@ const FilterContainerModal: React.FC<FilterContainerModalProps> = ({ filters, on
         <>
           <button 
             onClick={handleOpen}
+            className='button-default'
             style={{
               position: 'fixed',
               top: 10,

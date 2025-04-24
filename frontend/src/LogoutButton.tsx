@@ -9,9 +9,9 @@ const LogoutButton: React.FC = () => {
     return (
         <div className="logout-button">
             {isLoggedIn ? (
-                <button onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</button>
+                <button className='button-default' onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</button>
             ) : (
-                <button onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>Login</button>
+                <button className='button-default' onClick={() => navigate("/login")} style={{ cursor: "pointer" }}>Login</button>
             )}
         </div>
     );

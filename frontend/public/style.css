@@ -15,6 +15,15 @@ body {
     box-sizing: border-box;
 }
 
+.login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
 *::-webkit-scrollbar {
     width: 7px;
     height: 5px;
@@ -312,6 +321,23 @@ body {
     right: 10px;
 }
 
+.button-default {
+    color: white;
+    background: linear-gradient(#8a8d8c, #696969);
+    box-shadow: 1px 1px 3px #000000;
+    border: 2px solid #585858;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    width: 100px;
+    height: 50px;
+    font-size: 16px;
+}
+
+.button-default:active {
+    transform: scale(0.9);
+}
+
 @media (max-width: 1200px) {
     .app {
         display: flex;
@@ -328,7 +354,7 @@ body {
 
     .app > div:nth-child(2) {
         width: auto;
-        height: 500px;
+        height: 700px;
         margin: 0;
         padding: 20px;
     }
@@ -376,5 +402,14 @@ body {
 
     .count-container {
         overflow: auto;
+    }
+
+    .login-container {
+        width: 50%;
+    }
+
+    .login-input {
+        width: 100%;
+        max-width: 400px;
     }
 }
