@@ -3,11 +3,12 @@ import pool from './pool';
 import cors from 'cors';
 import path from 'path';
 import multer from 'multer';
+import stream from 'stream';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
-import DiskDragonImageService from './dragon-image-service';
+import { DiskDragonImageService, getDragonImages } from './dragon-image-service';
 const { loginUser, registerUser } = require("./auth-service");
-const { getDragons, getDragonImages, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
+const { getDragons, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -28,8 +29,8 @@ app.get("/dragons", async (req, res) => {
   res.status(result.status).json(result.json);
 });
 
-app.use('/images', express.static(path.join(__dirname, '../frontend/src/images')));
 const imageDirectory = path.join(__dirname, '../frontend/src/images');
+app.use('/images', express.static(imageDirectory));
 
 app.get('/dragons/:id/image', async (req, res) => {
   const id = req.params.id;
@@ -63,7 +64,6 @@ app.post('/upload', upload.single('image'), async (req, res) => {
           return res.status(400).json({ error: 'No image file uploaded.' });
       }
 
-      const stream = require('stream');
       const readableImageStream = new stream.PassThrough();
       readableImageStream.end(req.file.buffer);
 

@@ -37,23 +37,6 @@ const getDragons = async (pool) => {
     }
 };
 
-const getDragonImages = async (imageDirectory, imageFileName) => {
-  try {
-      const filePath = path.join(imageDirectory, `${imageFileName}`);
-      try {
-        await fsPromises.access(filePath);
-        return { found: true, filePath };
-      } catch {
-        // File not found, try next extension
-      }
-
-      return { status: 404, json: { message: "Image not found" } };
-  } catch (error) {
-      console.error('Error serving image:', error);
-      return { status: 500, json: { message: 'Server error' } };
-  }
-};
-
 const addDragons = async (name, can_be_traited, is_only_traited, elements, pool) => {
   try {
     const image = name.replace(/ /g, '_') + '.webp';
@@ -282,4 +265,4 @@ const getUserDragonTraits = async (user_id, dragon_id, userIdSession, pool) => {
   }
 };
 
-export { getDragons, getDragonImages, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
+export { getDragons, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
