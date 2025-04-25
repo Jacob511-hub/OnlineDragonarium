@@ -1,7 +1,3 @@
-import path from 'path';
-import { promises as fsPromises } from 'fs';
-import { send } from 'process';
-
 const getDragons = async (pool) => {
     try {
         const dragonsResult = await pool.query("SELECT * FROM dragons");

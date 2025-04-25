@@ -4,16 +4,19 @@ import { createReadStream, createWriteStream } from 'fs';
 import { pipeline } from 'stream';
 import { promisify } from 'util';
 
-const getDragonImages = async (imageDirectory, imageFileName) => {
+const pipelineAsync = promisify(pipeline);
+
+export const getDragonImages = async (imageService: DragonImageService, imageFileName: string) => {
     try {
-        const filePath = path.join(imageDirectory, `${imageFileName}`);
+        const imagePath = path.join(imageService.getBasePath?.() || '', imageFileName);
+
         try {
-          await fsPromises.access(filePath);
-          return { found: true, filePath };
+            await fsPromises.access(imagePath);
+            return { found: true, filePath: imagePath };
         } catch {
-          // File not found, try next extension
+            // File not found
         }
-  
+
         return { found: false, error: { status: 404, json: { message: "Image not found" } } };
     } catch (error) {
         console.error('Error serving image:', error);
@@ -21,14 +24,13 @@ const getDragonImages = async (imageDirectory, imageFileName) => {
     }
 };
 
-const pipelineAsync = promisify(pipeline);
-
-interface DragonImageService {
+export interface DragonImageService {
     getImageStream(filename: string): NodeJS.ReadableStream;
     saveImage(filename: string, data: NodeJS.ReadableStream): Promise<void>;
+    getBasePath?(): string;
 }
 
-class DiskDragonImageService implements DragonImageService {
+export class DiskDragonImageService implements DragonImageService {
     private basePath: string;
 
     constructor(basePath: string) {
@@ -52,4 +54,7 @@ class DiskDragonImageService implements DragonImageService {
     };
 };
 
-export { DiskDragonImageService, getDragonImages };
+export const getDragonImageService = (): DragonImageService => {
+    const imageDirectory = path.join(__dirname, '../frontend/src/images');
+    return new DiskDragonImageService(imageDirectory);
+};

@@ -1,12 +1,11 @@
 import express from 'express';
 import pool from './pool';
 import cors from 'cors';
-import path from 'path';
 import multer from 'multer';
 import stream from 'stream';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
-import { DiskDragonImageService, getDragonImages } from './dragon-image-service';
+import { getDragonImageService, getDragonImages } from './dragon-image-service';
 const { loginUser, registerUser } = require("./auth-service");
 const { getDragons, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
@@ -14,7 +13,6 @@ dotenv.config();
 
 const app = express();
 const port = 5000;
-const router = express.Router();
 
 app.use(
   cors({
@@ -29,20 +27,26 @@ app.get("/dragons", async (req, res) => {
   res.status(result.status).json(result.json);
 });
 
-const imageDirectory = path.join(__dirname, '../frontend/src/images');
-app.use('/images', express.static(imageDirectory));
+const upload = multer({ storage: multer.memoryStorage() });
+const imageService = getDragonImageService();
+
+if (imageService.getBasePath) {
+  app.use('/images', express.static(imageService.getBasePath()));
+}
 
 app.get('/dragons/:id/image', async (req, res) => {
   const id = req.params.id;
   const result = await pool.query('SELECT image FROM dragons WHERE id = $1', [id]);
   const dragon = result.rows[0];
+
   if (!dragon) {
     return res.status(404).json({ message: 'Dragon not found' });
   }
+
   const imageFileName = dragon.image;
   
   try {
-    const result = await getDragonImages(imageDirectory, imageFileName);
+    const result = await getDragonImages(imageService, imageFileName);
 
     if (result.found) {
       res.sendFile(result.filePath);
@@ -54,9 +58,6 @@ app.get('/dragons/:id/image', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
-const upload = multer({ storage: multer.memoryStorage() });
-const imageService = new DiskDragonImageService(imageDirectory);
 
 app.post('/upload', upload.single('image'), async (req, res) => {
   try {
