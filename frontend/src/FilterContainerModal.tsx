@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Box, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Modal, Box } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FilterContainer from './FilterContainer';
 

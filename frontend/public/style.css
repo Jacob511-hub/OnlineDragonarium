@@ -228,7 +228,6 @@ body {
     width: 55%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    padding: calc(5%);
     box-sizing: border-box;
     position: relative;
 }
@@ -258,6 +257,28 @@ body {
     height: 100%;
     width: auto;
     object-fit: contain;
+}
+
+.breeding-hint {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    top: calc(0%);
+    right: calc(0%);
+    height: 30%;
+    width: 30%;
+    padding: 0rem;
+    margin: 0rem;
+    box-sizing: border-box;
+    z-index: 10;
+    filter: brightness(1.0);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.breeding-hint:active {
+    transform: scale(0.9);
 }
 
 .filter-box {
@@ -380,7 +401,6 @@ body {
     .dragon-display {
         width: 100%;
         max-width: 300px;
-        padding: min(22px, 5%);
         overflow: hidden;
     }
 

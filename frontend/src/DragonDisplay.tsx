@@ -2,6 +2,7 @@ import React from "react";
 import useCurrentUser from "./hooks/useCurrentUser";
 import useDragonCounts from "./hooks/useDragonCounts";
 import ElementsDisplay from "./ElementsDisplay";
+import BreedingHint from "./BreedingHint";
 import IconFire from './images/Icon_Fire.webp';
 import IconPlant from './images/Icon_Plant.webp';
 import IconEarth from './images/Icon_Earth.webp';
@@ -95,11 +96,25 @@ const DragonDisplay: React.FC<{ src: string; elements: string[]; id: number }> =
     }
 
     return (
-        <div className="dragon-display "style={{ backgroundImage: `url(${image})`, filter}}>
-            <img
-                src={src}
-            />
-            <ElementsDisplay elements={elements} elementIcons={elementIcons} />
+        <div className="dragon-display">
+            <div style={{
+                backgroundImage: `url(${image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                aspectRatio: '1 / 1',
+                overflow: 'hidden',
+                padding: 'calc(5%)',
+                boxSizing: 'border-box',
+                position: 'relative',
+                filter
+            }}>
+                <img
+                    src={src}
+                />
+                <ElementsDisplay elements={elements} elementIcons={elementIcons} />
+            </div>
+            <BreedingHint id={id} />
         </div>
     );
 };
