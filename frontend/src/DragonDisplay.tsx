@@ -35,7 +35,7 @@ import IconGemstone from './images/Icon_Gemstone.webp';
 import IconCrystalline from './images/Icon_Crystalline.webp';
 import IconGalaxy from './images/Icon_Galaxy.webp';
 
-const DragonDisplay: React.FC<{ src: string; elements: string[]; id: number }> = ({ src, elements, id }) => {
+const DragonDisplay: React.FC<{ src: string; elements: string[]; id: number; setSelectedDragonId: (dragonId: number) => void }> = ({ src, elements, id, setSelectedDragonId }) => {
     const elementIcons: { [key: string]: string } = {
         Fire: IconFire,
         Plant: IconPlant,
@@ -114,7 +114,7 @@ const DragonDisplay: React.FC<{ src: string; elements: string[]; id: number }> =
                 />
                 <ElementsDisplay elements={elements} elementIcons={elementIcons} />
             </div>
-            <BreedingHint id={id} />
+            <BreedingHint id={id} setSelectedDragonId={setSelectedDragonId} />
         </div>
     );
 };

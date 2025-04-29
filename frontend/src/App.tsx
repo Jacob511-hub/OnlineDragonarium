@@ -29,7 +29,7 @@ const App: React.FC = () => {
     <div className="app">
       <FilterContainerModal filters={filters} onToggle={handleToggle} />
       <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
-      <InfoContainer selectedDragonId={selectedDragonId} />
+      <InfoContainer selectedDragonId={selectedDragonId} setSelectedDragonId={setSelectedDragonId} />
       <LogoutButton />
       <AdminMenu />
     </div>
