@@ -31,7 +31,7 @@ describe("getDragons", () => {
       const result = await getDragons(mockPool);
   
       expect(mockPool.query).toHaveBeenCalledTimes(2);
-      expect(mockPool.query).toHaveBeenCalledWith("SELECT * FROM dragons");
+      expect(mockPool.query).toHaveBeenCalledWith("SELECT * FROM dragons ORDER BY id ASC");
       const normalizeQuery = (query: string) => query.replace(/\s+/g, ' ').trim();
 
       expect(normalizeQuery(mockPool.query.mock.calls[1][0])).toBe(
