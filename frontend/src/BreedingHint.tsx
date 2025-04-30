@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Box } from "@mui/material";
 import useDragonSlug from "./hooks/useDragonSlug";
 import useDragonID from "./hooks/useDragonID";
+import { keyframes } from "@emotion/react";
 
 const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: number) => void }> = ({ id, setSelectedDragonId }) => {
     const [open, setOpen] = useState(false);
@@ -9,6 +10,17 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const slideDownFade = keyframes`
+        from {
+            transform: translate(-50%, -60%);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+    `;
 
     const { data } = useDragonID(id);
     const hint: string | null = data?.hint ?? null;
@@ -83,19 +95,26 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
             <Modal open={open} onClose={handleClose}>
                 <Box 
                 sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '60%',
-                    height: '500px',
-                    backgroundColor: 'gray',
-                    borderRadius: 2,
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    backgroundColor: "white",
+                    transform: "translate(-50%, -50%)",
+                    animation: `${slideDownFade} 0.3s ease-out`,
+                    width: "450px",
+                    maxWidth: "70%",
+                    height: "300px",
+                    borderRadius: "10px",
                     boxShadow: 24,
-                    p: 3,
+                    p: 4,
+                    overflowY: 'auto',
+                    outline: 'none',
+                    '&:focus-visible': {
+                        outline: 'none',
+                    }, 
                 }}
                 >
-                    <h1>Breeding Hint</h1>
+                    <h1 style={{marginTop: "0px"}}>Breeding Hint</h1>
                     <p>{hintParts}</p>
                 </Box>
             </Modal>
