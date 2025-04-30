@@ -5,18 +5,18 @@ CREATE TABLE dragons (
     is_only_traited BOOLEAN NOT NULL,
 );
 
-INSERT INTO dragons (id, name, can_be_traited, is_only_traited)
+INSERT INTO dragons (id, name, can_be_traited, is_only_traited, image, slug, hint)
 VALUES 
-    (1, 'Fire', false, false),
-    (2, 'Plant', false, false),
-    (3, 'Lightning', false, false),
-    (4, 'Earth', false, false),
-    (5, 'Cold', false, false),
-    (6, 'Metal', false, false),
-    (7, 'Water', false, false),
-    (8, 'Air', false, false),
-    (9, 'Light', false, false),
-    (10, 'Dark', false, false);
+    (DEFAULT, 'Fire', false, false, 'Fire.webp', 'fire', 'Placeholder'),
+    (DEFAULT, 'Plant', false, false, 'Plant.webp', 'plant', 'Placeholder'),
+    (DEFAULT, 'Lightning', false, false, 'Lightning.webp', 'lightning', 'Placeholder'),
+    (DEFAULT, 'Earth', false, false, 'Earth.webp', 'earth', 'Placeholder'),
+    (DEFAULT, 'Cold', false, false, 'Cold.webp', 'cold', 'Placeholder'),
+    (DEFAULT, 'Metal', false, false, 'Metal.webp', 'metal', 'Placeholder'),
+    (DEFAULT, 'Water', false, false, 'Water.webp', 'water', 'Placeholder'),
+    (DEFAULT, 'Air', false, false, 'Air.webp', 'air', 'Placeholder'),
+    (DEFAULT, 'Light', false, false, 'Light.webp', 'light', 'Placeholder'),
+    (DEFAULT, 'Dark', false, false, 'Dark.webp', 'dark', 'Placeholder');
 
 CREATE TABLE elements (
 	id SERIAL PRIMARY KEY,
@@ -25,16 +25,16 @@ CREATE TABLE elements (
 
 INSERT INTO elements (id, name)
 VALUES 
-    (1, 'Fire'),
-    (2, 'Plant'),
-    (3, 'Lightning'),
-    (4, 'Earth'),
-    (5, 'Cold'),
-    (6, 'Metal'),
-    (7, 'Water'),
-    (8, 'Air'),
-    (9, 'Light'),
-    (10, 'Dark');
+    (DEFAULT, 'Fire'),
+    (DEFAULT, 'Plant'),
+    (DEFAULT, 'Lightning'),
+    (DEFAULT, 'Earth'),
+    (DEFAULT, 'Cold'),
+    (DEFAULT, 'Metal'),
+    (DEFAULT, 'Water'),
+    (DEFAULT, 'Air'),
+    (DEFAULT, 'Light'),
+    (DEFAULT, 'Dark');
 
 CREATE TABLE dragon_elements (
     dragon_id INTEGER NOT NULL,
