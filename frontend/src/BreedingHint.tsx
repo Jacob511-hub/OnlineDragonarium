@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Box } from "@mui/material";
 import useDragonSlug from "./hooks/useDragonSlug";
+import useDragonID from "./hooks/useDragonID";
 
 const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: number) => void }> = ({ id, setSelectedDragonId }) => {
     const [open, setOpen] = useState(false);
@@ -9,7 +10,9 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const rawHint = "This dragon is bred using a ${rain} Dragon and a ${mountain} Dragon";
+    const { data } = useDragonID(id);
+    const hint: string | null = data?.hint ?? null;
+    const rawHint = hint || "This dragon has no breeding hint available.";
 
     const regex = /\$\{(\w+)\}/g;
     const matches = Array.from(rawHint.matchAll(regex));

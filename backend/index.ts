@@ -7,7 +7,7 @@ import sessionConfig from "./session-config";
 import dotenv from "dotenv";
 import { getDragonImageService, getDragonImages } from './dragon-image-service';
 const { loginUser, registerUser } = require("./auth-service");
-const { getDragons, getDragonBySlug, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
+const { getDragons, getDragonByID, getDragonBySlug, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits } = require("./dragon-service");
 
 dotenv.config();
 
@@ -117,6 +117,13 @@ app.get("/current-user", (req, res) => {
   } else {
     res.status(200).json({ user_id: "guest" });
   }
+});
+
+app.get("/dragon-id", async (req, res) => {
+  const { id } = req.query;
+
+  const result = await getDragonByID(id, pool);
+  res.status(result.status).json(result.json);
 });
 
 app.get("/dragon-slug", async (req, res) => {

@@ -33,6 +33,28 @@ const getDragons = async (pool) => {
     }
 };
 
+const getDragonByID = async (id, pool) => {
+  if (!id) {
+    return { status: 400, json: { error: "Missing ID parameter" } };
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM dragons WHERE id = $1`,
+      [id]
+    );
+
+    if (result.rows.length > 0) {
+      return { status: 200, json: result.rows[0] }; // Return the found dragon
+    } else {
+      return { status: 404, json: { message: "Dragon not found" } };
+    }
+  } catch (err) {
+    console.error('Error fetching dragon by ID:', err);
+    return { status: 500, json: { message: "Server error" } };
+  }
+};
+
 const getDragonBySlug = async (slug, pool) => {
   if (!slug) {
     return { status: 400, json: { error: "Missing slug parameter" } };
@@ -285,4 +307,4 @@ const getUserDragonTraits = async (user_id, dragon_id, userIdSession, pool) => {
   }
 };
 
-export { getDragons, getDragonBySlug, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
+export { getDragons, getDragonByID, getDragonBySlug, addDragons, initializeCounts, getUserCounts, patchUserCounts, getTraits, initializeTraits, getUserTraits, setUserTraits, patchUserTraits, getUserDragonTraits };
