@@ -77,24 +77,25 @@ const getDragonBySlug = async (slug, pool) => {
   }
 };
 
-const addDragons = async (name, can_be_traited, is_only_traited, elements, pool) => {
+const addDragons = async (name, can_be_traited, is_only_traited, elements, hint, pool) => {
   try {
     const image = name.replace(/ /g, '_') + '.webp';
     const slug = name.replace(/ /g, '_').toLowerCase();
     const query = `
-      INSERT INTO dragons (id, name, can_be_traited, is_only_traited, image, slug)
+      INSERT INTO dragons (id, name, can_be_traited, is_only_traited, image, slug, hint)
       VALUES (
         DEFAULT,
         $1,
         $2,
         $3,
         $4,
-        $5
+        $5,
+        $6
       )
       RETURNING *;
     `;
 
-    const result = await pool.query(query, [name, can_be_traited, is_only_traited, image, slug]);
+    const result = await pool.query(query, [name, can_be_traited, is_only_traited, image, slug, hint]);
     const newDragon = result.rows[0];
 
     // Insert elements into dragon_elements table

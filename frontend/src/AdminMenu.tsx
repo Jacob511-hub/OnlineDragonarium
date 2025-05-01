@@ -45,12 +45,14 @@ const AdminMenu: React.FC = () => {
     const [canBeTrait, setCanBeTrait] = useState(false);
     const [isOnlyTrait, setIsOnlyTrait] = useState(false);
     const [elements, setElements] = useState<number[]>([]);
+    const [hint, setHint] = useState("");
 
     const { handleAddDragon } = useAddDragon({
         name: name,
         can_be_traited: canBeTrait,
         is_only_traited: isOnlyTrait,
         elements: elements,
+        hint: hint,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -98,7 +100,7 @@ const AdminMenu: React.FC = () => {
                                 <h1 style={{marginTop: "0px"}}>Add Dragon</h1>
                                 <form onSubmit={handleSubmit} style={{ marginTop: "1rem" }}>
                                     <div>
-                                        <label>Dragon Name:</label>
+                                        <label>Dragon Name: </label>
                                         <input
                                             type="text"
                                             value={name}
@@ -125,6 +127,15 @@ const AdminMenu: React.FC = () => {
                                     <div>
                                         <label>Elements (comma separated):</label>
                                         <AdminMenuElementPicker elements={elements} setElements={setElements} />
+                                    </div>
+                                    <div>
+                                        <label>Breeding Hint: </label>
+                                        <input
+                                            type="text"
+                                            value={hint}
+                                            onChange={(e) => setHint(e.target.value)}
+                                            required
+                                        />
                                     </div>
                                     <button type="submit">Add Dragon</button>
                                 </form>
