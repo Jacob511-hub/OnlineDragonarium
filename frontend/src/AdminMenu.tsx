@@ -30,6 +30,7 @@ const AdminMenu: React.FC = () => {
         transform: "translate(-50%, -50%)",
         animation: `${slideDownFade} 0.3s ease-out`,
         width: "450px",
+        maxWidth: "75%",
         height: "300px",
         borderRadius: "10px",
         boxShadow: 24,
