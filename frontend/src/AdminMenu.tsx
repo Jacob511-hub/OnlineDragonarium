@@ -46,6 +46,7 @@ const AdminMenu: React.FC = () => {
     const [isOnlyTrait, setIsOnlyTrait] = useState(false);
     const [elements, setElements] = useState<number[]>([]);
     const [hint, setHint] = useState("");
+    const [dateAdded, setDateAdded] = useState(new Date().toISOString());
 
     const { handleAddDragon } = useAddDragon({
         name: name,
@@ -53,6 +54,7 @@ const AdminMenu: React.FC = () => {
         is_only_traited: isOnlyTrait,
         elements: elements,
         hint: hint,
+        date_added: dateAdded,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -134,6 +136,16 @@ const AdminMenu: React.FC = () => {
                                             type="text"
                                             value={hint}
                                             onChange={(e) => setHint(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label>Date Added: </label>
+                                        <input
+                                            type="date"
+                                            value={dateAdded.split("T")[0]}
+                                            onChange={(e) => setDateAdded(e.target.value)}
+                                            pattern="\d{4}-\d{2}-\d{2}"
                                             required
                                         />
                                     </div>

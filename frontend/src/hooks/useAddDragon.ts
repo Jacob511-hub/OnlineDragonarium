@@ -6,6 +6,7 @@ interface AddDragonParams {
   is_only_traited: boolean;
   elements: number[];
   hint: string;
+  date_added: string;
 }
 
 const useAddDragon = (params: AddDragonParams) => {

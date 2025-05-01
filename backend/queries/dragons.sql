@@ -5,18 +5,18 @@ CREATE TABLE dragons (
     is_only_traited BOOLEAN NOT NULL,
 );
 
-INSERT INTO dragons (id, name, can_be_traited, is_only_traited, image, slug, hint)
+INSERT INTO dragons (id, name, can_be_traited, is_only_traited, image, slug, hint, date_added)
 VALUES 
-    (DEFAULT, 'Fire', false, false, 'Fire.webp', 'fire', 'Placeholder'),
-    (DEFAULT, 'Plant', false, false, 'Plant.webp', 'plant', 'Placeholder'),
-    (DEFAULT, 'Lightning', false, false, 'Lightning.webp', 'lightning', 'Placeholder'),
-    (DEFAULT, 'Earth', false, false, 'Earth.webp', 'earth', 'Placeholder'),
-    (DEFAULT, 'Cold', false, false, 'Cold.webp', 'cold', 'Placeholder'),
-    (DEFAULT, 'Metal', false, false, 'Metal.webp', 'metal', 'Placeholder'),
-    (DEFAULT, 'Water', false, false, 'Water.webp', 'water', 'Placeholder'),
-    (DEFAULT, 'Air', false, false, 'Air.webp', 'air', 'Placeholder'),
-    (DEFAULT, 'Light', false, false, 'Light.webp', 'light', 'Placeholder'),
-    (DEFAULT, 'Dark', false, false, 'Dark.webp', 'dark', 'Placeholder');
+    (DEFAULT, 'Fire', false, false, 'Fire.webp', 'fire', 'Placeholder', '2011-09-14'),
+    (DEFAULT, 'Plant', false, false, 'Plant.webp', 'plant', 'Placeholder', '2011-09-14'),
+    (DEFAULT, 'Lightning', false, false, 'Lightning.webp', 'lightning', 'Placeholder', '2011-09-14'),
+    (DEFAULT, 'Earth', false, false, 'Earth.webp', 'earth', 'Placeholder', '2011-09-14'),
+    (DEFAULT, 'Cold', false, false, 'Cold.webp', 'cold', 'Placeholder', '2011-09-14'),
+    (DEFAULT, 'Metal', false, false, 'Metal.webp', 'metal', 'Placeholder', '2011-09-14'),
+    (DEFAULT, 'Water', false, false, 'Water.webp', 'water', 'Placeholder', '2011-09-14'),
+    (DEFAULT, 'Air', false, false, 'Air.webp', 'air', 'Placeholder', '2011-09-14'),
+    (DEFAULT, 'Light', false, false, 'Light.webp', 'light', 'Placeholder', '2013-11-05'),
+    (DEFAULT, 'Dark', false, false, 'Dark.webp', 'dark', 'Placeholder', '2013-11-15');
 
 CREATE TABLE elements (
 	id SERIAL PRIMARY KEY,

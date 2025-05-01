@@ -1,6 +1,6 @@
 const getDragons = async (pool) => {
     try {
-        const dragonsResult = await pool.query("SELECT * FROM dragons ORDER BY id ASC");
+        const dragonsResult = await pool.query("SELECT * FROM dragons ORDER BY date_added ASC, id ASC");
         const dragons = dragonsResult.rows;
     
         const dragonIds = dragons.map((d) => d.id);
@@ -77,12 +77,12 @@ const getDragonBySlug = async (slug, pool) => {
   }
 };
 
-const addDragons = async (name, can_be_traited, is_only_traited, elements, hint, pool) => {
+const addDragons = async (name, can_be_traited, is_only_traited, elements, hint, date_added, pool) => {
   try {
     const image = name.replace(/ /g, '_') + '.webp';
     const slug = name.replace(/ /g, '_').toLowerCase();
     const query = `
-      INSERT INTO dragons (id, name, can_be_traited, is_only_traited, image, slug, hint)
+      INSERT INTO dragons (id, name, can_be_traited, is_only_traited, image, slug, hint, date_added)
       VALUES (
         DEFAULT,
         $1,
@@ -90,12 +90,13 @@ const addDragons = async (name, can_be_traited, is_only_traited, elements, hint,
         $3,
         $4,
         $5,
-        $6
+        $6,
+        $7
       )
       RETURNING *;
     `;
 
-    const result = await pool.query(query, [name, can_be_traited, is_only_traited, image, slug, hint]);
+    const result = await pool.query(query, [name, can_be_traited, is_only_traited, image, slug, hint, date_added]);
     const newDragon = result.rows[0];
 
     // Insert elements into dragon_elements table
