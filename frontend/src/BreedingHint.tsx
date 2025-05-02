@@ -30,15 +30,7 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
     const matches = Array.from(rawHint.matchAll(regex));
     const slugs = matches.map(match => match[1]);
 
-    const slug1 = slugs[0];
-    const slug2 = slugs[1];
-
-    const dragon1 = useDragonSlug(slug1 || "");
-    const dragon2 = useDragonSlug(slug2 || "");
-
-    const slugToDragon: Record<string, ReturnType<typeof useDragonSlug>> = {};
-    if (slug1) slugToDragon[slug1] = dragon1;
-    if (slug2) slugToDragon[slug2] = dragon2;
+    const { dataMap: slugToDragon, loading } = useDragonSlug(slugs);
 
     useEffect(() => {
         const parts: React.ReactNode[] = [];
@@ -54,16 +46,16 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
     
             const dragon = slugToDragon[slug];
     
-            if (dragon?.loading || !dragon?.data) {
+            if (loading || !dragon) {
                 parts.push(<span key={slug}>Loading...</span>);
             } else {
                 parts.push(
                     <span
                         key={slug}
-                        onClick={() => {setSelectedDragonId(dragon.data.id); handleClose()}}
+                        onClick={() => { setSelectedDragonId(dragon.id); handleClose(); }}
                         style={{ color: "blue", cursor: "pointer", fontWeight: "bold" }}
                     >
-                        {dragon.data.name}
+                        {dragon.name}
                     </span>
                 );
             }
@@ -73,16 +65,7 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
     
         parts.push(rawHint.slice(lastIndex));
         setHintParts(parts);
-    }, [
-        rawHint,
-        setSelectedDragonId,
-        dragon1.loading,
-        dragon1.data?.id,
-        dragon1.data?.name,
-        dragon2.loading,
-        dragon2.data?.id,
-        dragon2.data?.name,
-    ]);
+    }, [rawHint, slugToDragon, loading, setSelectedDragonId]);
 
     return (
         <>
