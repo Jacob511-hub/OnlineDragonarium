@@ -47,17 +47,18 @@ CREATE TABLE dragon_elements (
 );
 
 INSERT INTO dragon_elements (dragon_id, element_id)
-VALUES 
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9),
-    (10, 10);
+SELECT d.id, e.id
+FROM dragons d, elements e
+WHERE d.slug = 'fire' AND e.name = 'Fire'
+   OR d.slug = 'plant' AND e.name = 'Plant'
+   OR d.slug = 'lightning' AND e.name = 'Lightning'
+   OR d.slug = 'earth' AND e.name = 'Earth'
+   OR d.slug = 'cold' AND e.name = 'Cold'
+   OR d.slug = 'metal' AND e.name = 'Metal'
+   OR d.slug = 'water' AND e.name = 'Water'
+   OR d.slug = 'air' AND e.name = 'Air'
+   OR d.slug = 'light' AND e.name = 'Light'
+   OR d.slug = 'dark' AND e.name = 'Dark';
 
 CREATE TABLE user_dragons (
     user_id INTEGER NOT NULL,
@@ -80,16 +81,16 @@ CREATE TABLE traits (
 
 INSERT INTO traits (id, name)
 VALUES 
-    (1, 'Plant'),
-    (2, 'Fire'),
-    (3, 'Earth'),
-    (4, 'Cold'),
-    (5, 'Lightning'),
-    (6, 'Water'),
-    (7, 'Air'),
-    (8, 'Metal'),
-    (9, 'Light'),
-    (10, 'Dark');
+    (DEFAULT, 'Plant'),
+    (DEFAULT, 'Fire'),
+    (DEFAULT, 'Earth'),
+    (DEFAULT, 'Cold'),
+    (DEFAULT, 'Lightning'),
+    (DEFAULT, 'Water'),
+    (DEFAULT, 'Air'),
+    (DEFAULT, 'Metal'),
+    (DEFAULT, 'Light'),
+    (DEFAULT, 'Dark');
     
 CREATE TABLE user_traits (
     user_id INTEGER NOT NULL,
