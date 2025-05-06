@@ -2,7 +2,6 @@ import express from 'express';
 import pool from './pool';
 import cors from 'cors';
 import multer from 'multer';
-import mime from 'mime-types';
 import path from 'path';
 import stream from 'stream';
 import sessionConfig from "./session-config";

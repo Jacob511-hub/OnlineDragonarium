@@ -3,6 +3,10 @@ CREATE TABLE dragons (
 	name VARCHAR(50) NOT NULL,
     can_be_traited BOOLEAN NOT NULL,
     is_only_traited BOOLEAN NOT NULL,
+    image TEXT,
+    slug TEXT UNIQUE,
+    hint TEXT,
+    date_added DATE
 );
 
 INSERT INTO dragons (id, name, can_be_traited, is_only_traited, image, slug, hint, date_added)
