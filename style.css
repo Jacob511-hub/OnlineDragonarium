@@ -1,0 +1,436 @@
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.login {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+    width: 7px;
+    height: 5px;
+}
+
+*::-webkit-scrollbar-button {
+    display: none;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: #00000000;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #e6e6e6;
+    border-radius: 6px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #b7b7b7;
+}
+
+.filter-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+    background-color: rgba(47, 47, 47, 0.486);
+    height: 100%;
+    width: auto;
+    padding: 2rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+    background-color: rgba(47, 47, 47, 0.486);
+    height: 100%;
+    width: auto;
+    padding: 2rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    background-color: rgba(47, 47, 47, 0.486);
+    height: 100%;
+    width: 40%;
+    padding: 2rem;
+    margin: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.traits-container {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.588);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.traits-container img {
+    height: auto;
+    width: 10%;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.traits-container img:active {
+    transform: scale(0.9);
+}
+
+.traits-container-fixed {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.588);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.traits-container-fixed img {
+    height: auto;
+    width: 10%;
+    object-fit: contain;
+}
+
+.count-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: white;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.588);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.count-container input {
+    width: 50%;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.admin-elements-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.admin-elements-container img {
+    width: 30px;
+    height: auto;
+    object-fit: contain;
+}
+
+.header {
+    margin: 0;
+}
+
+.dragon {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 3px;
+    padding: 5px;
+    box-sizing: border-box;
+
+    transition: transform 0.1s ease;
+}
+
+.dragon:active {
+    transform: scale(0.9);
+}
+
+.dragon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    box-sizing: border-box;
+}
+
+.trait-wheel {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 30%;
+    width: 30%;
+    padding: 0rem;
+    margin: 0rem;
+    box-sizing: border-box;
+}
+
+.dragon-display {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 55%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.dragon-display img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    box-sizing: border-box;
+}
+
+.elements-display {
+    position: absolute;
+    bottom: calc(10%);
+    left: calc(10%);
+    display: flex;
+    gap: calc(5%);
+    height: 15%;
+    align-items: center;
+}
+
+.element-icon {
+    height: 100%;
+}
+
+.element-icon img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+.breeding-hint {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    top: calc(0%);
+    right: calc(0%);
+    height: 30%;
+    width: 30%;
+    padding: 0rem;
+    margin: 0rem;
+    box-sizing: border-box;
+    z-index: 10;
+    filter: brightness(1.0);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.breeding-hint:active {
+    transform: scale(0.9);
+}
+
+.filter-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: flex-start;
+    height: 100%;
+    width: 100%;
+    padding: 0rem;
+    margin: 0rem;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    background-color: rgb(139, 139, 139);
+    border: black;
+    border-style: solid;
+    border-radius: 10px;
+    margin: 5px;
+    user-select: none;
+
+    transition: transform 0.1s ease;
+}
+
+.filter-button:active {
+    transform: scale(0.9);
+}
+
+.filter-button img {
+    height: 40px;
+    width: auto;
+}
+
+.filter-button p {
+    margin: 0;
+    color: white;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 50%;
+    width: 15%;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.logout-button {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.button-default {
+    color: white;
+    background: linear-gradient(#8a8d8c, #696969);
+    box-shadow: 1px 1px 3px #000000;
+    border: 2px solid #585858;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    width: 100px;
+    height: 50px;
+    font-size: 16px;
+}
+
+.button-default:active {
+    transform: scale(0.9);
+}
+
+@media (max-width: 1200px) {
+    .app {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        height: auto;
+        justify-items: center;
+        padding: 2rem;
+    }
+    
+    .app > div:nth-child(1) {
+        padding: 0rem;
+    }
+
+    .app > div:nth-child(2) {
+        width: 100%;
+        height: 700px;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    .app > div:nth-child(3) {
+        width: 100%;
+    }
+
+    .filter-button {
+        text-overflow: clip;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .dragon {
+        width: 40%;
+        max-width: 100px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .dragon-display {
+        width: 100%;
+        max-width: 300px;
+        overflow: hidden;
+    }
+
+    .traits-container {
+        max-width: 300px;
+        flex-wrap: wrap;
+    }
+
+    .traits-container img {
+        width: 20%;
+    }
+
+    .traits-container-fixed {
+        flex-wrap: wrap;
+    }
+
+    .traits-container-fixed img {
+        width: 20%;
+    }
+
+    .count-container {
+        overflow: auto;
+    }
+
+    .login-container {
+        width: 50%;
+    }
+
+    .login-input {
+        width: 100%;
+        max-width: 400px;
+    }
+}
