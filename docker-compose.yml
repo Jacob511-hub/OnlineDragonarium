@@ -1,0 +1,41 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PG_USER=postgres
+      - PG_HOST=postgres
+      - PG_DATABASE=online_dragonarium
+      - PG_PASSWORD=postgres
+      - PG_PORT=5432
+      - SESSION_SECRET=supersecretkey
+      - NODE_ENV=development
+      - REACT_APP_FRONTEND_URL=http://localhost:3000
+      - IMAGE_BASE_PATH=/app/images
+    depends_on:
+      - postgres
+    volumes:
+      # - ./backend:/app
+      - ./backend/src/images:/app/images
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: online_dragonarium
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  dragon_images:

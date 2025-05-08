@@ -55,6 +55,6 @@ export class DiskDragonImageService implements DragonImageService {
 };
 
 export const getDragonImageService = (): DragonImageService => {
-    const imageDirectory = path.join(__dirname, '../frontend/src/images');
+    const imageDirectory = process.env.IMAGE_BASE_PATH || path.join(__dirname, './images');
     return new DiskDragonImageService(imageDirectory);
 };

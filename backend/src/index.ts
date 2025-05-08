@@ -2,6 +2,7 @@ import express from 'express';
 import pool from './pool';
 import cors from 'cors';
 import multer from 'multer';
+import path from 'path';
 import stream from 'stream';
 import sessionConfig from "./session-config";
 import dotenv from "dotenv";
@@ -49,6 +50,7 @@ app.get('/dragons/:id/image', async (req, res) => {
     const result = await getDragonImages(imageService, imageFileName);
 
     if (result.found) {
+      res.type(path.extname(imageFileName));
       res.sendFile(result.filePath);
     } else {
       res.status(result.error.status).json(result.error.json);
