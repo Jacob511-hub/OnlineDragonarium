@@ -7,6 +7,7 @@ import Register from "./Register"
 const AppRouter: React.FC = () => {
     return (
       <Router basename="/OnlineDragonarium">
+      {/* <Router> */}
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />

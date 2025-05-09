@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import api from "../axios";
 import useTraitCountStore from "./useTraitCountStore";
 import useTraitStateStore from "./useTraitStateStore";
@@ -50,12 +50,14 @@ const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => 
   const { increment, decrement } = useTraitCountStore();
   const { getTrait, setTrait } = useTraitStateStore();
 
-  const traitKey = `${user_id}_${dragon_id}_${trait_id}`;
+  const traitKey = useMemo(() => `${user_id}_${dragon_id}_${trait_id}`, [user_id, dragon_id, trait_id]);
   const traitCountKey = `${user_id}_${dragon_id}`;
 
-  const handler = user_id === "guest" || trait_id === null
-    ? createLocalStorageHandler({ user_id, dragon_id, trait_id })
-    : createAPIHandler({ user_id, dragon_id, trait_id });
+  const handler = useMemo(() => {
+    return (user_id === "guest" || trait_id === null)
+      ? createLocalStorageHandler({ user_id, dragon_id, trait_id })
+      : createAPIHandler({ user_id, dragon_id, trait_id });
+  }, [user_id, dragon_id, trait_id]);
 
   useEffect(() => {
     const fetchTraitState = async () => {
@@ -76,7 +78,7 @@ const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => 
     };
 
     fetchTraitState();
-  }, [trait_id, user_id, dragon_id]);
+  }, [getTrait, handler, traitKey]);
 
   const toggleTraitState = async () => {
     if (isOn === null) return;

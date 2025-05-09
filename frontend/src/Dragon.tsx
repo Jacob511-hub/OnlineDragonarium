@@ -32,7 +32,7 @@ const Dragon: React.FC<{ id: number; can_be_traited: boolean; is_only_traited: b
 
     return (
         <div className="dragon" onClick={onClick} style={{ cursor: "pointer", backgroundImage: `url(${image})`, filter}}>
-            <img src={src}/>
+            <img src={src} alt=""/>
             {can_be_traited && <TraitWheel id={id} can_be_traited={can_be_traited} />}
             {is_only_traited && <TraitWheelStatic is_only_traited={is_only_traited} />}
         </div>

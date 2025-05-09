@@ -16,7 +16,7 @@ const AdminElementButton: React.FC<AdminElementButtonProps> = ({ src, id, onClic
           style={{ cursor: "pointer" }}
           onClick={handleClick}
         >
-          <img src={src} />
+          <img src={src} alt="" />
         </div>
       );
 };

@@ -31,7 +31,7 @@ const useDragonSlug = (slugs: string[]) => {
     };
 
     fetchDragons();
-  }, [JSON.stringify(slugs)]);
+  }, [slugs]);
 
   return { dataMap, loading, error };
 };

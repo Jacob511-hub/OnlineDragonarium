@@ -109,9 +109,7 @@ const DragonDisplay: React.FC<{ src: string; elements: string[]; id: number; set
                 position: 'relative',
                 filter
             }}>
-                <img
-                    src={src}
-                />
+                <img src={src} alt=""/>
                 <ElementsDisplay elements={elements} elementIcons={elementIcons} />
             </div>
             <BreedingHint id={id} setSelectedDragonId={setSelectedDragonId} />

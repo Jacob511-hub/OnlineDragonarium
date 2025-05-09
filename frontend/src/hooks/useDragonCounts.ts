@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import api from "../axios";
 import useDragonCountsStore from "./useDragonCountsStore";
 
@@ -66,13 +66,14 @@ const useDragonCounts = ({ user_id, dragon_id }: UseDragonCountsProps) => {
 
   const { dragonCounts, getCounts, setCounts } = useDragonCountsStore();
 
-  const key = `${user_id}_${dragon_id}`;
-  const counts = dragonCounts[key] || 0;
-
-  const handler =
-    user_id === "guest"
+  const key = useMemo(() => `${user_id}_${dragon_id}`, [user_id, dragon_id]);
+  const handler = useMemo(() => {
+    return user_id === "guest"
       ? createLocalStorageHandler({ user_id, dragon_id })
       : createAPIHandler({ user_id, dragon_id });
+  }, [user_id, dragon_id]);
+
+  const counts = dragonCounts[key] || defaultCounts;
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -91,7 +92,7 @@ const useDragonCounts = ({ user_id, dragon_id }: UseDragonCountsProps) => {
         }
     };
     fetchCounts();
-  }, [user_id, dragon_id]);
+  }, [getCounts, setCounts, handler, key]);
 
   const updateCount = (countKey: keyof DragonCounts, value: number) => {
     const updated = { ...counts, [countKey]: value };

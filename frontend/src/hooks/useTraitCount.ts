@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import api from "../axios";
 import useTraitCountStore from "./useTraitCountStore";
 import useTraitListStore from "./useTraitListStore";
@@ -46,26 +46,28 @@ const useTraitCount = ({ user_id, dragon_id }: UseTraitStateProps) => {
     const key = `${user_id}_${dragon_id}`;
     const count = traitCounts[key] || 0;
 
-    const handler = user_id === "guest"
+    const handler = useMemo(() => {
+      return user_id === "guest"
         ? createLocalStorageHandler({ user_id, dragon_id })
         : createAPIHandler({ user_id, dragon_id });
+    }, [user_id, dragon_id]);
 
     useEffect(() => {
         const fetchCount = async () => {
-        const cached = getTraits(key);
+          const cached = getTraits(key);
 
-        if (cached !== undefined) {
-            setCount(key, cached.filter(Boolean).length);
-            return;
-        }
+          if (cached !== undefined) {
+              setCount(key, cached.filter(Boolean).length);
+              return;
+          }
 
-        const traits = await handler.get();
-        setTraits(key, traits);
-        setCount(key, traits.filter(Boolean).length);
+          const traits = await handler.get();
+          setTraits(key, traits);
+          setCount(key, traits.filter(Boolean).length);
         };
 
         fetchCount();
-    }, [user_id, dragon_id]);
+    }, [getTraits, handler, key, setCount, setTraits]);
     
     return count;
 };
