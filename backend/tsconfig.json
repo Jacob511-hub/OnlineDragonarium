@@ -5,6 +5,7 @@
       "target": "ES2015",
       "module": "commonjs",
       "types": ["jest"],
-      "esModuleInterop": true
+      "esModuleInterop": true,
     },
+    "exclude": ["jest.config.ts"]
 }
