@@ -63,10 +63,13 @@ JOIN elements e ON
     (d.slug = 'light' AND e.name = 'Light') OR
     (d.slug = 'dark' AND e.name = 'Dark');
 
--- You can add this placeholder if user table isn't ready yet
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    username TEXT UNIQUE
+    username TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_admin BOOLEAN DEFAULT false;
 );
 
 CREATE TABLE IF NOT EXISTS user_dragons (
