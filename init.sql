@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_admin BOOLEAN DEFAULT false;
+    is_admin BOOLEAN DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS user_dragons (
