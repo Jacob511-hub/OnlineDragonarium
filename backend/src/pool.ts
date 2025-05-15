@@ -11,7 +11,7 @@ const pool = new Pool({
   password: process.env.PG_PASSWORD,
   port: Number(process.env.PG_PORT),
   ssl: {
-    ca: fs.readFileSync('./us-east-2-bundle.pem').toString()
+    ca: fs.readFileSync(__dirname + '/us-east-2-bundle.pem').toString()
   },
 });
 
