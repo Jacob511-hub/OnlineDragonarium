@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Copy .pem into dist folder
-COPY backend/src/us-east-2-bundle.pem /app/dist/us-east-2-bundle.pem
+COPY src/us-east-2-bundle.pem /app/dist/us-east-2-bundle.pem
 
 # Expose the port the app runs on
 EXPOSE 5000
