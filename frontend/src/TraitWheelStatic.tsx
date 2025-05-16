@@ -1,7 +1,7 @@
 import React from "react";
 
 const TraitWheel: React.FC<{ is_only_traited: boolean; }> = ({ is_only_traited }) => {
-    const image = `../images/trait_10.png`;
+    const image = `./images/trait_10.png`;
 
     return (
         <>

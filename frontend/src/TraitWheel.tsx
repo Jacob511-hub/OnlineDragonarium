@@ -8,7 +8,7 @@ const TraitWheel: React.FC<{ id: number; can_be_traited: boolean; }> = ({ id, ca
 
     const rawTraitCount = useTraitCount({ user_id: userIdString, dragon_id: id });
     const traitCount = can_be_traited ? rawTraitCount : 0;
-    const image = `../images/trait_${traitCount}.png`;
+    const image = `./images/trait_${traitCount}.png`;
 
     return (
         <>

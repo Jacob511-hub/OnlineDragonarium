@@ -72,7 +72,7 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
             <div className="breeding-hint"
                 onClick={handleOpen}
                 style={{
-                    backgroundImage: 'url(../images/BreedingHint.webp)'
+                    backgroundImage: 'url(./images/BreedingHint.webp)'
                 }}
             ></div>
             <Modal open={open} onClose={handleClose}>

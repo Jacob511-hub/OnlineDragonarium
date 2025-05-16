@@ -10,7 +10,7 @@ const Dragon: React.FC<{ id: number; can_be_traited: boolean; is_only_traited: b
 
     const { counts } = useDragonCounts({ user_id: userIdString, dragon_id: id });
 
-    let image = "../images/tile.png";
+    let image = "./images/tile.png";
     let filter = "none";
 
     if (counts) {
@@ -22,9 +22,9 @@ const Dragon: React.FC<{ id: number; can_be_traited: boolean; is_only_traited: b
         if (!hasNormal && !hasTwin) {
             filter = 'brightness(0.4)';
         } else if (hasNormal && hasTwin) {
-            image = "../images/tile_gold.png";
+            image = "./images/tile_gold.png";
         } else if (hasTwin) {
-            image = "../images/tile_twin.png";
+            image = "./images/tile_twin.png";
         }
     } else {
         filter = 'brightness(0.4)';

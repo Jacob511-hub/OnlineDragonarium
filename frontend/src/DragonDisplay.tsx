@@ -75,7 +75,7 @@ const DragonDisplay: React.FC<{ src: string; elements: string[]; id: number; set
 
     const { counts } = useDragonCounts({ user_id: userIdString, dragon_id: id });
 
-    let image = "../images/tile.png";
+    let image = "./images/tile.png";
     let filter = "none";
 
     if (counts) {
@@ -87,9 +87,9 @@ const DragonDisplay: React.FC<{ src: string; elements: string[]; id: number; set
         if (!hasNormal && !hasTwin) {
             filter = 'brightness(0.4)';
         } else if (hasNormal && hasTwin) {
-            image = "../images/tile_gold.png";
+            image = "./images/tile_gold.png";
         } else if (hasTwin) {
-            image = "../images/tile_twin.png";
+            image = "./images/tile_twin.png";
         }
     } else {
         filter = 'brightness(0.4)';
