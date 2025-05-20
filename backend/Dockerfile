@@ -13,14 +13,8 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Copy .pem into src folder
-COPY src/us-east-2-bundle.pem /app/src/us-east-2-bundle.pem
-
 # Build TypeScript to JavaScript
 RUN npm run build
-
-# Copy .pem into dist folder
-RUN cp /app/src/us-east-2-bundle.pem /app/dist/us-east-2-bundle.pem
 
 # Expose the port the app runs on
 EXPOSE 5000
