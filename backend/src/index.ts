@@ -46,18 +46,17 @@ app.get('/dragons/:id/image', async (req, res) => {
 
   const imageFileName = dragon.image;
   
-  try {
-    const result = await getDragonImages(imageService, imageFileName);
-
-    if (result.found) {
+  const resultImg = await getDragonImages(imageService, imageFileName);
+  if (resultImg.found) {
+    if (resultImg.filePath) {
       res.type(path.extname(imageFileName));
-      res.sendFile(result.filePath);
-    } else {
-      res.status(result.error.status).json(result.error.json);
+      return res.sendFile(resultImg.filePath);
+    } else if (resultImg.fileStream) {
+      res.setHeader('Content-Type', 'image/*');
+      return resultImg.fileStream.pipe(res);
     }
-  } catch (err) {
-    console.error('Unexpected error:', err);
-    res.status(500).json({ message: 'Server error' });
+  } else {
+    res.status(resultImg.error.status).json(resultImg.error.json);
   }
 });
 
