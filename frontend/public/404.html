@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="refresh" content="0; URL=/OnlineDragonarium/" />
+        <meta charset="utf-8">
+        <script type="text/javascript">
+            // Redirect back to the index.html with the original path
+            var redirectTo = '/OnlineDragonarium' + location.pathname.replace('/OnlineDragonarium', '') + location.search + location.hash;
+            window.location.replace(redirectTo);
+        </script>
     </head>
     <body>
     </body>
