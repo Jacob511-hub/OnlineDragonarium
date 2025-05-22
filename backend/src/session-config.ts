@@ -14,7 +14,7 @@ const sessionConfig = session({
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true, // Prevents client-side JS from accessing cookies
     maxAge: 1000 * 60 * 60 * 24, // 1 day
     sameSite: 'none'
