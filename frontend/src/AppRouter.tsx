@@ -9,7 +9,7 @@ const AppRouter: React.FC = () => {
       <Router basename="/OnlineDragonarium">
       {/* <Router> */}
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/app" element={<App />} />
