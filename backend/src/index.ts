@@ -13,6 +13,7 @@ const { getDragons, getDragonByID, getDragonBySlug, addDragons, initializeCounts
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', 1)
 const port = 5000;
 
 app.use(
@@ -45,7 +46,7 @@ app.get('/dragons/:id/image', async (req, res) => {
   }
 
   const imageFileName = dragon.image;
-  
+
   const resultImg = await getDragonImages(imageService, imageFileName);
   if (resultImg.found) {
     if (resultImg.filePath) {
