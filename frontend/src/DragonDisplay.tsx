@@ -1,5 +1,5 @@
 import React from "react";
-import useCurrentUser from "./hooks/useCurrentUser";
+import { useCurrentUser } from "./CurrentUserContext";
 import useDragonCounts from "./hooks/useDragonCounts";
 import ElementsDisplay from "./ElementsDisplay";
 import BreedingHint from "./BreedingHint";
@@ -70,7 +70,7 @@ const DragonDisplay: React.FC<{ src: string; elements: string[]; id: number; set
         Galaxy: IconGalaxy,
     };
 
-    const user_id = useCurrentUser();
+    const { user_id } = useCurrentUser();
     const userIdString = user_id !== null ? user_id.toString() : "guest";
 
     const { counts } = useDragonCounts({ user_id: userIdString, dragon_id: id });

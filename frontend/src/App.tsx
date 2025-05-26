@@ -4,6 +4,7 @@ import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
 import LogoutButton from "./LogoutButton";
 import AdminMenu from "./AdminMenu";
+import { CurrentUserProvider } from "./CurrentUserContext";
 import bgImage from './images/bg-kairos.webp';
 import useInitializeTraits from "./hooks/useInitializeTraits";
 import useInitializeCounts from "./hooks/useInitializeCounts";
@@ -27,11 +28,13 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <FilterContainerModal filters={filters} onToggle={handleToggle} />
-      <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
-      <InfoContainer selectedDragonId={selectedDragonId} setSelectedDragonId={setSelectedDragonId} />
-      <LogoutButton />
-      <AdminMenu />
+      <CurrentUserProvider>
+        <FilterContainerModal filters={filters} onToggle={handleToggle} />
+        <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
+        <InfoContainer selectedDragonId={selectedDragonId} setSelectedDragonId={setSelectedDragonId} />
+        <LogoutButton />
+        <AdminMenu />
+      </CurrentUserProvider>
     </div>
   );
 };

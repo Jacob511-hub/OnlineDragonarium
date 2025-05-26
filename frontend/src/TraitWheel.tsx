@@ -1,9 +1,9 @@
 import React from "react";
-import useCurrentUser from "./hooks/useCurrentUser";
+import { useCurrentUser } from "./CurrentUserContext";
 import useTraitCount from "./hooks/useTraitCount";
 
 const TraitWheel: React.FC<{ id: number; can_be_traited: boolean; }> = ({ id, can_be_traited }) => {
-    const user_id = useCurrentUser();
+    const { user_id } = useCurrentUser();
     const userIdString = user_id !== null ? user_id.toString() : "guest";
 
     const rawTraitCount = useTraitCount({ user_id: userIdString, dragon_id: id });

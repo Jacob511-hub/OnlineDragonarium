@@ -1,10 +1,10 @@
 import React from "react";
 import useTraits from './hooks/useTraits';
-import useCurrentUser from "./hooks/useCurrentUser";
+import { useCurrentUser } from "./CurrentUserContext";
 import useTraitState from "./hooks/useTraitState";
 
 const TraitToggle: React.FC<{ trait: string, dragon_id: number }> = ({ trait, dragon_id }) => {
-  const user_id = useCurrentUser();
+  const { user_id } = useCurrentUser();
   const userIdString = user_id !== null ? user_id.toString() : "guest";
   const { traits, error } = useTraits();
 
