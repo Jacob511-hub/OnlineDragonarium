@@ -6,8 +6,7 @@ import LogoutButton from "./LogoutButton";
 import AdminMenu from "./AdminMenu";
 import { CurrentUserProvider } from "./CurrentUserContext";
 import bgImage from './images/bg-kairos.webp';
-import useInitializeTraits from "./hooks/useInitializeTraits";
-import useInitializeCounts from "./hooks/useInitializeCounts";
+import AppInitializer from "./AppInitializer";
 
 document.body.style.backgroundImage = `url(${bgImage})`;
 
@@ -17,8 +16,6 @@ const useSelectedDragon = (initialId: number | null) => {
 };
 
 const App: React.FC = () => {
-  useInitializeTraits();
-  useInitializeCounts();
   const { selectedDragonId, setSelectedDragonId } = useSelectedDragon(null);
   const [filters, setFilters] = useState<Record<string, number>>({});
 
@@ -29,6 +26,7 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <CurrentUserProvider>
+        <AppInitializer />
         <FilterContainerModal filters={filters} onToggle={handleToggle} />
         <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
         <InfoContainer selectedDragonId={selectedDragonId} setSelectedDragonId={setSelectedDragonId} />

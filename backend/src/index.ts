@@ -181,6 +181,34 @@ app.patch('/user-counts', async (req, res) => {
   res.status(result.status).json(result.json);
 });
 
+app.get("/user-counts/all", async (req, res) => {
+  const userId = req.session.user ? req.session.user.id : null;
+
+  if (!userId) {
+    return res.status(403).json({ error: "Unauthorized access" });
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT * FROM user_dragons WHERE user_id = $1`,
+      [userId]
+    );
+
+    const counts = result.rows.map(row => ({
+      dragon_id: row.dragon_id,
+      count_normal: row.normal_count,
+      count_traited: row.traited_count,
+      count_twin: row.twin_count,
+      count_traited_twin: row.traited_twin_count,
+    }));
+
+    res.status(200).json(counts);
+  } catch (err) {
+    console.error("Error fetching user dragon counts:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.post("/initialize-traits", async (req, res) => {
   const userId = req.session.user ? req.session.user.id : null;
   const dragonsResult = await pool.query('SELECT id FROM dragons WHERE can_be_traited = true');

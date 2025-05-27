@@ -77,22 +77,25 @@ const useDragonCounts = ({ user_id, dragon_id }: UseDragonCountsProps) => {
 
   useEffect(() => {
     const fetchCounts = async () => {
-        const cached = getCounts(key);
-        if (cached) {
-          setCounts(key, cached);
-          return;
-        }
-
+      const cached = getCounts(key);
+      if (cached) {
+        setCounts(key, cached);
+        return;
+      }
+  
+      if (user_id === "guest") {
         try {
-            const data = await handler.get();
-            setCounts(key, data);
+          const data = await handler.get();
+          setCounts(key, data);
         } catch (err) {
-            setError("Error fetching dragon counts");
-            console.error(err);
+          setError("Error fetching dragon counts");
+          console.error(err);
         }
+      }
     };
+  
     fetchCounts();
-  }, [getCounts, setCounts, handler, key]);
+  }, [getCounts, setCounts, handler, key, user_id]);
 
   const updateCount = (countKey: keyof DragonCounts, value: number) => {
     const updated = { ...counts, [countKey]: value };
