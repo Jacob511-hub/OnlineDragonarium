@@ -1,16 +1,12 @@
 import React from "react";
+import useTraits from './hooks/useTraits';
 import { useCurrentUser } from "./CurrentUserContext";
 import useTraitState from "./hooks/useTraitState";
 
-interface TraitToggleProps {
-  trait: string;
-  dragon_id: number;
-  traits: Array<{ name: string; id: number }>;
-}
-
-const TraitToggle: React.FC<TraitToggleProps> = ({ trait, dragon_id, traits }) => {
+const TraitToggle: React.FC<{ trait: string, dragon_id: number }> = ({ trait, dragon_id }) => {
   const { user_id } = useCurrentUser();
   const userIdString = user_id !== null ? user_id.toString() : "guest";
+  const { traits, error } = useTraits();
 
   const traitData = traits.find(t => t.name.toLowerCase() === trait.toLowerCase());  
   const trait_id = traitData ? traitData.id : null;
@@ -21,7 +17,7 @@ const TraitToggle: React.FC<TraitToggleProps> = ({ trait, dragon_id, traits }) =
     trait_id,
   });
 
-  if (apiError) return <div>Error: {apiError}</div>;
+  if (error || apiError) return <div>Error: {error || apiError}</div>;
   if (trait_id === null) return null;
 
   return (
