@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "homepage": "https://jacob511-hub.github.io/OnlineDragonarium",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
