@@ -80,7 +80,7 @@ const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => 
     };
 
     fetchTraitState();
-  }, [getTrait, handler, traitKey]);
+  }, [getTrait, handler, traitKey, user_id]);
 
   const toggleTraitState = async () => {
     if (isOn === null) return;
