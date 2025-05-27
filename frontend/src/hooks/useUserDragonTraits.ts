@@ -18,8 +18,11 @@ const useUserDragonTraits = (user_id: string, dragon_id: number) => {
         const res = await api.get("/user-dragon-traits", {
           params: { user_id, dragon_id },
         });
-
-        res.data.forEach((trait: { trait_id: number; unlocked: boolean }) => {
+  
+        const traitArray = Array.isArray(res.data) ? res.data : res.data?.json;
+        if (!Array.isArray(traitArray)) throw new Error("Unexpected response format");
+  
+        traitArray.forEach((trait) => {
           const key = `${user_id}_${dragon_id}_${trait.trait_id}`;
           setTrait(key, trait.unlocked);
         });
