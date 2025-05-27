@@ -68,6 +68,8 @@ const useTraitState = ({ user_id, dragon_id, trait_id }: UseTraitStateProps) => 
         return;
       }
 
+      if (user_id !== "guest") return;
+      
       try {
         const state = await handler.get();
         setIsOn(state);
