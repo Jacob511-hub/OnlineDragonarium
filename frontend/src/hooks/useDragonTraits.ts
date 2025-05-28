@@ -34,7 +34,7 @@ const useDragonTraits = (user_id: string, dragon_id: number, can_be_traited: boo
     };
 
     fetchAllTraits();
-  }, [user_id, dragon_id, setTrait]);
+  }, [user_id, dragon_id, can_be_traited, setTrait]);
 
   return { loading, error };
 };
