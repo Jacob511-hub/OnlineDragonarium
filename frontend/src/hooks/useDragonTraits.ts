@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../axios";
 import useTraitStateStore from "./useTraitStateStore";
 
-const useDragonTraits = (user_id: string, dragon_id: number) => {
+const useDragonTraits = (user_id: string, dragon_id: number, can_be_traited: boolean) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -10,7 +10,7 @@ const useDragonTraits = (user_id: string, dragon_id: number) => {
 
   useEffect(() => {
     const fetchAllTraits = async () => {
-      if (user_id === "guest") {
+      if (user_id === "guest" || !can_be_traited) {
         setLoading(false);
         return;
       }

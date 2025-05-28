@@ -9,7 +9,7 @@ const Traits: React.FC<{ can_be_traited: boolean, dragon_id: number }> = ({ can_
     const { user_id } = useCurrentUser();
     const userIdString = user_id !== null ? user_id.toString() : "guest";
   
-    const { loading, error: dragonTraitError } = useDragonTraits(userIdString, dragon_id);
+    const { loading, error: dragonTraitError } = useDragonTraits(userIdString, dragon_id, can_be_traited);
 
     if (!can_be_traited) return null;
     if (traitError || dragonTraitError) return <div>Error: {traitError || dragonTraitError}</div>;
