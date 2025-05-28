@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Modal, Box } from "@mui/material";
 import useDragonSlug from "./hooks/useDragonSlug";
 import useDragonID from "./hooks/useDragonID";
@@ -28,7 +28,7 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
 
     const regex = /\$\{(\w+)\}/g;
     const matches = Array.from(rawHint.matchAll(regex));
-    const slugs = matches.map(match => match[1]);
+    const slugs = useMemo(() => matches.map(match => match[1]), [rawHint]);
 
     const { dataMap: slugToDragon, loading } = useDragonSlug(slugs);
 
