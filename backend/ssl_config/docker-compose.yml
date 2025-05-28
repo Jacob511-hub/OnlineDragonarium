@@ -1,0 +1,62 @@
+services:
+  backend:
+    image: ghcr.io/jacob511-hub/onlinedragonarium:latest
+    container_name: backend
+    expose:
+      - "5000"
+    environment:
+      - PG_USER=****************
+      - PG_HOST=****************
+      - PG_DATABASE=postgres
+      - PG_PASSWORD=****************
+      - PG_PORT=5432
+      - SESSION_SECRET=****************
+      - NODE_ENV=production
+      - REACT_APP_FRONTEND_URL=https://jacob511-hub.github.io
+      - IMAGE_BASE_PATH=/app/images
+      - SSL_CERT_PATH=/app/us-east-2-bundle.pem
+      - USE_S3=true
+      - S3_BUCKET_NAME=my-dragon-images
+      - AWS_REGION=us-east-2
+      - AWS_ACCESS_KEY_ID=****************
+      - AWS_SECRET_ACCESS_KEY=****************
+    volumes:
+      - ./backend/src/images:/app/images
+      - ./us-east-2-bundle.pem:/app/us-east-2-bundle.pem
+    restart: unless-stopped
+    networks:
+      - web
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/letsencrypt
+      - ./nginx/ssl-data:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - web
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./nginx/ssl:/etc/letsencrypt
+      - ./nginx/ssl-data:/var/www/certbot
+    entrypoint: /bin/sh -c
+    command: >
+      "certbot certonly --webroot --webroot-path=/var/www/certbot
+      --email ****************
+      --agree-tos --no-eff-email
+      -d ****************"
+
+volumes:
+  dragon_images:
+
+networks:
+  web:
+    driver: bridge

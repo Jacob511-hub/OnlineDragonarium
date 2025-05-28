@@ -1,0 +1,30 @@
+server {
+    listen 80;
+    server_name ****************;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name ****************;
+
+    ssl_certificate /etc/letsencrypt/live/****************/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/****************/privkey.pem;
+
+    location / {
+        proxy_pass http://backend:5000;
+        proxy_set_header Cookie $http_cookie;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass_header Set-Cookie;
+        proxy_pass_header *;
+    }
+}
