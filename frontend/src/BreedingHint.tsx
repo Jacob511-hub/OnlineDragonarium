@@ -26,9 +26,11 @@ const BreedingHint: React.FC<{ id: number; setSelectedDragonId: (dragonId: numbe
     const hint: string | null = data?.hint ?? null;
     const rawHint = hint || "This dragon has no breeding hint available.";
 
-    const regex = /\$\{(\w+)\}/g;
-    const matches = Array.from(rawHint.matchAll(regex));
-    const slugs = useMemo(() => matches.map(match => match[1]), [rawHint]);
+    const slugs = useMemo(() => {
+        const regex = /\$\{(\w+)\}/g;
+        const matches = Array.from(rawHint.matchAll(regex));
+        return matches.map(match => match[1]);
+      }, [rawHint]);
 
     const { dataMap: slugToDragon, loading } = useDragonSlug(slugs);
 
