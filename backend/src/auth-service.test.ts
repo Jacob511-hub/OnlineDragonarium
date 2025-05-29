@@ -50,7 +50,7 @@ describe("loginUser", () => {
     
     const result = await loginUser("test@example.com", "correctpassword", mockPool, mockSession);
     
-    expect(result).toEqual({ status: 200, json: { message: "Login successful", user: "testuser" } });
+    expect(result).toEqual({ status: 200, json: { user: "testuser" } });
     expect(mockSession.user).toEqual({ id: 1, username: "testuser", email: "test@example.com" });
   });
 
@@ -102,7 +102,6 @@ describe("registerUser", () => {
         expect(response).toEqual({
             status: 201,
             json: {
-              message: "User registered successfully",
               user: { id: 1, username: "testuser", email: "test@example.com" },
             },
         });

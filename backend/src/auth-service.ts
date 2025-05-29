@@ -24,7 +24,7 @@ const loginUser = async (email, password, pool, session) => {
         is_admin: user.is_admin,
       };
   
-      return { status: 200, json: { message: "Login successful", user: user.username } };
+      return { status: 200, json: { user: user.username } };
     } catch (err) {
       console.error(err.message);
       return { status: 500, json: { message: "Server error" } };
@@ -54,8 +54,7 @@ const loginUser = async (email, password, pool, session) => {
         [username, email, hashedPassword]
       );
   
-      return { status: 201, json: { 
-        message: "User registered successfully",
+      return { status: 201, json: {
         user: { id: newUser.rows[0].id, username: newUser.rows[0].username, email: newUser.rows[0].email }
       }};
     } catch (err) {
