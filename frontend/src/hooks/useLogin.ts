@@ -6,7 +6,7 @@ const useLogin = (email: string, password: string) => {
   
     const handleLogin = async () => {
       try {
-        const res = await api.post('/login', { email, password });
+        await api.post('/login', { email, password });
         navigate("/app");
       } catch (err) {
         alert("Login failed");
