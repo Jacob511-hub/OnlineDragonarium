@@ -19,7 +19,7 @@ const TraitToggleFixed: React.FC<{ trait: string, name: string }> = ({ trait, na
 
   return (
     <img
-      src={`/images/traits/${trait}-${isOn ? 'on' : 'off'}.png`}
+      src={`./images/traits/${trait}-${isOn ? 'on' : 'off'}.png`}
       alt={trait}
       style={{ filter: isOn ? 'brightness(1)' : 'brightness(0.2)' }}
     />
