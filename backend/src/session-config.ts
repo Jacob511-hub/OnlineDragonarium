@@ -12,9 +12,9 @@ declare module "express-session" {
 const sessionConfig = session({
   secret: process.env.SESSION_SECRET!,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === "production", // Set to true in production
+    secure: true, // Set to true in production
     httpOnly: true, // Prevents client-side JS from accessing cookies
     maxAge: 1000 * 60 * 60 * 24, // 1 day
     sameSite: 'none'
