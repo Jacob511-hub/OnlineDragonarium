@@ -307,6 +307,7 @@ body {
     border-radius: 10px;
     margin: 5px;
     user-select: none;
+    overflow: hidden;
 
     transition: transform 0.1s ease;
 }
