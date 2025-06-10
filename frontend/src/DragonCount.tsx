@@ -23,6 +23,14 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
             if (currentValue > 0) updateCount(countKey, currentValue - 1);
         };
 
+        const buttonStyle = {
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            '&:hover': {
+                backgroundColor: '#f0f0f0',
+            },
+        };
+
         return (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                 <input
@@ -36,10 +44,10 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
                     }}
                     style={{ width: 80, ...inputStyle }}
                 />
-                <IconButton size="small" onClick={decrement} aria-label="decrease">
+                <IconButton size="small" onClick={decrement} aria-label="decrease" sx={buttonStyle}>
                     <RemoveIcon fontSize="small" />
                 </IconButton>
-                <IconButton size="small" onClick={increment} aria-label="increase">
+                <IconButton size="small" onClick={increment} aria-label="increase" sx={buttonStyle}>
                     <AddIcon fontSize="small" />
                 </IconButton>
             </div>
@@ -69,14 +77,14 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
             {!is_only_traited && (
                 <>
                     <h2 style={{color: '#1199ff'}} className="header">Non-Traited</h2>
-                    {renderInputWithButtons("count_twin", counts.count_twin, { backgroundColor: '#1199ff', color: 'white' })}
+                    {renderInputWithButtons("count_twin", counts.count_twin, { backgroundColor: '#1199ff' })}
                 </>
             )}
 
             {(can_be_traited && !is_only_traited) && (
                 <>
                     <h2 style={{color: '#1199ff'}} className="header">Traited</h2>
-                    {renderInputWithButtons("count_traited_twin", counts.count_traited_twin, { backgroundColor: '#1199ff', color: 'white' })}
+                    {renderInputWithButtons("count_traited_twin", counts.count_traited_twin, { backgroundColor: '#1199ff' })}
                 </>
             )}
         </div>
