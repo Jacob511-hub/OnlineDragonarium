@@ -6,7 +6,7 @@ This is a tool for the mobile game "DragonVale" to assist players in keeping tra
 
 ## Description
 
-- This is a webpage designed for players of the mobile game "DragonVale", originally created in 2011 by Backflip Studios and now owned by DECA games.
+- This is a webpage designed for players of the mobile game "DragonVale", originally created in 2011 by Backflip Studios and now owned by DECA Games.
 - DragonVale is a park management simulator game where players can collect a multitude of unique dragons, with new dragons still being added to this day.
 - Players are able to breed their dragons in order to create new hybrid dragons of different elements, as well as collect different types of each dragon, including Twin versions of dragons and dragons that can have Traits.
 - The purpose of this project is to provide a convenient, single-page resource for players to keep track of the dragons they have collected, how many of each dragon they own, which Traits each dragon has unlocked, as well view info about each one, such as how to breed them.
