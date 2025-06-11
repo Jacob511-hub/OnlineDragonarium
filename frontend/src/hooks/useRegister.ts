@@ -9,7 +9,6 @@ const useRegister = (username: string, email: string, password: string) => {
     const handleRegister = async () => {
         try {
             const res = await axios.post(`${API_BASE_URL}/register`, { username, email, password });
-            alert(res.data.message);
             navigate("/login");
         } catch (err) {
             alert("Registration failed");
