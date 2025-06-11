@@ -56,6 +56,8 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
 
     return (
         <div className="count-container">
+            <h1 style={{textDecoration: 'underline', fontSize: '3em'}} className="header">Owned:</h1>
+
             <h1 style={{textDecoration: 'underline'}} className="header">Normal</h1>
 
             {!is_only_traited && (
