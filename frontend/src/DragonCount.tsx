@@ -42,7 +42,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
                         const val = Number(e.target.value);
                         updateCount(countKey, val >= 0 ? val : 0);
                     }}
-                    style={{ width: 80, ...inputStyle }}
+                    style={{ ...inputStyle }}
                 />
                 <IconButton size="small" onClick={decrement} aria-label="decrease" sx={buttonStyle}>
                     <RemoveIcon fontSize="small" />
@@ -56,7 +56,7 @@ const DragonCount: React.FC<{ dragon_id: number; can_be_traited: boolean; is_onl
 
     return (
         <div className="count-container">
-            <h1 style={{textDecoration: 'underline', fontSize: '3em'}} className="header">Owned:</h1>
+            <h1 style={{textDecoration: 'underline', fontSize: '2.5em'}} className="header">Owned:</h1>
 
             <h1 style={{textDecoration: 'underline'}} className="header">Normal</h1>
 
