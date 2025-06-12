@@ -4,6 +4,7 @@ import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
 import LogoutButton from "./LogoutButton";
 import AdminMenu from "./AdminMenu";
+import GuideModal from "./GuideModal";
 import { CurrentUserProvider } from "./CurrentUserContext";
 import bgImage from './images/bg-kairos.webp';
 import AppInitializer from "./AppInitializer";
@@ -31,6 +32,7 @@ const App: React.FC = () => {
         <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
         <InfoContainer selectedDragonId={selectedDragonId} setSelectedDragonId={setSelectedDragonId} />
         <LogoutButton />
+        <GuideModal />
         <AdminMenu />
       </CurrentUserProvider>
     </div>
