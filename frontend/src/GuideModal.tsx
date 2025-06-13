@@ -58,7 +58,7 @@ const GuideModal: React.FC = () => {
             <Box sx={modalStyle}>
                 <h1 style={{marginTop: "0px"}}>Guide</h1>
                 <p>Here are some tips to help you use the Online Dragonarium</p>
-                <img style={{width: '100%', height: 'auto'}} src={'./images/guide_1'}></img>
+                <img style={{width: '100%', height: 'auto'}} src={'./images/guide_1'} alt="" />
             </Box>
         </Modal>
     </>
