@@ -26,9 +26,9 @@ const GuideModal: React.FC = () => {
     backgroundColor: "white",
     transform: "translate(-50%, -50%)",
     animation: `${slideDownFade} 0.3s ease-out`,
-    width: "450px",
+    width: "600px",
     maxWidth: "75%",
-    height: "300px",
+    height: "500px",
     borderRadius: "10px",
     boxShadow: 24,
     p: 4,
@@ -58,7 +58,7 @@ const GuideModal: React.FC = () => {
             <Box sx={modalStyle}>
                 <h1 style={{marginTop: "0px"}}>Guide</h1>
                 <p>Here are some tips to help you use the Online Dragonarium</p>
-                <img style={{width: '100%', height: 'auto'}} src={'./images/guide_1'} alt="" />
+                <img style={{width: '100%', height: 'auto'}} src={'./images/guide_1.png'} alt="" />
             </Box>
         </Modal>
     </>
