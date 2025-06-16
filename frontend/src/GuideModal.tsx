@@ -37,7 +37,13 @@ const GuideModal: React.FC = () => {
     '&:focus-visible': {
         outline: 'none',
     }, 
-};
+  };
+
+  const imgStyle = {
+    width: '100%',
+    height: 'auto',
+    borderRadius: '10px',
+  }
 
   return (
     <>
@@ -58,7 +64,17 @@ const GuideModal: React.FC = () => {
             <Box sx={modalStyle}>
                 <h1 style={{marginTop: "0px"}}>Guide</h1>
                 <p>Here are some tips to help you use the Online Dragonarium</p>
-                <img style={{width: '100%', height: 'auto'}} src={'./images/guide_1.png'} alt="" />
+                <img style={imgStyle} src={'./images/guide_1.png'} alt="" />
+                <p>Click on a dragon from the list to view its details in the info panel.</p>
+                <img style={imgStyle} src={'./images/guide_2.png'} alt="" />
+                <p>The info panel displays several pieces of information regarding each dragon:</p>
+                <ul>
+                    <li><strong>Name:</strong> The name of the dragon.</li>
+                    <li><strong>Elements:</strong> The elemental types of the dragon.</li>
+                    <li><strong>Hint:</strong> Click the egg with the "?" to view how to obtain the dragon.</li>
+                    <li><strong>Traits:</strong> Toggle which Traits you have unlocked on that dragon (not all dragons can have Traits, and some are inherently locked to a specific Trait).</li>
+                    <li><strong>Owned:</strong> Modify the number of that dragon you own. Normal and Twin variants can be tracked individually, as well as Normal Traited and Twin Traited variants for dragons that can have Traits.</li>
+                </ul>
             </Box>
         </Modal>
     </>
