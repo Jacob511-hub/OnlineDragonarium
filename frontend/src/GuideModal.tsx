@@ -70,11 +70,17 @@ const GuideModal: React.FC = () => {
                 <p>The info panel displays several pieces of information regarding each dragon:</p>
                 <ul>
                     <li><strong>Name:</strong> The name of the dragon.</li>
-                    <li><strong>Elements:</strong> The elemental types of the dragon.</li>
+                    <li><strong>Elements:</strong> The elementals of the dragon.</li>
                     <li><strong>Hint:</strong> Click the egg with the "?" to view how to obtain the dragon.</li>
                     <li><strong>Traits:</strong> Toggle which Traits you have unlocked on that dragon (not all dragons can have Traits, and some are inherently locked to a specific Trait).</li>
                     <li><strong>Owned:</strong> Modify the number of that dragon you own. Normal and Twin variants can be tracked individually, as well as Normal Traited and Twin Traited variants for dragons that can have Traits.</li>
                 </ul>
+                <p>Use filters to only show dragons of specific elements or element combinations.</p>
+                <p>Filters can be used to show all dragons containing a specific element, or all dragons that do not contain a specific element.</p>
+                <p>These can be combined, such as filtering for every dragon that contains the Fire element that does not also contain the Plant element.</p>
+                <img style={imgStyle} src={'./images/guide_3.png'} alt="" />
+                <p>You can also create an account and log in to it to save your changes to an account to access on any device.</p>
+                <p>Changes made while not logged in will be saved to the browser instead.</p>
             </Box>
         </Modal>
     </>
