@@ -286,7 +286,7 @@ body {
 .filter-box {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-content: flex-start;
     height: 100%;
     width: 100%;
@@ -300,7 +300,7 @@ body {
 .filter-button {
     display: flex;
     align-items: center;
-    width: 40%;
+    width: 44%;
     background-color: rgb(139, 139, 139);
     border: black;
     border-style: solid;
