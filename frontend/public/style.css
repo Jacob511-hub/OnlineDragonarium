@@ -319,6 +319,7 @@ body {
 .filter-button img {
     height: 40px;
     width: auto;
+    padding: 2px;
 }
 
 .filter-button p {
