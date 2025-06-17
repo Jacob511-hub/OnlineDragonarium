@@ -52,8 +52,8 @@ const GuideModal: React.FC = () => {
             className='button-default'
             style={{
                 position: 'fixed',
-                top: 10,
-                left: 10,
+                bottom: 10,
+                right: 120,
                 zIndex: 99,
             }}
         >
