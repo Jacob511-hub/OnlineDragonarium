@@ -40,8 +40,8 @@ const Register: React.FC = () => {
                 <button
                     className='button-default'
                     style={{ width: '150px' }}
-                    onClick={() => navigate("/login")}
-                >Back to Login</button>
+                    onClick={() => navigate("/app")}
+                >Back</button>
             </div>
         </div>
     );
