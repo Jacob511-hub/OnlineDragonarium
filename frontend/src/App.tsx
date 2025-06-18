@@ -3,6 +3,7 @@ import FilterContainerModal from "./FilterContainerModal";
 import ListContainer from "./ListContainer";
 import InfoContainer from "./InfoContainer";
 import LogoutButton from "./LogoutButton";
+import RegisterButton from "./RegisterButton";
 import AdminMenu from "./AdminMenu";
 import GuideModal from "./GuideModal";
 import { CurrentUserProvider } from "./CurrentUserContext";
@@ -32,6 +33,7 @@ const App: React.FC = () => {
         <ListContainer filters={filters} onClick={(id: number) => setSelectedDragonId(id)} />
         <InfoContainer selectedDragonId={selectedDragonId} setSelectedDragonId={setSelectedDragonId} />
         <LogoutButton />
+        <RegisterButton />
         <GuideModal />
         <AdminMenu />
       </CurrentUserProvider>
