@@ -53,7 +53,7 @@ const GuideModal: React.FC = () => {
             style={{
                 position: 'fixed',
                 bottom: 10,
-                right: 120,
+                right: 10,
                 zIndex: 99,
             }}
         >
