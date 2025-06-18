@@ -9,9 +9,9 @@ const RegisterButton: React.FC = () => {
     return (
         <div className="register-button">
             {isLoggedIn ? (
-                <button className='button-default' onClick={() => navigate("/register")} style={{ cursor: "pointer" }}>Sign up</button>
-            ) : (
                 <></>
+            ) : (
+                <button className='button-default' onClick={() => navigate("/register")} style={{ cursor: "pointer" }}>Sign up</button>
             )}
         </div>
     );
